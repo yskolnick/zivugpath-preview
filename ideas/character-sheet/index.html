@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ZivugPath · Character sheet</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #736A5E;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root { --paper: #17130F; --raise: #211C17; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E; --line: #322A23; --line-soft: #2A231D; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F; --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.6); } }
+  :root[data-theme="light"] { --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #736A5E; --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6; --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff; --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36); }
+  :root[data-theme="dark"] { --paper: #17130F; --raise: #211C17; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E; --line: #322A23; --line-soft: #2A231D; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F; --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.6); }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 32px); }
+  h1,h2,h3 { font-family: var(--serif); font-weight: 500; margin: 0; }
+  a { color: var(--pom-ink); }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 6px; }
+  .dood { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  .head { padding: clamp(36px, 7vw, 68px) 0 clamp(18px,3vw,26px); }
+  .head .kick { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--pom); font-weight: 700; }
+  .head h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.02em; margin: 14px 0 0; text-wrap: balance; max-width: 20ch; }
+  .head h1 em { font-style: italic; color: var(--pom); }
+  .head p { color: var(--muted); font-size: clamp(1.02rem, 2vw, 1.16rem); max-width: 58ch; margin: 16px 0 0; line-height: 1.55; }
+
+  /* poster */
+  .poster { margin: 26px 0 0; background:
+      radial-gradient(60% 40% at 88% 6%, var(--pom-soft), transparent 60%),
+      radial-gradient(50% 40% at 4% 96%, var(--gold-soft), transparent 60%),
+      var(--raise);
+    border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: clamp(22px, 4vw, 40px); }
+  .p-head { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .p-head .av { width: 76px; height: 76px; border-radius: 20px; flex: none; background: linear-gradient(150deg, #e7c9ce, #b98a95); display: grid; place-items: center; box-shadow: var(--shadow-sm); }
+  .p-head .av svg { width: 62%; fill: #7e2447; opacity: .85; }
+  .p-head .nm { font-size: clamp(1.7rem, 4vw, 2.4rem); letter-spacing: -.015em; line-height: 1; }
+  .p-head .tl { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  .p-head .tl b { color: var(--pom-ink); font-weight: 700; }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 24px; }
+  @media (min-width: 620px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .cell { border: 1px solid var(--line); border-radius: 16px; padding: 16px 17px; background: var(--paper); position: relative; }
+  .cell.wide { grid-column: 1 / -1; }
+  .cell .lbl { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--pom); }
+  .cell .lbl svg { width: 16px; height: 16px; color: var(--pom); }
+  .cell .val { margin-top: 9px; font-size: 15px; line-height: 1.5; }
+  .cell.quote .val { font-family: var(--serif); font-size: 1.5rem; line-height: 1.25; letter-spacing: -.01em; }
+  .cell.quote { background: var(--pom-soft); border-color: color-mix(in srgb, var(--pom) 22%, var(--line)); }
+  .starter { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
+  .starter .p { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; background: var(--raise); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+  .starter .p svg { width: 15px; height: 15px; color: var(--gold); }
+
+  /* kept / cut */
+  .kc { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 26px; }
+  @media (min-width: 620px) { .kc { grid-template-columns: 1fr 1fr; } }
+  .kc .box { border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; background: var(--raise); box-shadow: var(--shadow-sm); }
+  .kc .box h3 { font-size: 1.15rem; display: flex; align-items: center; gap: 8px; }
+  .kc .keep h3 { color: var(--pom-ink); }
+  .kc .cut h3 { color: var(--muted); }
+  .kc ul { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .kc li { font-size: 14px; line-height: 1.45; padding-left: 20px; position: relative; color: var(--ink); }
+  .kc .keep li::before { content: "✓"; position: absolute; left: 0; color: var(--pom); font-weight: 800; }
+  .kc .cut li { color: var(--muted); }
+  .kc .cut li::before { content: "×"; position: absolute; left: 0; color: var(--faint); font-weight: 800; }
+
+  .foot { border-top: 1px solid var(--line); padding: 26px 0 46px; margin-top: clamp(30px,5vw,52px); color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="page">
+  <header class="head">
+    <div class="wrap">
+      <div class="kick">Output type · concept (exploring)</div>
+      <h1>The character sheet — personality, <em>tastefully.</em></h1>
+      <p>The expressive end of the spectrum: a warm, witty poster of who someone is. We keep the specificity and the charm; we leave the "loving roast" and the chaos out — a shadchan is reading for a person, with dignity.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <article class="poster">
+      <div class="p-head">
+        <span class="av" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="36" r="19"/><path d="M20 92 a30 30 0 0 1 60 0 z"/></svg></span>
+        <div>
+          <div class="nm">Rivka Mandel</div>
+          <div class="tl">morah · second of six · <b>full-Shabbos-table enthusiast</b></div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="cell">
+          <div class="lbl"><svg class="dood" viewBox="0 0 24 24"><path d="M4 19V5l8 6 8-6v14"/></svg> The things she'll happily over-explain</div>
+          <div class="val">Why third grade is the best grade · a good Rashi debate · thrifted blazers · the case for a longer bentching.</div>
+        </div>
+        <div class="cell">
+          <div class="lbl"><svg class="dood" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9-9a4.5 4.5 0 0 1 9-2 4.5 4.5 0 0 1 9 2c-2 4.5-9 9-9 9z"/></svg> Comfort things</div>
+          <div class="val">Her sister on speed-dial, a niggun that runs too long, and the third cup of coffee she swears is the last.</div>
+        </div>
+        <div class="cell">
+          <div class="lbl"><svg class="dood" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg> Her humor</div>
+          <div class="val">Dry, quick, and kind — the kind that lands without anyone being the punchline.</div>
+        </div>
+        <div class="cell">
+          <div class="lbl"><svg class="dood" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Sundays look like</div>
+          <div class="val">Coffee, a long walk, calling her sister, and lesson-planning she fully intends to do later.</div>
+        </div>
+        <div class="cell wide">
+          <div class="lbl"><svg class="dood" viewBox="0 0 24 24"><path d="M3 21h18M6 21V9l6-5 6 5v12M10 21v-6h4v6"/></svg> Big dreams</div>
+          <div class="val">A home that stays open and warm when life gets busy — and, someday, a classroom that's entirely her own.</div>
+        </div>
+        <div class="cell quote">
+          <div class="lbl"><svg class="dood" viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg> Daily mantra</div>
+          <div class="val">"Start again, gently."</div>
+        </div>
+        <div class="cell">
+          <div class="lbl"><svg class="dood" viewBox="0 0 24 24"><path d="M5 3h14v18l-7-4-7 4z"/></svg> Starter pack</div>
+          <div class="starter">
+            <span class="p"><svg class="dood" viewBox="0 0 24 24"><path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 9h2a2 2 0 0 1 0 5h-1"/></svg> Coffee</span>
+            <span class="p"><svg class="dood" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM9 5v14"/></svg> Chalk</span>
+            <span class="p"><svg class="dood" viewBox="0 0 24 24"><path d="M6 4h12v16H6zM9 8h6M9 12h6"/></svg> Siddur</span>
+            <span class="p"><svg class="dood" viewBox="0 0 24 24"><path d="M8 4l4 2 4-2v9a4 4 0 0 1-8 0z"/></svg> Blazer</span>
+            <span class="p"><svg class="dood" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12M9 12l10-2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg> A long niggun</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="kc">
+      <div class="box keep">
+        <h3>What we keep</h3>
+        <ul>
+          <li>Deeply specific, warm, and a little funny — never generic</li>
+          <li>Interests, comfort things, humor, dreams, a daily mantra</li>
+          <li>Starter-pack callouts and light doodles</li>
+          <li>An illustrated avatar — modest, no real photo needed</li>
+        </ul>
+      </div>
+      <div class="box cut">
+        <h3>What we cut</h3>
+        <ul>
+          <li>The "loving roast" — you don't roast someone you're presenting for marriage</li>
+          <li>"Slightly chaotic" energy — dignity wins here</li>
+          <li>A "weaknesses" headline — growth framing instead</li>
+          <li>The "healing journey" confessional — reads as baggage to a shadchan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap">Concept · exploring. A real render needs an illustration model; the layout, tone, and content model are the point here. <a href="../../">back to ZivugPath</a></div>
+  </footer>
+</div>
+
+</body>
+</html>

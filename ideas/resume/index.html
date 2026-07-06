@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ZivugPath · Traditional resume</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #736A5E;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root { --paper: #17130F; --raise: #211C17; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E; --line: #322A23; --line-soft: #2A231D; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --on-accent: #17130F; --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.6); } }
+  :root[data-theme="light"] { --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #736A5E; --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6; --gold: #876214; --on-accent: #ffffff; --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36); }
+  :root[data-theme="dark"] { --paper: #17130F; --raise: #211C17; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E; --line: #322A23; --line-soft: #2A231D; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --on-accent: #17130F; --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.6); }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; padding: clamp(28px, 6vw, 64px) 0 80px; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 32px); }
+  a { color: var(--pom-ink); }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 4px; }
+
+  .intro { margin-bottom: 26px; }
+  .intro .kick { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--pom); font-weight: 700; }
+  .intro h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(1.6rem, 3.4vw, 2.2rem); letter-spacing: -.01em; margin: 8px 0 0; }
+  .intro p { color: var(--muted); font-size: 15px; margin: 8px 0 0; max-width: 60ch; }
+
+  /* the sheet */
+  .sheet { background: var(--raise); border: 1px solid var(--line); border-radius: 6px; box-shadow: var(--shadow); padding: clamp(28px, 5vw, 52px); }
+  .rhead { text-align: center; border-bottom: 2px solid var(--ink); padding-bottom: 18px; }
+  .rhead .nm { font-family: var(--serif); font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -.01em; line-height: 1; }
+  .rhead .sub { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-top: 10px; }
+
+  .grp { padding: 22px 0; border-bottom: 1px solid var(--line-soft); }
+  .grp:last-child { border-bottom: 0; padding-bottom: 0; }
+  .grp h2 { font-family: var(--serif); font-weight: 500; font-size: 1.15rem; letter-spacing: .02em; margin: 0 0 14px; display: flex; align-items: center; gap: 10px; color: var(--pom-ink); }
+  .grp h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .rows { display: grid; grid-template-columns: 1fr; gap: 10px 28px; }
+  @media (min-width: 560px) { .rows.two { grid-template-columns: 1fr 1fr; } }
+  .row { display: flex; gap: 12px; font-size: 14.5px; }
+  .row .k { flex: none; width: 118px; color: var(--faint); font-weight: 600; }
+  .row .v { color: var(--ink); }
+  .row .v b { font-weight: 600; }
+
+  .fam { font-size: 14.5px; line-height: 1.7; }
+  .fam .line { display: flex; gap: 12px; padding: 3px 0; }
+  .fam .line .k { flex: none; width: 118px; color: var(--faint); font-weight: 600; }
+  .sibs { margin: 8px 0 0; padding-left: 0; list-style: none; }
+  .sibs li { padding: 3px 0 3px 16px; position: relative; font-size: 14px; color: var(--muted); }
+  .sibs li::before { content: "·"; position: absolute; left: 4px; color: var(--pom); font-weight: 800; }
+
+  .prose { font-size: 15px; line-height: 1.7; color: var(--ink); }
+  .refs .gated { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); padding: 6px 12px; border-radius: 8px; }
+  .lk { width: 1em; height: 1em; vertical-align: -.14em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .foot { text-align: center; margin-top: 26px; font-size: 12.5px; color: var(--faint); }
+</style>
+
+<div class="page">
+  <div class="wrap">
+    <div class="intro">
+      <div class="kick">Output type · concept</div>
+      <h1>The traditional résumé</h1>
+      <p>The classic field-list, rendered clean — for shadchanim who expect the familiar format. Same profile, formal render. Sensitive lines (contact, reference numbers) stay gated.</p>
+    </div>
+
+    <article class="sheet">
+      <header class="rhead">
+        <div class="nm">Rivka Mandel</div>
+        <div class="sub">Shidduch Résumé</div>
+      </header>
+
+      <section class="grp">
+        <h2>Personal</h2>
+        <div class="rows two">
+          <div class="row"><span class="k">Date of birth</span><span class="v">14 Adar 5762 · 2002</span></div>
+          <div class="row"><span class="k">Height</span><span class="v">5′5″</span></div>
+          <div class="row"><span class="k">Residence</span><span class="v">Lakewood, NJ</span></div>
+          <div class="row"><span class="k">Background</span><span class="v">Ashkenaz</span></div>
+          <div class="row"><span class="k">Hashkafa</span><span class="v">Modern Orthodox — machmir, warmly observant</span></div>
+          <div class="row"><span class="k">Open to</span><span class="v">Relocating</span></div>
+        </div>
+      </section>
+
+      <section class="grp">
+        <h2>Education &amp; parnassah</h2>
+        <div class="rows two">
+          <div class="row"><span class="k">High school</span><span class="v">Bais Yaakov of Lakewood</span></div>
+          <div class="row"><span class="k">Seminary</span><span class="v">Michlala, Yerushalayim</span></div>
+          <div class="row"><span class="k">Degree</span><span class="v">B.A. Education</span></div>
+          <div class="row"><span class="k">Occupation</span><span class="v">3rd-grade morah</span></div>
+        </div>
+      </section>
+
+      <section class="grp">
+        <h2>Family</h2>
+        <div class="fam">
+          <div class="line"><span class="k">Father</span><span class="v">R' Dovid Mandel — accountant; davens at Khal Zichron Yaakov</span></div>
+          <div class="line"><span class="k">Mother</span><span class="v">Mrs. Leah Mandel — speech therapist</span></div>
+          <div class="line"><span class="k">Family Rav</span><span class="v">Rav S. Feldman (contact time: evenings)</span></div>
+          <div class="line"><span class="k">Siblings</span><span class="v" style="flex:1">
+            <ul class="sibs">
+              <li>Yosef (26) — kollel, Lakewood · married to Miriam (née Klein)</li>
+              <li>Rivka (24) — the above</li>
+              <li>Shira (21) — seminary graduate, assistant teacher</li>
+              <li>Ari (18) — Bais Medrash Govoha</li>
+              <li>Tzippy (15) &amp; Moshe (12) — at home</li>
+            </ul>
+          </span></div>
+        </div>
+      </section>
+
+      <section class="grp">
+        <h2>Looking for</h2>
+        <p class="prose">Someone warm and steady who takes his growth seriously and himself a little less so — a ben Torah building a working or learning life, who wants a home that stays open and unhurried. Comfortable in a Modern-Orthodox, machmir setting.</p>
+      </section>
+
+      <section class="grp refs">
+        <h2>References</h2>
+        <p class="prose" style="margin-bottom:12px">Five references who know Rivka in different settings — a former principal, seminary teacher, two close friends, and a neighbor.</p>
+        <span class="gated"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Names &amp; numbers shared with the shadchan on request</span>
+      </section>
+    </article>
+
+    <p class="foot">Prototype · placeholder person. One profile, rendered as a traditional résumé · <a href="../../">back to ZivugPath</a></p>
+  </div>
+</div>
+
+</body>
+</html>

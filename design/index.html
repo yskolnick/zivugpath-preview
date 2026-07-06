@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ZivugPath · Design direction</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7;
+    --raise: #FFFFFF;
+    --ink: #23201D;
+    --muted: #8C837B;
+    --faint: #B4ABA1;
+    --line: #E9E2D8;
+    --line-soft: #F1EBE2;
+    --pom: #A82D46;
+    --pom-ink: #8E2439;
+    --pom-soft: #F6E5E6;
+    --gold: #B0842B;
+    --gold-soft: #F3EAD4;
+    --shadow: 26px 40px 70px -46px rgba(60, 36, 24, .40);
+    --shadow-sm: 12px 18px 34px -24px rgba(60, 36, 24, .34);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --r: 18px;
+    --r-sm: 12px;
+    --maxw: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #191512;
+      --raise: #221D19;
+      --ink: #F2EBE1;
+      --muted: #A79C90;
+      --faint: #7C7268;
+      --line: #322A24;
+      --line-soft: #2A231E;
+      --pom: #E17185;
+      --pom-ink: #EC8598;
+      --pom-soft: #3A2029;
+      --gold: #D8AE5C;
+      --gold-soft: #34291733;
+      --shadow: 26px 40px 70px -44px rgba(0, 0, 0, .60);
+      --shadow-sm: 12px 18px 34px -22px rgba(0, 0, 0, .55);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #23201D; --muted: #8C837B; --faint: #B4ABA1;
+    --line: #E9E2D8; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #B0842B; --gold-soft: #F3EAD4;
+    --shadow: 26px 40px 70px -46px rgba(60,36,24,.40); --shadow-sm: 12px 18px 34px -24px rgba(60,36,24,.34);
+  }
+  :root[data-theme="dark"] {
+    --paper: #191512; --raise: #221D19; --ink: #F2EBE1; --muted: #A79C90; --faint: #7C7268;
+    --line: #322A24; --line-soft: #2A231E; --pom: #E17185; --pom-ink: #EC8598; --pom-soft: #3A2029;
+    --gold: #D8AE5C; --gold-soft: #34291733;
+    --shadow: 26px 40px 70px -44px rgba(0,0,0,.60); --shadow-sm: 12px 18px 34px -22px rgba(0,0,0,.55);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding: clamp(20px, 5vw, 56px) clamp(18px, 5vw, 40px) 80px;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; }
+
+  h1, h2, h3, .serif { font-family: var(--serif); font-weight: 500; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin: 0;
+  }
+  .eyebrow .dot { color: var(--pom); }
+  a { color: var(--pom-ink); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: clamp(20px, 6vw, 60px) 0 clamp(34px, 6vw, 56px); border-bottom: 1px solid var(--line); }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.03; letter-spacing: -.015em; margin: 22px 0 0;
+    text-wrap: balance; max-width: 15ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--pom); }
+  .lede { font-size: clamp(1.05rem, 2.2vw, 1.3rem); color: var(--muted); max-width: 54ch; margin: 22px 0 0; line-height: 1.55; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12.5px; font-weight: 600; letter-spacing: .01em;
+    padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--raise); color: var(--muted);
+  }
+  .badge b { color: var(--ink); font-weight: 700; }
+  .badge .tick { color: var(--pom); font-weight: 800; }
+
+  /* ---------- section scaffolding ---------- */
+  section.block { padding: clamp(38px, 6vw, 62px) 0; border-bottom: 1px solid var(--line); }
+  .kicker { display: flex; align-items: baseline; gap: 14px; margin-bottom: 30px; }
+  .kicker .num { font-family: var(--serif); font-size: 15px; color: var(--pom); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .kicker h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin: 0; letter-spacing: -.01em; }
+  .kicker p { margin: 4px 0 0; color: var(--muted); font-size: 14.5px; max-width: 46ch; }
+  .kicker .head { flex: 1; }
+
+  /* ---------- palette ---------- */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; }
+  .sw { border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; background: var(--raise); }
+  .sw .chip { height: 78px; }
+  .sw .meta { padding: 11px 13px 13px; }
+  .sw .nm { font-weight: 700; font-size: 13.5px; }
+  .sw .hx { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .02em; margin-top: 1px; }
+  .sw .role { font-size: 11.5px; color: var(--faint); margin-top: 6px; line-height: 1.35; }
+  .ratio { margin-top: 18px; display: flex; height: 26px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); font-size: 11px; font-weight: 700; }
+  .ratio span { display: grid; place-items: center; letter-spacing: .04em; }
+
+  /* ---------- type specimen ---------- */
+  .type-grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+  @media (min-width: 780px) { .type-grid { grid-template-columns: 1.1fr .9fr; } }
+  .spec { background: var(--raise); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(20px, 3vw, 30px); box-shadow: var(--shadow-sm); }
+  .spec .tag { font-size: 11.5px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); font-weight: 700; }
+  .spec .face { color: var(--faint); font-size: 12.5px; margin-top: 3px; }
+  .spec .big { font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 3.9rem); line-height: 1; letter-spacing: -.02em; margin: 18px 0 8px; }
+  .spec .big em { font-style: italic; color: var(--pom); }
+  .scale-row { display: flex; align-items: baseline; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line-soft); }
+  .scale-row:first-of-type { border-top: 0; }
+  .scale-row .lbl { width: 52px; flex: none; font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .sans-body p { margin: 0 0 12px; }
+  .sans-body .lbl2 { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--pom); font-weight: 700; }
+
+  /* ---------- mock components ---------- */
+  .gallery { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  @media (min-width: 720px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+  .card {
+    background: var(--raise); border: 1px solid var(--line); border-radius: var(--r);
+    box-shadow: var(--shadow); overflow: hidden; transition: transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s;
+  }
+  .card:hover { transform: translateY(-3px); }
+  .mock-label { display: flex; align-items: center; gap: 8px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .13em; color: var(--faint); font-weight: 700; margin: 0 0 12px; }
+  .mock-label::before { content: ""; width: 16px; height: 1px; background: var(--pom); display: inline-block; }
+
+  /* profile card (the signature) */
+  .profile { padding: 0; }
+  .photo {
+    position: relative; aspect-ratio: 5 / 4;
+    background:
+      radial-gradient(120% 90% at 18% 12%, #C7415733 0%, transparent 55%),
+      radial-gradient(130% 120% at 88% 96%, #B0842B2e 0%, transparent 50%),
+      linear-gradient(150deg, #b8433d 0%, #7e2b45 52%, #46243a 100%);
+    display: grid; place-items: center;
+  }
+  .photo .mono { font-family: var(--serif); font-size: 4.2rem; color: #ffffffe0; letter-spacing: .02em; text-shadow: 0 2px 30px rgba(0,0,0,.25); }
+  .photo .gate {
+    position: absolute; left: 12px; bottom: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: .02em;
+    color: #fff; background: rgba(30,18,14,.5); backdrop-filter: blur(3px);
+    padding: 5px 10px; border-radius: 999px; font-family: var(--sans);
+  }
+  .profile .body { padding: 18px 20px 20px; }
+  .profile .name { font-family: var(--serif); font-size: 1.7rem; letter-spacing: -.01em; margin: 0; }
+  .profile .facts { color: var(--muted); font-size: 14px; margin: 3px 0 0; }
+  .profile .one-liner { margin: 13px 0 0; font-size: 15px; line-height: 1.5; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
+  .tag-pill { font-size: 12px; font-weight: 600; color: var(--ink); background: var(--pom-soft); border-radius: 999px; padding: 5px 11px; }
+  .tag-pill.gold { background: var(--gold-soft); color: var(--gold); display: inline-flex; align-items: center; gap: 5px; }
+
+  /* prompt/answer blocks */
+  .prompts { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .prompt {
+    border: 1px solid var(--line); border-radius: var(--r-sm); padding: 15px 16px;
+    background: var(--paper);
+  }
+  .prompt .q { font-size: 12.5px; color: var(--pom); font-weight: 700; letter-spacing: .01em; }
+  .prompt .a { font-family: var(--serif); font-size: 1.22rem; line-height: 1.35; margin-top: 6px; letter-spacing: -.005em; }
+
+  /* build wizard + completion meter */
+  .wizard { padding: 20px; }
+  .wz-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .wz-head .t { font-family: var(--serif); font-size: 1.3rem; }
+  .wz-head .pct { font-size: 13px; font-weight: 800; color: var(--pom); font-variant-numeric: tabular-nums; }
+  .meter { height: 9px; background: var(--line-soft); border-radius: 999px; margin: 12px 0 4px; overflow: hidden; }
+  .meter i { display: block; height: 100%; width: 72%; border-radius: 999px; background: linear-gradient(90deg, var(--gold), var(--pom)); }
+  .wz-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+  .todo { display: flex; flex-direction: column; gap: 8px; }
+  .todo .row {
+    display: flex; align-items: center; gap: 11px; padding: 11px 13px;
+    border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--raise);
+    font-size: 13.5px; transition: border-color .2s, background .2s;
+  }
+  .todo .row.pending { cursor: pointer; }
+  .todo .row.pending:hover { border-color: var(--pom); background: var(--pom-soft); }
+  .todo .box { width: 20px; height: 20px; border-radius: 6px; flex: none; display: grid; place-items: center; font-size: 12px; font-weight: 800; }
+  .todo .done .box { background: var(--pom); color: #fff; }
+  .todo .done { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--faint); }
+  .todo .pending .box { border: 1.5px solid var(--faint); color: transparent; }
+  .todo .row .grow { flex: 1; }
+  .todo .row .go { font-size: 12px; font-weight: 700; color: var(--pom); }
+
+  /* share control */
+  .share { padding: 20px; }
+  .share .field {
+    display: flex; align-items: center; gap: 10px; border: 1px solid var(--line);
+    border-radius: var(--r-sm); padding: 6px 6px 6px 14px; background: var(--paper);
+  }
+  .share .url { flex: 1; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--sans); }
+  .share .url b { color: var(--ink); font-weight: 700; }
+  .btn {
+    font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .01em;
+    border: 0; border-radius: 9px; padding: 9px 15px; cursor: pointer;
+    background: var(--pom); color: #fff; transition: filter .18s, transform .1s;
+  }
+  .btn:hover { filter: brightness(1.06); }
+  .btn:active { transform: translateY(1px); }
+  .btn.copied { background: var(--gold); }
+  .seg { display: inline-flex; background: var(--line-soft); border-radius: 10px; padding: 3px; margin-top: 16px; }
+  .seg button {
+    font-family: var(--sans); font-size: 12.5px; font-weight: 700; border: 0; background: transparent;
+    color: var(--muted); padding: 7px 15px; border-radius: 8px; cursor: pointer; transition: all .18s;
+  }
+  .seg button[aria-pressed="true"] { background: var(--raise); color: var(--ink); box-shadow: var(--shadow-sm); }
+  .toggle-row { display: flex; flex-direction: column; gap: 2px; margin-top: 16px; }
+  .toggle-row .tg { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 2px; border-top: 1px solid var(--line-soft); font-size: 13.5px; }
+  .toggle-row .tg:first-child { border-top: 0; }
+  .toggle-row .tg .desc { color: var(--muted); font-size: 12px; margin-top: 1px; }
+  .switch { width: 40px; height: 23px; border-radius: 999px; background: var(--pom); position: relative; flex: none; cursor: pointer; border: 0; transition: background .2s; }
+  .switch::after { content: ""; position: absolute; top: 2.5px; left: 2.5px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .2s; }
+  .switch[aria-pressed="false"] { background: var(--faint); }
+  .switch[aria-pressed="false"]::after { transform: translateX(17px); }
+  .switch[aria-pressed="true"]::after { transform: translateX(0); }
+
+  /* modesty principles */
+  .principles { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+  @media (min-width: 640px) { .principles { grid-template-columns: 1fr 1fr; } }
+  .principle { background: var(--raise); padding: 22px 22px 24px; }
+  .principle .from { font-size: 12px; color: var(--faint); text-decoration: line-through; }
+  .principle .to { font-family: var(--serif); font-size: 1.22rem; letter-spacing: -.005em; margin: 5px 0 8px; }
+  .principle .to .arrow { color: var(--pom); font-style: normal; }
+  .principle p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+
+  /* footer */
+  .foot { padding-top: 34px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+  .foot .k { color: var(--faint); }
+
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 2px; border-radius: 4px; }
+
+  .reveal { opacity: 0; transform: translateY(14px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.in { opacity: 1; transform: none; transition: none; }
+    .card { transition: none; }
+  }
+
+  /* ---------- full screens (device frames) ---------- */
+  .screens { display: grid; gap: 34px; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .screens { grid-template-columns: 1fr 1fr; align-items: start; } }
+  .device { max-width: 390px; margin: 0 auto; width: 100%; border: 1px solid var(--line); border-radius: 42px; background: var(--raise); box-shadow: var(--shadow); padding: 11px; }
+  .device .screen { border-radius: 32px; overflow: hidden; background: var(--paper); border: 1px solid var(--line-soft); }
+  .statusbar { display: flex; align-items: center; justify-content: space-between; padding: 11px 22px 7px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .statusbar .dots { letter-spacing: 2px; }
+
+  /* profile page internals */
+  .pp-photo { position: relative; aspect-ratio: 4 / 5;
+    background:
+      radial-gradient(120% 90% at 20% 10%, #C7415733 0%, transparent 55%),
+      radial-gradient(130% 120% at 85% 95%, #B0842B2e 0%, transparent 50%),
+      linear-gradient(155deg, #bd453e 0%, #82274a 50%, #43233b 100%);
+    display: grid; place-items: center; }
+  .pp-photo .mono { font-family: var(--serif); font-size: 5rem; color: #ffffffdd; text-shadow: 0 3px 40px rgba(0,0,0,.3); }
+  .pp-scrim { position: absolute; inset: auto 0 0 0; padding: 34px 18px 16px; background: linear-gradient(to top, rgba(30,16,14,.82), transparent); }
+  .pp-scrim .nm { font-family: var(--serif); font-size: 1.85rem; color: #fff; letter-spacing: -.01em; line-height: 1; }
+  .pp-scrim .fx { color: #ffffffcf; font-size: 13px; margin-top: 5px; }
+  .pp-sec { padding: 17px 18px; border-top: 1px solid var(--line-soft); }
+  .pp-sec:first-of-type { border-top: 0; }
+  .pp-sec .h { font-size: 11px; text-transform: uppercase; letter-spacing: .13em; color: var(--faint); font-weight: 700; margin: 0 0 10px; }
+  .pp-intro { font-size: 14.5px; line-height: 1.55; margin: 0; }
+  .pp-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 12px; overflow: hidden; }
+  .pp-facts div { background: var(--raise); padding: 10px 13px; }
+  .pp-facts .k { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); font-weight: 700; }
+  .pp-facts .v { font-size: 13.5px; margin-top: 2px; }
+  .pp-prompt { border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; }
+  .pp-prompt + .pp-prompt { margin-top: 10px; }
+  .pp-prompt .q { font-size: 12px; color: var(--pom); font-weight: 700; }
+  .pp-prompt .a { font-family: var(--serif); font-size: 1.15rem; line-height: 1.35; margin-top: 5px; }
+  .pp-refs { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 13px; }
+  .pp-refs .ic { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--gold-soft); color: var(--gold); font-size: 15px; }
+  .pp-refs .t { font-weight: 700; font-size: 13.5px; }
+  .pp-refs .s { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .pp-cta { padding: 15px 16px 17px; border-top: 1px solid var(--line-soft); }
+  .pp-cta .note { text-align: center; font-size: 11.5px; color: var(--muted); margin: 9px 0 0; }
+  .pp-foot { text-align: center; font-size: 11px; color: var(--faint); padding: 0 0 15px; }
+  .btn.block { display: block; width: 100%; padding: 13px; font-size: 14px; text-align: center; }
+
+  /* onboarding step internals */
+  .ob-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 0; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .ob-top .quiet { background: transparent; border: 0; color: var(--faint); font-family: var(--sans); font-size: 12px; font-weight: 600; cursor: pointer; padding: 4px; }
+  .ob-bar { height: 4px; background: var(--line-soft); border-radius: 999px; margin: 11px 16px 0; overflow: hidden; }
+  .ob-bar i { display: block; height: 100%; width: 66%; background: var(--pom); border-radius: 999px; }
+  .ob-body { padding: 22px 18px 20px; }
+  .ob-q { font-family: var(--serif); font-size: 1.55rem; line-height: 1.15; letter-spacing: -.01em; margin: 0 0 5px; text-wrap: balance; }
+  .ob-hint { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+  .ob-picker { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .ob-opt { text-align: left; font-family: var(--sans); font-size: 13.5px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--raise); cursor: pointer; color: var(--ink); transition: border-color .18s, background .18s; }
+  .ob-opt[aria-pressed="true"] { border-color: var(--pom); background: var(--pom-soft); font-weight: 600; }
+  .ob-area { border: 1px solid var(--pom); border-radius: 12px; padding: 13px 14px; background: var(--paper); }
+  .ob-area .lab { font-size: 12px; color: var(--pom); font-weight: 700; margin-bottom: 6px; }
+  .ob-area .txt { font-family: var(--serif); font-size: 1.15rem; line-height: 1.4; }
+  .ob-area .cnt { text-align: right; font-size: 11px; color: var(--faint); margin-top: 9px; font-variant-numeric: tabular-nums; }
+  .ob-actions { margin-top: 18px; }
+  .ob-skip { display: block; width: 100%; text-align: center; background: transparent; border: 0; color: var(--muted); font-family: var(--sans); font-size: 13px; font-weight: 600; padding: 13px; cursor: pointer; }
+
+  /* ---------- the single's app (three-up) ---------- */
+  .single-screens { display: grid; gap: 26px; grid-template-columns: 1fr; }
+  @media (min-width: 680px) { .single-screens { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) { .single-screens { grid-template-columns: repeat(3, 1fr); } }
+  .single-screens .device { max-width: 360px; }
+  .btn.sm { padding: 8px 12px; font-size: 12.5px; }
+
+  /* home / manage */
+  .hm-head { display: flex; align-items: center; gap: 11px; padding: 14px 16px 2px; }
+  .hm-ava { width: 40px; height: 40px; border-radius: 50%; flex: none; display: grid; place-items: center; font-family: var(--serif); color: #fff; font-size: 1.2rem; background: linear-gradient(150deg, #bd453e, #82274a); }
+  .hm-hi .k { font-size: 12px; color: var(--muted); }
+  .hm-hi .n { font-family: var(--serif); font-size: 1.25rem; line-height: 1.1; }
+  .hm-card { margin: 14px 16px 0; border: 1px solid var(--line); border-radius: 16px; background: var(--raise); padding: 15px; box-shadow: var(--shadow-sm); }
+  .hm-card .top { display: flex; align-items: center; justify-content: space-between; }
+  .hm-card .lab { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--faint); font-weight: 700; }
+  .hm-live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--pom); }
+  .hm-live .d { width: 7px; height: 7px; border-radius: 50%; background: var(--pom); }
+  .hm-link { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 5px 5px 5px 12px; background: var(--paper); margin-top: 12px; }
+  .hm-link .u { flex: 1; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hm-link .u b { color: var(--ink); }
+  .hm-stat { margin: 14px 16px 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .hm-stat b { color: var(--ink); font-weight: 700; }
+  .hm-intro { margin: 12px 16px 0; border: 1px solid var(--line); border-radius: 14px; padding: 12px 13px; display: flex; align-items: center; gap: 11px; background: var(--pom-soft); cursor: pointer; }
+  .hm-intro .ic { width: 32px; height: 32px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--pom); color: #fff; font-size: 14px; }
+  .hm-intro .t { font-weight: 700; font-size: 13px; }
+  .hm-intro .s { font-size: 11.5px; color: var(--muted); }
+  .hm-intro .chev { margin-left: auto; color: var(--pom); font-weight: 800; }
+  .hm-nav { display: flex; margin-top: 16px; border-top: 1px solid var(--line-soft); }
+  .hm-nav a { flex: 1; text-align: center; padding: 10px 0 13px; font-size: 10.5px; font-weight: 700; color: var(--faint); text-decoration: none; }
+  .hm-nav a .ic { display: block; font-size: 16px; margin-bottom: 3px; }
+  .hm-nav a.on { color: var(--pom); }
+
+  /* conversation */
+  .cv-top { padding: 13px 16px 0; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); font-weight: 600; }
+  .cv-top .est { color: var(--faint); }
+  .cv-thread { padding: 16px 16px 4px; display: flex; flex-direction: column; gap: 11px; }
+  .cv-b { max-width: 82%; padding: 11px 14px; border-radius: 16px; font-size: 13.5px; line-height: 1.45; }
+  .cv-a { align-self: flex-start; background: var(--raise); border: 1px solid var(--line); border-bottom-left-radius: 5px; }
+  .cv-a.q { font-family: var(--serif); font-size: 1.05rem; line-height: 1.3; }
+  .cv-u { align-self: flex-end; background: var(--pom-soft); border-bottom-right-radius: 5px; color: var(--ink); }
+  .cv-saved { align-self: center; font-size: 11px; color: var(--gold); font-weight: 700; display: inline-flex; gap: 5px; align-items: center; padding: 2px 0; }
+  .cv-chips { display: flex; gap: 7px; flex-wrap: wrap; padding: 8px 16px 10px; }
+  .cv-chip { font-family: var(--sans); font-size: 12px; font-weight: 600; border: 1px solid var(--line); background: var(--raise); color: var(--ink); border-radius: 999px; padding: 7px 12px; cursor: pointer; transition: background .16s, border-color .16s; }
+  .cv-chip:hover { border-color: var(--pom); background: var(--pom-soft); }
+  .cv-input { margin: 0 12px 14px; display: flex; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 5px 5px 5px 15px; background: var(--paper); }
+  .cv-input .ph { flex: 1; font-size: 13px; color: var(--faint); }
+  .cv-send { width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--pom); color: #fff; font-size: 15px; cursor: pointer; flex: none; }
+
+  /* introduction requests */
+  .rq-h { padding: 16px 16px 2px; font-family: var(--serif); font-size: 1.4rem; }
+  .rq-sub { padding: 0 16px; font-size: 12.5px; color: var(--muted); }
+  .rq-list { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .rq-card { border: 1px solid var(--line); border-radius: 16px; padding: 14px; background: var(--raise); }
+  .rq-card.settled { background: var(--paper); }
+  .rq-from { display: flex; align-items: center; gap: 10px; }
+  .rq-from .ic { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--gold-soft); color: var(--gold); font-weight: 700; font-family: var(--serif); }
+  .rq-from .t { font-weight: 700; font-size: 13.5px; }
+  .rq-from .s { font-size: 12px; color: var(--muted); }
+  .rq-from .time { margin-left: auto; font-size: 11px; color: var(--faint); }
+  .rq-note { font-size: 13.5px; line-height: 1.5; margin: 11px 0 0; }
+  .rq-actions { display: flex; gap: 9px; margin-top: 14px; }
+  .rq-actions .btn { flex: 1; }
+  .rq-actions .ghost { flex: 1; background: transparent; border: 1px solid var(--line); color: var(--ink); border-radius: 9px; font-family: var(--sans); font-weight: 700; font-size: 13px; cursor: pointer; padding: 9px 12px; }
+  .rq-actions .ghost:hover { border-color: var(--muted); }
+  .rq-settled { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--gold); font-weight: 700; }
+  .rq-settled.declined { color: var(--muted); }
+</style>
+
+<div class="page">
+  <div class="wrap">
+
+    <!-- HERO -->
+    <header class="hero">
+      <p class="eyebrow"><span class="dot">●</span>&nbsp; Design direction · ZivugPath</p>
+      <h1>Warm and editorial, <em>not</em> a loud dating app.</h1>
+      <p class="lede">A dignified, photo-forward profile that feels made — like a magazine feature, not a swipe card. Warmth comes from paper, portraiture, and type; color stays disciplined. Every choice below is drawn from the verified design research.</p>
+      <div class="badge-row">
+        <span class="badge"><span class="tick">✓</span> Hinge-class restraint</span>
+        <span class="badge"><b>~85%</b>&nbsp; neutral canvas</span>
+        <span class="badge"><b>1</b>&nbsp; warm accent</span>
+        <span class="badge">Modesty-first, by design</span>
+      </div>
+    </header>
+
+    <!-- PALETTE -->
+    <section class="block reveal">
+      <div class="kicker">
+        <span class="num">01</span>
+        <div class="head">
+          <h2>The palette</h2>
+          <p>A warm near-white ground and espresso ink carry the page. Pomegranate — <em>rimon</em>, a sign of blessing — is the one accent, spent only where it counts.</p>
+        </div>
+      </div>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background:#FCFAF7"></div><div class="meta"><div class="nm">Paper</div><div class="hx">#FCFAF7</div><div class="role">Ground — most of every screen</div></div></div>
+        <div class="sw"><div class="chip" style="background:#23201D"></div><div class="meta"><div class="nm">Ink</div><div class="hx">#23201D</div><div class="role">Warm near-black, never pure #000</div></div></div>
+        <div class="sw"><div class="chip" style="background:#8C837B"></div><div class="meta"><div class="nm">Greige</div><div class="hx">#8C837B</div><div class="role">Secondary text, quiet labels</div></div></div>
+        <div class="sw"><div class="chip" style="background:#A82D46"></div><div class="meta"><div class="nm">Pomegranate</div><div class="hx">#A82D46</div><div class="role">The accent — CTAs, links, emphasis</div></div></div>
+        <div class="sw"><div class="chip" style="background:#F6E5E6"></div><div class="meta"><div class="nm">Blush</div><div class="hx">#F6E5E6</div><div class="role">Accent tint — chips, soft fills</div></div></div>
+        <div class="sw"><div class="chip" style="background:#B0842B"></div><div class="meta"><div class="nm">Candle gold</div><div class="hx">#B0842B</div><div class="role">Trust cue only — verified &amp; references</div></div></div>
+      </div>
+      <div class="ratio" aria-label="Roughly 85 percent neutral, 15 percent accent">
+        <span style="background:#F1EBE2;color:#8C837B;flex:85">85% neutral base</span>
+        <span style="background:#A82D46;color:#fff;flex:15">15% accent</span>
+      </div>
+    </section>
+
+    <!-- TYPE -->
+    <section class="block reveal">
+      <div class="kicker">
+        <span class="num">02</span>
+        <div class="head">
+          <h2>The type pairing</h2>
+          <p>An editorial serif for names and headlines; a clean humanist sans for everything you operate. The contrast is the personality.</p>
+        </div>
+      </div>
+      <div class="type-grid">
+        <div class="spec">
+          <div class="tag">Display · serif</div>
+          <div class="face">Fraunces / Newsreader class — rendered here in a Palatino-family stand-in</div>
+          <div class="big">Rivka &amp; <em>Dovid</em></div>
+          <div class="scale-row"><span class="lbl">44 / 500</span><span class="serif" style="font-size:1.7rem">A home built with intention</span></div>
+          <div class="scale-row"><span class="lbl">28 / 500</span><span class="serif" style="font-size:1.25rem">Answers that sound like a person</span></div>
+          <div class="scale-row"><span class="lbl">italic</span><span class="serif" style="font-size:1.25rem;font-style:italic">warmth, not decoration</span></div>
+        </div>
+        <div class="spec sans-body">
+          <div class="tag">Body · sans</div>
+          <div class="face">Inter / Geist class — rendered here in the system UI sans</div>
+          <p class="lbl2" style="margin-top:16px">What you're looking for</p>
+          <p style="font-size:15px;color:var(--muted)">Set clear, scannable copy in a friendly sans. Names and moments get the serif; buttons, labels, and forms stay in this quiet, legible voice so the page is easy to move through.</p>
+          <p style="font-size:13px;color:var(--faint);margin:0">Aa Bb Cc · 0123456789 · Save changes · Share link</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPONENTS -->
+    <section class="block reveal">
+      <div class="kicker">
+        <span class="num">03</span>
+        <div class="head">
+          <h2>What it looks like</h2>
+          <p>The direction, working — a profile card, prompt answers, the guided build, and the live share link that replaces the emailed PDF.</p>
+        </div>
+      </div>
+
+      <div class="gallery">
+
+        <!-- profile card -->
+        <div>
+          <p class="mock-label">Profile card · the signature</p>
+          <article class="card profile">
+            <div class="photo">
+              <span class="mono">R</span>
+              <span class="gate">🔒 Photo shown on full link only</span>
+            </div>
+            <div class="body">
+              <h3 class="name">Rivka M.</h3>
+              <p class="facts">24 · Lakewood, NJ · Open to relocating</p>
+              <p class="one-liner">A morah who runs on early mornings, long Shabbos tables, and a good argument about a Rashi.</p>
+              <div class="tags">
+                <span class="tag-pill">Teaching</span>
+                <span class="tag-pill">Bais Yaakov</span>
+                <span class="tag-pill gold">✦ 3 references</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- prompts -->
+        <div>
+          <p class="mock-label">Prompt answers · personality, not a form</p>
+          <article class="card">
+            <div class="prompts">
+              <div class="prompt"><div class="q">A value I won't compromise on</div><div class="a">A home where guests never feel like guests.</div></div>
+              <div class="prompt"><div class="q">My ideal Friday night</div><div class="a">Too much food, a niggun that goes too long, no one checking the time.</div></div>
+              <div class="prompt"><div class="q">Something I'm working on</div><div class="a">Letting a plan change without treating it as a crisis.</div></div>
+            </div>
+          </article>
+        </div>
+
+        <!-- build wizard -->
+        <div>
+          <p class="mock-label">Guided build · a meter tied to real next steps</p>
+          <article class="card">
+            <div class="wizard">
+              <div class="wz-head"><span class="t">Your profile</span><span class="pct">72%</span></div>
+              <div class="meter"><i></i></div>
+              <p class="wz-sub">Two quick things and you're ready to share.</p>
+              <div class="todo">
+                <div class="row done"><span class="box">✓</span><span class="grow">Basics &amp; background</span></div>
+                <div class="row done"><span class="box">✓</span><span class="grow">Answer three prompts</span></div>
+                <div class="row pending" tabindex="0"><span class="box"></span><span class="grow">Add two more photos</span><span class="go">Add →</span></div>
+                <div class="row pending" tabindex="0"><span class="box"></span><span class="grow">Invite one reference</span><span class="go">Invite →</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- share control -->
+        <div>
+          <p class="mock-label">Share link · one link, always current</p>
+          <article class="card">
+            <div class="share">
+              <div class="field">
+                <span class="url">zivugpath.com/p/<b>rivka-m</b>-8fk2</span>
+                <button class="btn" id="copyBtn" type="button">Copy link</button>
+              </div>
+              <div class="seg" role="group" aria-label="Link visibility">
+                <button type="button" aria-pressed="true" data-seg>Full profile</button>
+                <button type="button" aria-pressed="false" data-seg>Limited view</button>
+              </div>
+              <div class="toggle-row">
+                <div class="tg">
+                  <div><div>Hide contact details</div><div class="desc">Shown only after you approve a request</div></div>
+                  <button class="switch" type="button" aria-pressed="true" aria-label="Hide contact details"></button>
+                </div>
+                <div class="tg">
+                  <div><div>Keep off search engines</div><div class="desc">Never indexed — private by default</div></div>
+                  <button class="switch" type="button" aria-pressed="true" aria-label="Keep off search engines"></button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODESTY -->
+    <section class="block reveal">
+      <div class="kicker">
+        <span class="num">04</span>
+        <div class="head">
+          <h2>Where dating-app habits get adapted</h2>
+          <p>The look borrows from the best modern apps; the mechanics answer to a shidduch audience. Each pattern is turned, not copied.</p>
+        </div>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <div class="from">Swipe on photos</div>
+          <div class="to">Consent reveal <span class="arrow">→</span></div>
+          <p>No judging a face in a stack. Details open when both sides choose to look closer.</p>
+        </div>
+        <div class="principle">
+          <div class="from">Open browsing</div>
+          <div class="to">Private by default <span class="arrow">→</span></div>
+          <p>Nothing is public and nothing is indexed. Privacy is the headline, not a buried setting.</p>
+        </div>
+        <div class="principle">
+          <div class="from">Selfie verification</div>
+          <div class="to">References &amp; vouching <span class="arrow">→</span></div>
+          <p>Trust the way the community already does — a name that says "I know her," not a face scan.</p>
+        </div>
+        <div class="principle">
+          <div class="from">The emailed PDF</div>
+          <div class="to">One living link <span class="arrow">→</span></div>
+          <p>A profile you update once and share anywhere — always the current version, never a stale attachment.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FULL SCREENS -->
+    <section class="block reveal">
+      <div class="kicker">
+        <span class="num">05</span>
+        <div class="head">
+          <h2>The two screens that matter most</h2>
+          <p>Centered on the single: the page they send when a shidduch comes up, and the unhurried build that gets them there.</p>
+        </div>
+      </div>
+
+      <div class="screens">
+
+        <!-- shared profile page -->
+        <div>
+          <p class="mock-label">The shared page · what opens at your link</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots">● ● ●</span></div>
+              <div class="pp-photo">
+                <span class="mono">R</span>
+                <div class="pp-scrim">
+                  <div class="nm">Rivka Mandel</div>
+                  <div class="fx">24 · Lakewood, NJ · open to relocating</div>
+                </div>
+              </div>
+              <div class="pp-sec">
+                <p class="pp-intro">A morah who runs on early mornings, long Shabbos tables, and a good argument about a Rashi. Looking to build a home that stays warm when things get busy.</p>
+              </div>
+              <div class="pp-sec">
+                <p class="h">The basics</p>
+                <div class="pp-facts">
+                  <div><div class="k">Age</div><div class="v">24</div></div>
+                  <div><div class="k">From</div><div class="v">Lakewood, NJ</div></div>
+                  <div><div class="k">Does</div><div class="v">3rd-grade morah</div></div>
+                  <div><div class="k">Learned</div><div class="v">Bais Yaakov · seminary</div></div>
+                </div>
+              </div>
+              <div class="pp-sec">
+                <p class="h">In her words</p>
+                <div class="pp-prompt"><div class="q">A value I won't compromise on</div><div class="a">A home where guests never feel like guests.</div></div>
+                <div class="pp-prompt"><div class="q">My ideal Friday night</div><div class="a">Too much food, a niggun that runs long, no one checking the time.</div></div>
+              </div>
+              <div class="pp-sec">
+                <p class="h">Vouched for</p>
+                <div class="pp-refs">
+                  <span class="ic">✦</span>
+                  <div><div class="t">3 references</div><div class="s">Shared privately with the shadchan</div></div>
+                </div>
+              </div>
+              <div class="pp-cta">
+                <a class="btn block" href="#" onclick="return false">Request an introduction</a>
+                <p class="note">Contact details open only after Rivka approves.</p>
+              </div>
+              <div class="pp-foot">🔒 Private link · never indexed</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- onboarding step -->
+        <div>
+          <p class="mock-label">Building it · one question at a time</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots">● ● ●</span></div>
+              <div class="ob-top"><span>Step 4 of 6</span><button class="quiet" type="button">Save &amp; exit</button></div>
+              <div class="ob-bar"><i></i></div>
+              <div class="ob-body">
+                <h3 class="ob-q">Answer a prompt in your own voice.</h3>
+                <p class="ob-hint">Pick one to start. Say it like you'd say it out loud — you can change it later.</p>
+                <div class="ob-picker" role="group" aria-label="Choose a prompt">
+                  <button class="ob-opt" type="button" aria-pressed="true" data-ob>A value I won't compromise on</button>
+                  <button class="ob-opt" type="button" aria-pressed="false" data-ob>My ideal Friday night</button>
+                  <button class="ob-opt" type="button" aria-pressed="false" data-ob>Something I'm working on</button>
+                </div>
+                <div class="ob-area">
+                  <div class="lab">A value I won't compromise on</div>
+                  <div class="txt">A home where guests never feel like guests.</div>
+                  <div class="cnt">47 / 140</div>
+                </div>
+                <div class="ob-actions">
+                  <a class="btn block" href="#" onclick="return false">Continue</a>
+                  <button class="ob-skip" type="button">Skip for now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- THE SINGLE'S APP -->
+    <section class="block reveal">
+      <div class="kicker">
+        <span class="num">06</span>
+        <div class="head">
+          <h2>The single's app</h2>
+          <p>Three screens, one loop: write your profile by talking, manage and share it, then decide who gets an introduction. Nothing leaves your hands without your yes.</p>
+        </div>
+      </div>
+
+      <div class="single-screens">
+
+        <!-- AI build conversation -->
+        <div>
+          <p class="mock-label">Build · you talk, it writes</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots">● ● ●</span></div>
+              <div class="cv-top"><span>Building your profile</span><span class="est">about 3 min left</span></div>
+              <div class="cv-thread">
+                <div class="cv-b cv-a q">Picture your Shabbos table a few years from now — who's around it?</div>
+                <div class="cv-b cv-u">Honestly, a full one. Family, friends who had nowhere else, a couple of my students who stayed in town.</div>
+                <div class="cv-saved">✓ Saved to “In her words”</div>
+                <div class="cv-b cv-a q">That says a lot. What makes a guest feel like they belong at your table?</div>
+              </div>
+              <div class="cv-chips">
+                <button class="cv-chip" type="button" data-chip>No fuss, just a seat</button>
+                <button class="cv-chip" type="button" data-chip>Being remembered</button>
+                <button class="cv-chip" type="button" data-chip>Let me type…</button>
+              </div>
+              <div class="cv-input">
+                <span class="ph">Type your answer…</span>
+                <button class="cv-send" type="button" aria-label="Send">↑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- home / manage -->
+        <div>
+          <p class="mock-label">Home · manage &amp; share</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots">● ● ●</span></div>
+              <div class="hm-head">
+                <span class="hm-ava">R</span>
+                <div class="hm-hi"><div class="k">Good morning</div><div class="n">Rivka</div></div>
+              </div>
+              <div class="hm-card">
+                <div class="top">
+                  <span class="lab">Your profile</span>
+                  <span class="hm-live"><span class="d"></span> Live</span>
+                </div>
+                <div class="hm-link">
+                  <span class="u">zivugpath.com/p/<b>rivka-m</b>-8fk2</span>
+                  <button class="btn sm" id="copyBtn2" type="button">Copy</button>
+                </div>
+              </div>
+              <p class="hm-stat"><b>6 people</b> opened your link this week. It always shows your latest version.</p>
+              <div class="hm-intro" tabindex="0">
+                <span class="ic">✦</span>
+                <div><div class="t">1 new introduction</div><div class="s">Mrs. Cohen would like to share your profile</div></div>
+                <span class="chev">→</span>
+              </div>
+              <nav class="hm-nav" aria-label="App sections">
+                <a class="on" href="#" onclick="return false"><span class="ic">⌂</span>Home</a>
+                <a href="#" onclick="return false"><span class="ic">✎</span>Profile</a>
+                <a href="#" onclick="return false"><span class="ic">✦</span>Intros</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <!-- introduction requests -->
+        <div>
+          <p class="mock-label">Introductions · your call, always</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots">● ● ●</span></div>
+              <div class="rq-h">Introductions</div>
+              <p class="rq-sub">Approve before anyone sees your full profile or contact.</p>
+              <div class="rq-list">
+                <div class="rq-card" data-req>
+                  <div class="rq-from">
+                    <span class="ic">MC</span>
+                    <div><div class="t">Mrs. Cohen</div><div class="s">Shadchan · Lakewood</div></div>
+                    <span class="time">2h ago</span>
+                  </div>
+                  <p class="rq-note">“I have someone in mind who I think fits what you described. May I share your profile with his side?”</p>
+                  <div class="rq-actions">
+                    <button class="btn" type="button" data-approve>Approve</button>
+                    <button class="ghost" type="button" data-decline>Not now</button>
+                  </div>
+                </div>
+                <div class="rq-card settled">
+                  <div class="rq-from">
+                    <span class="ic">RW</span>
+                    <div><div class="t">R' Weiss</div><div class="s">Shadchan · Passaic</div></div>
+                    <span class="time">Mon</span>
+                  </div>
+                  <p class="rq-note" style="color:var(--muted)">“Would love to redt a shidduch — sharing with the other side now.”</p>
+                  <div class="rq-actions"><span class="rq-settled">✓ Approved · contact shared</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="foot">
+      <span class="k">Source</span>
+      <span>Verified deep-research report · <em>2026-07-04-modern-shidduch-profile-design.md</em></span>
+      <span class="k">·</span>
+      <span>Direction: warm editorial minimalism</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var copy = document.getElementById('copyBtn');
+    if (copy) {
+      copy.addEventListener('click', function () {
+        var text = 'zivugpath.com/p/rivka-m-8fk2';
+        var done = function () { copy.textContent = 'Copied'; copy.classList.add('copied');
+          setTimeout(function () { copy.textContent = 'Copy link'; copy.classList.remove('copied'); }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, done); }
+        else { done(); }
+      });
+    }
+    document.querySelectorAll('[data-seg]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('[data-seg]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+      });
+    });
+    document.querySelectorAll('.switch').forEach(function (s) {
+      s.addEventListener('click', function () {
+        s.setAttribute('aria-pressed', s.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      });
+    });
+    var obAnswers = {
+      "A value I won't compromise on": "A home where guests never feel like guests.",
+      "My ideal Friday night": "Too much food, a niggun that runs long, no one checking the time.",
+      "Something I'm working on": "Letting a plan change without treating it as a crisis."
+    };
+    var obLab = document.querySelector('.ob-area .lab');
+    var obTxt = document.querySelector('.ob-area .txt');
+    var obCnt = document.querySelector('.ob-area .cnt');
+    document.querySelectorAll('[data-ob]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('[data-ob]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        var q = b.textContent.trim();
+        var a = obAnswers[q] || '';
+        if (obLab) obLab.textContent = q;
+        if (obTxt) obTxt.textContent = a;
+        if (obCnt) obCnt.textContent = a.length + ' / 140';
+      });
+    });
+    var copy2 = document.getElementById('copyBtn2');
+    if (copy2) {
+      copy2.addEventListener('click', function () {
+        copy2.textContent = 'Copied';
+        setTimeout(function () { copy2.textContent = 'Copy'; }, 1600);
+      });
+    }
+    document.querySelectorAll('[data-approve]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var actions = b.closest('.rq-actions');
+        var card = b.closest('.rq-card');
+        if (card) card.classList.add('settled');
+        if (actions) actions.innerHTML = '<span class="rq-settled">✓ Approved · contact shared</span>';
+      });
+    });
+    document.querySelectorAll('[data-decline]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var actions = b.closest('.rq-actions');
+        var card = b.closest('.rq-card');
+        if (card) card.classList.add('settled');
+        if (actions) actions.innerHTML = '<span class="rq-settled declined">Declined · nothing was shared</span>';
+      });
+    });
+    document.querySelectorAll('[data-chip]').forEach(function (c) {
+      c.addEventListener('click', function () {
+        var thread = document.querySelector('.cv-thread');
+        var chips = c.closest('.cv-chips');
+        if (thread) {
+          var bub = document.createElement('div');
+          bub.className = 'cv-b cv-u';
+          bub.textContent = c.textContent;
+          thread.appendChild(bub);
+        }
+        if (chips) chips.remove();
+      });
+    });
+    var io;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+    }
+  })();
+</script>
+
+</body>
+</html>

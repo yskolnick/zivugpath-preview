@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ZivugPath · Illustrated avatar</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #736A5E;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root { --paper: #17130F; --raise: #211C17; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E; --line: #322A23; --line-soft: #2A231D; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F; --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.6); } }
+  :root[data-theme="light"] { --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #736A5E; --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6; --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff; --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36); }
+  :root[data-theme="dark"] { --paper: #17130F; --raise: #211C17; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E; --line: #322A23; --line-soft: #2A231D; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F; --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.6); }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 32px); }
+  h1,h2 { font-family: var(--serif); font-weight: 500; margin: 0; }
+  a { color: var(--pom-ink); }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 6px; }
+
+  .head { padding: clamp(36px, 7vw, 72px) 0 clamp(20px, 3vw, 30px); }
+  .head .kick { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--pom); font-weight: 700; }
+  .head h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.02em; margin: 14px 0 0; text-wrap: balance; max-width: 18ch; }
+  .head h1 em { font-style: italic; color: var(--pom); }
+  .head p { color: var(--muted); font-size: clamp(1.02rem, 2vw, 1.18rem); max-width: 56ch; margin: 16px 0 0; line-height: 1.55; }
+
+  .why { display: grid; grid-template-columns: 1fr; gap: 14px; padding: 8px 0 clamp(30px,5vw,46px); }
+  @media (min-width: 720px) { .why { grid-template-columns: repeat(3,1fr); } }
+  .why .c { border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--raise); box-shadow: var(--shadow-sm); }
+  .why .c b { display: block; font-family: var(--serif); font-size: 1.15rem; }
+  .why .c span { display: block; color: var(--muted); font-size: 14px; margin-top: 6px; line-height: 1.5; }
+
+  .sec { padding: clamp(30px,5vw,52px) 0; border-top: 1px solid var(--line); }
+  .sec-lbl { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--pom); font-weight: 700; }
+  .sec h2 { font-size: clamp(1.4rem,3vw,1.9rem); letter-spacing: -.01em; margin: 8px 0 0; }
+  .sec .note { color: var(--muted); font-size: 14.5px; margin: 10px 0 0; max-width: 62ch; line-height: 1.55; }
+
+  .styles { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-top: 24px; }
+  @media (min-width: 720px) { .styles { grid-template-columns: repeat(4,1fr); } }
+  .style { text-align: center; }
+  .av { width: 100%; aspect-ratio: 1; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); display: grid; place-items: center; }
+  .av svg { width: 66%; height: 66%; display: block; }
+  .style .nm { font-weight: 700; font-size: 13.5px; margin-top: 11px; }
+  .style .ds { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* avatar variants */
+  .av.mono { background: radial-gradient(120% 100% at 78% 12%, rgba(168,45,70,.2), transparent 55%), linear-gradient(150deg, #bcab9c, #6f5e52); }
+  .av.mono .m { font-family: var(--serif); font-size: 3.4rem; color: rgba(255,255,255,.94); text-shadow: 0 2px 14px rgba(20,12,9,.4); }
+  .av.silo { background: var(--pom-soft); }
+  .av.silo svg { fill: var(--pom); }
+  .av.line { background: var(--line-soft); }
+  .av.line svg { fill: none; stroke: var(--ink); stroke-width: 4; }
+  .av.duo { background: linear-gradient(150deg, #e7c9ce, #b98a95); }
+  .av.duo svg { fill: #7e2447; opacity: .82; }
+
+  /* in context */
+  .ctx { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 24px; align-items: flex-start; }
+  .pcard { width: 240px; background: var(--raise); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+  .pcard .top { aspect-ratio: 5/4; background: var(--pom-soft); display: grid; place-items: center; }
+  .pcard .top svg { width: 52%; fill: var(--pom); }
+  .pcard .bd { padding: 14px 15px 16px; }
+  .pcard .bd .n { font-family: var(--serif); font-size: 1.3rem; }
+  .pcard .bd .f { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+  .story { width: 132px; aspect-ratio: 9/16; border-radius: 16px; overflow: hidden; position: relative; box-shadow: var(--shadow); background: radial-gradient(120% 80% at 74% 14%, rgba(168,45,70,.34), transparent 55%), linear-gradient(158deg,#b6a495,#46392f); }
+  .story .a { position: absolute; top: 16%; left: 50%; transform: translateX(-50%); width: 46%; }
+  .story .a svg { fill: rgba(255,255,255,.9); width: 100%; }
+  .story .nm { position: absolute; left: 10px; bottom: 14px; font-family: var(--serif); color: #fff; font-size: 1rem; text-shadow: 0 1px 8px rgba(20,12,9,.5); }
+  .ctx .cap { flex: 1; min-width: 200px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .ctx .cap b { color: var(--ink); }
+
+  .banner { margin: 8px 0 0; background: var(--pom-soft); border: 1px solid color-mix(in srgb, var(--pom) 30%, var(--line)); border-radius: 14px; padding: 16px 18px; font-size: 14px; color: var(--ink); line-height: 1.55; }
+  .banner b { color: var(--pom-ink); }
+  .foot { border-top: 1px solid var(--line); padding: 26px 0 46px; color: var(--faint); font-size: 12.5px; }
+</style>
+
+<div class="page">
+  <header class="head">
+    <div class="wrap">
+      <div class="kick">Output type · concept</div>
+      <h1>An illustrated avatar — a <em>modest</em> alternative to a photo.</h1>
+      <p>Not everyone shares a photo, and many shouldn't have to. A warm, stylized avatar carries vibe, dress, and energy — without a real image traveling through a dozen forwards.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="why">
+      <div class="c"><b>Modest by default</b><span>Conveys who someone is without circulating a photograph — fitting where images are gated or withheld.</span></div>
+      <div class="c"><b>Vibe, not just data</b><span>Fashion, warmth, and personality come through where a field-list can't.</span></div>
+      <div class="c"><b>Opt-in &amp; labelled</b><span>Always the person's choice, always clearly an illustration — a stand-in for the photo, or a warm-up before it.</span></div>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-lbl">Treatments</div>
+      <h2>A few directions</h2>
+      <p class="note">Placeholder treatments below (real illustration needs an image model). In production the avatar is generated from the person's own photos — flattering and tzniut-appropriate — in a consistent house style.</p>
+      <div class="styles">
+        <div class="style">
+          <div class="av mono"><span class="m">R</span></div>
+          <div class="nm">Monogram</div><div class="ds">Serif initial, warm ground</div>
+        </div>
+        <div class="style">
+          <div class="av silo"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="36" r="19"/><path d="M20 92 a30 30 0 0 1 60 0 z"/></svg></div>
+          <div class="nm">Silhouette</div><div class="ds">Faceless, dignified</div>
+        </div>
+        <div class="style">
+          <div class="av line"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="36" r="18"/><path d="M22 90 a28 28 0 0 1 56 0"/></svg></div>
+          <div class="nm">Line portrait</div><div class="ds">Editorial sketch</div>
+        </div>
+        <div class="style">
+          <div class="av duo"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="36" r="19"/><path d="M20 92 a30 30 0 0 1 60 0 z"/></svg></div>
+          <div class="nm">Warm duotone</div><div class="ds">Soft, illustrated feel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-lbl">In context</div>
+      <h2>Where it stands in</h2>
+      <div class="ctx">
+        <div class="pcard">
+          <div class="top"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="36" r="19"/><path d="M20 92 a30 30 0 0 1 60 0 z"/></svg></div>
+          <div class="bd"><div class="n">Rivka Mandel</div><div class="f">24 · Lakewood, NJ</div></div>
+        </div>
+        <div class="story">
+          <div class="a"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="36" r="19"/><path d="M20 92 a30 30 0 0 1 60 0 z"/></svg></div>
+          <div class="nm">Rivka</div>
+        </div>
+        <div class="cap">The same avatar carries across every render — the <b>profile card</b>, the <b>story card</b>, the WhatsApp preview. One modest likeness, everywhere, so a real photo only ever changes hands when the person decides.</div>
+      </div>
+      <div class="banner"><b>Why it could matter:</b> a photo, once forwarded, can't be pulled back. An illustrated avatar gives the warmth of a face with none of that risk — a genuine differentiator for a modesty-conscious audience.</div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap">Prototype concept · placeholder person · <a href="../../">back to ZivugPath</a></div>
+  </footer>
+</div>
+
+</body>
+</html>

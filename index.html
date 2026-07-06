@@ -116,6 +116,47 @@
   .p-design .pal i { width: 24px; height: 24px; border-radius: 7px; border: 1px solid var(--line); display: block; }
   .p-design .aa { font-family: var(--serif); font-size: 1.7rem; color: var(--ink); }
 
+  /* ===== conversation demo ===== */
+  .convo { padding: clamp(10px, 2vw, 18px) 0 clamp(44px, 7vw, 72px); }
+  .convo .kick { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--pom); font-weight: 700; }
+  .convo h2 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); letter-spacing: -.015em; margin: 8px 0 0; line-height: 1.08; text-wrap: balance; }
+  .convo .sub { color: var(--muted); font-size: 1.02rem; max-width: 58ch; margin: 12px 0 0; line-height: 1.6; }
+  .cv-chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+  .cv-chip { font-family: var(--sans); font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 8px 15px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; }
+  .cv-chip:hover { border-color: var(--pom); color: var(--ink); }
+  .cv-chip[aria-pressed="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+  .cv-grid { display: grid; grid-template-columns: 1fr; gap: clamp(20px, 3.5vw, 34px); margin-top: 24px; align-items: stretch; }
+  @media (min-width: 840px) { .cv-grid { grid-template-columns: 1.2fr 1fr; } }
+  .cv-chat { background: var(--raise); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-sm); padding: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 320px; }
+  .cv-chat .cv-top { display: flex; align-items: center; gap: 9px; padding-bottom: 12px; border-bottom: 1px solid var(--line-soft); margin-bottom: 4px; }
+  .cv-chat .cv-top .seal-mark { width: 18px; height: 18px; }
+  .cv-chat .cv-top .t { font-family: var(--serif); font-size: 1rem; }
+  .cv-chat .cv-top .s { margin-left: auto; font-size: 11px; color: var(--faint); }
+  .cv-m { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; opacity: 1; }
+  .cv-m.ai { align-self: flex-start; background: var(--paper); border: 1px solid var(--line-soft); border-top-left-radius: 4px; }
+  .cv-m.me { align-self: flex-end; background: var(--pom-soft); color: var(--ink); border-top-right-radius: 4px; }
+  .js .cv-m.anim { animation: cvIn .4s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes cvIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .cv-typing { align-self: flex-start; display: inline-flex; gap: 5px; padding: 12px 15px; background: var(--paper); border: 1px solid var(--line-soft); border-radius: 14px; border-top-left-radius: 4px; }
+  .cv-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); animation: cvDot 1s ease-in-out infinite; }
+  .cv-typing i:nth-child(2) { animation-delay: .15s; }
+  .cv-typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes cvDot { 0%, 60%, 100% { opacity: .35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  .cv-card { background: var(--raise); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; }
+  .cv-card .ph { position: relative; height: 74px; background: radial-gradient(120% 90% at 80% 12%, rgba(168,45,70,.16), transparent 55%), linear-gradient(150deg, #bcab9c, #6f5e52); }
+  .cv-card .ph .nm { position: absolute; left: 16px; bottom: 10px; font-family: var(--serif); color: #fff; font-size: 1.25rem; text-shadow: 0 1px 8px rgba(20,12,9,.4); }
+  .cv-card .ph .lab { position: absolute; right: 12px; top: 10px; font-size: 9.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(20,12,9,.38); padding: 3px 8px; border-radius: 999px; }
+  .cv-card .bd { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+  .cv-slot .h { font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--faint); font-weight: 700; margin-bottom: 4px; }
+  .cv-slot .v { font-size: 13.5px; line-height: 1.45; border-radius: 8px; }
+  .cv-slot .v.q { font-family: var(--serif); font-size: 1.02rem; line-height: 1.35; }
+  .cv-slot .v.empty { color: var(--faint); }
+  .cv-slot .v.fill { animation: cvFill 1.6s ease both; padding: 2px 6px; margin: -2px -6px; }
+  @keyframes cvFill { 0% { background: var(--pom-soft); } 100% { background: transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    .js .cv-m.anim, .cv-slot .v.fill, .cv-typing i { animation: none !important; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .tile, .tile .meta .open .arr { transition: none; }
     .tile:hover { transform: none; }
@@ -130,6 +171,43 @@
       <p class="lede">A dignified shidduch profile you build by talking — then send however the moment needs. Explore the pieces.</p>
     </div>
   </header>
+
+  <section class="convo" aria-labelledby="convo-h">
+    <div class="wrap">
+      <span class="kick">Try it · how the profile gets built</span>
+      <h2 id="convo-h">No forms. A few good conversations.</h2>
+      <p class="sub">ZivugPath builds the profile by talking — different conversations draw out different things. Pick one to see how a chat becomes a profile.</p>
+
+      <div class="cv-chips" role="group" aria-label="Conversation types">
+        <button class="cv-chip" aria-pressed="true" data-cv="0">Getting acquainted</button>
+        <button class="cv-chip" aria-pressed="false" data-cv="1">The deeper things</button>
+        <button class="cv-chip" aria-pressed="false" data-cv="2">Who she's looking for</button>
+        <button class="cv-chip" aria-pressed="false" data-cv="3">References</button>
+        <button class="cv-chip" aria-pressed="false" data-cv="4">The check-in</button>
+      </div>
+
+      <div class="cv-grid">
+        <div class="cv-chat" id="cvChat" aria-label="Example conversation">
+          <div class="cv-top"><span class="seal-mark" aria-hidden="true"></span><span class="t">Profile conversation</span><span class="s">example · placeholder person</span></div>
+          <div class="cv-m ai">Let's start easy. Walk me through a regular Tuesday.</div>
+          <div class="cv-m me">Up at seven, davening, then I teach until three. Afternoons are errands or my sister's kids.</div>
+          <div class="cv-m ai">Teaching what — and do you love it?</div>
+          <div class="cv-m me">Third grade. And completely.</div>
+        </div>
+
+        <div class="cv-card" aria-label="The profile, filling in as she talks">
+          <div class="ph"><span class="nm">Rivka Mandel</span><span class="lab">Living draft</span></div>
+          <div class="bd">
+            <div class="cv-slot"><div class="h">At a glance</div><div class="v" id="cvSlot0">Teaches 3rd grade · loves it</div></div>
+            <div class="cv-slot"><div class="h">In her words</div><div class="v q empty" id="cvSlot1">— drawn out in conversation —</div></div>
+            <div class="cv-slot"><div class="h">Looking for</div><div class="v empty" id="cvSlot2">— in her own phrasing, not a checklist —</div></div>
+            <div class="cv-slot"><div class="h">References</div><div class="v empty" id="cvSlot3">— gathered, kept private —</div></div>
+            <div class="cv-slot"><div class="h">Status</div><div class="v empty" id="cvSlot4">Live · one link, always current</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <main class="wrap">
     <div class="tiles">
@@ -174,20 +252,8 @@
         </div>
         <div class="meta">
           <div class="kick">How it travels</div>
-          <h2>On WhatsApp</h2>
-          <p>The link that unfurls into a preview card in a chat — plus a bullet one-pager you can forward as an image.</p>
-          <span class="open">Open <span class="arr" aria-hidden="true">→</span></span>
-        </div>
-      </a>
-
-      <a class="tile" href="export/">
-        <div class="prev p-export" aria-hidden="true">
-          <div class="sm"><span class="bar"></span><span class="nm">Rivka</span><span class="ru"></span></div>
-        </div>
-        <div class="meta">
-          <div class="kick">Every format</div>
-          <h2>Export &amp; share</h2>
-          <p>The full menu of exports — including the animated 9:16 story card for a WhatsApp Status.</p>
+          <h2>Share &amp; export</h2>
+          <p>Four WhatsApp formats — link card, one-pager, plain text, story card — plus a dated PDF and the full export menu.</p>
           <span class="open">Open <span class="arr" aria-hidden="true">→</span></span>
         </div>
       </a>
@@ -244,6 +310,106 @@
     <div class="wrap">Prototype · placeholder person. One profile dataset, rendered as multiple formats. Warm editorial design direction · light &amp; dark · responsive.</div>
   </footer>
 </div>
+
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    var SCRIPTS = [
+      { msgs: [
+          ['ai', "Let's start easy. Walk me through a regular Tuesday."],
+          ['me', 'Up at seven, davening, then I teach until three. Afternoons are errands or my sister’s kids.'],
+          ['ai', 'Teaching what — and do you love it?'],
+          ['me', 'Third grade. And completely.']
+        ], slot: 0, val: 'Teaches 3rd grade · loves it', quote: false },
+      { msgs: [
+          ['ai', 'Think of a Shabbos table you loved. What made it that one?'],
+          ['me', 'Everyone stayed after bentching. No one rushed off. There was singing.'],
+          ['ai', 'So a home where people linger.'],
+          ['me', 'Exactly — where guests never feel like guests.']
+        ], slot: 1, val: '“A home where guests never feel like guests.”', quote: true },
+      { msgs: [
+          ['ai', 'Describe him at his best — the person, not the checklist.'],
+          ['me', 'Steady. Takes his growth seriously and himself a little less so.'],
+          ['ai', 'That’s going in exactly as you said it.']
+        ], slot: 2, val: 'Warm and steady — serious about growth, less serious about himself.', quote: false },
+      { msgs: [
+          ['ai', 'Who knows you well enough to be honest about you?'],
+          ['me', 'My seminary teacher, my principal, and a neighbor we’re close with.'],
+          ['ai', 'Added — kept private, and shared only when you approve an introduction.']
+        ], slot: 3, val: 'Three on request · shared privately', quote: false },
+      { msgs: [
+          ['ai', 'Quick check-in — anything new since the spring?'],
+          ['me', 'I switched schools in September. And relocating is a yes now.'],
+          ['ai', 'Updated. Everyone who has your link already sees the newest version.']
+        ], slot: 4, val: 'Updated today · every link already current', quote: false }
+    ];
+
+    var chat = document.getElementById('cvChat');
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.cv-chip'));
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var run = 0;
+
+    function bubble(who, text, anim) {
+      var d = document.createElement('div');
+      d.className = 'cv-m ' + who + (anim ? ' anim' : '');
+      d.textContent = text;
+      return d;
+    }
+
+    function clearChat() {
+      var keep = chat.querySelector('.cv-top');
+      chat.innerHTML = '';
+      chat.appendChild(keep);
+    }
+
+    function fillSlot(s) {
+      var el = document.getElementById('cvSlot' + s.slot);
+      el.classList.remove('empty', 'fill');
+      el.textContent = s.val;
+      void el.offsetWidth;
+      el.classList.add('fill');
+    }
+
+    function play(i) {
+      var token = ++run;
+      var s = SCRIPTS[i];
+      chips.forEach(function (c, j) { c.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+      clearChat();
+      if (reduce) {
+        s.msgs.forEach(function (m) { chat.appendChild(bubble(m[0], m[1], false)); });
+        fillSlot(s);
+        return;
+      }
+      var k = 0;
+      function next() {
+        if (token !== run) return;
+        if (k >= s.msgs.length) { fillSlot(s); return; }
+        var m = s.msgs[k++];
+        if (m[0] === 'ai') {
+          var ty = document.createElement('div');
+          ty.className = 'cv-typing';
+          ty.setAttribute('aria-hidden', 'true');
+          ty.innerHTML = '<i></i><i></i><i></i>';
+          chat.appendChild(ty);
+          setTimeout(function () {
+            if (token !== run) return;
+            ty.remove();
+            chat.appendChild(bubble(m[0], m[1], true));
+            setTimeout(next, 900);
+          }, 650);
+        } else {
+          chat.appendChild(bubble(m[0], m[1], true));
+          setTimeout(next, 900);
+        }
+      }
+      next();
+    }
+
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () { play(parseInt(c.getAttribute('data-cv'), 10)); });
+    });
+  })();
+</script>
 
 </body>
 </html>

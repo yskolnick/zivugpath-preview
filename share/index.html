@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ZivugPath · Built to be forwarded</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
+    --line: #E7E0D6; --line-soft: #F1EBE2;
+    --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5);
+    --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --maxw: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+      --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+      --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+      --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62); }
+  }
+  :root[data-theme="light"] { --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36); }
+  :root[data-theme="dark"] { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+    --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+    --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+    --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62); }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(18px, 5vw, 40px); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; margin: 0; }
+  .eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 5px; }
+  .lk { width: 1em; height: 1em; vertical-align: -.14em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .seal-mark { border-radius: 50%; background: radial-gradient(circle at 35% 30%, #d76277, #7e2447 72%); position: relative; display: inline-block; }
+  .seal-mark::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; border: 1.3px solid rgba(255,255,255,.6); }
+
+  /* header */
+  .top { padding: clamp(40px, 7vw, 80px) 0 clamp(20px, 3vw, 30px); }
+  .brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--serif); font-size: 1.25rem; }
+  .brand .seal-mark { width: 22px; height: 22px; }
+  .top h1 { font-size: clamp(2.3rem, 6vw, 3.7rem); line-height: 1.02; letter-spacing: -.02em; margin: 22px 0 0; text-wrap: balance; max-width: 16ch; }
+  .top h1 em { font-style: italic; color: var(--pom); }
+  .top .lede { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.25rem); max-width: 54ch; margin: 18px 0 0; line-height: 1.55; }
+
+  /* format block */
+  .fmt { padding: clamp(34px, 6vw, 64px) 0; border-top: 1px solid var(--line); }
+  .fmt-grid { display: grid; grid-template-columns: 1fr; gap: clamp(30px, 5vw, 54px); align-items: center; }
+  @media (min-width: 880px) { .fmt-grid { grid-template-columns: 380px 1fr; } .fmt-grid.flip { grid-template-columns: 1fr 420px; } .fmt-grid.flip .fmt-copy { order: -1; } }
+  .fmt-copy .lbl { display: inline-flex; align-items: center; gap: 8px; color: var(--pom); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+  .fmt-copy .lbl .num { font-family: var(--serif); font-size: 15px; }
+  .fmt-copy h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); letter-spacing: -.015em; margin: 14px 0 0; line-height: 1.1; text-wrap: balance; }
+  .fmt-copy p { color: var(--muted); font-size: 1.03rem; margin: 14px 0 0; line-height: 1.6; }
+  .fmt-copy .pts { list-style: none; padding: 0; margin: 20px 0 0; display: flex; flex-direction: column; gap: 11px; }
+  .fmt-copy .pts li { display: flex; gap: 11px; font-size: 14.5px; line-height: 1.5; }
+  .fmt-copy .pts .dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--pom); margin-top: 8px; }
+  .fmt-copy .pts b { font-weight: 700; }
+  .spec-note { margin-top: 22px; font-size: 12.5px; color: var(--faint); }
+
+  /* ===== WhatsApp mock (committed light look) ===== */
+  .phone { width: 100%; max-width: 380px; margin: 0 auto; border: 1px solid var(--line); border-radius: 40px; background: #111; padding: 8px; box-shadow: var(--shadow); }
+  .wa { border-radius: 33px; overflow: hidden; background: #E9E1D6; }
+  .wa-head { background: #008069; color: #fff; display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+  .wa-head .bk { font-size: 20px; line-height: 1; opacity: .95; }
+  .wa-head .av { width: 34px; height: 34px; border-radius: 50%; background: #cfc4b8; color: #5b5045; display: grid; place-items: center; font-weight: 700; font-size: 13px; font-family: var(--serif); }
+  .wa-head .who { flex: 1; min-width: 0; }
+  .wa-head .who .n { font-weight: 600; font-size: 15px; }
+  .wa-head .who .s { font-size: 11.5px; color: #fff; }
+  .wa-head .ico { display: flex; gap: 16px; opacity: .95; }
+  .wa-head .ico svg { width: 19px; height: 19px; fill: none; stroke: #fff; stroke-width: 2; }
+  .wa-body { background-color: #E9E1D6; background-image: radial-gradient(rgba(0,0,0,.028) 1px, transparent 1px); background-size: 16px 16px; padding: 14px 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .wa-day { align-self: center; background: #E4F0D9; color: #5b6b52; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 8px; margin: 2px 0 6px; box-shadow: 0 1px 1px rgba(0,0,0,.05); }
+  .bub { max-width: 84%; padding: 7px 9px 5px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; color: #111B21; box-shadow: 0 1px .5px rgba(0,0,0,.13); position: relative; }
+  .bub .tm { float: right; font-size: 10px; color: #667781; margin: 6px 0 0 10px; }
+  .bub.in { align-self: flex-start; background: #fff; border-top-left-radius: 3px; }
+  .bub.out { align-self: flex-end; background: #D9FDD3; border-top-right-radius: 3px; }
+  .bub.out .tk { color: #53BDEB; font-size: 11px; margin-left: 3px; }
+  .bub.card { padding: 4px 4px 5px; width: 84%; }
+  .bub.card .txt { padding: 3px 6px 0; }
+  .bub .url { color: #027EB5; text-decoration: underline; word-break: break-all; }
+
+  /* OG preview card (reused) */
+  .og { border-radius: 7px; overflow: hidden; background: #F6F1EA; border: 1px solid rgba(0,0,0,.07); }
+  .og .img { position: relative; aspect-ratio: 1200 / 630;
+    background: radial-gradient(120% 120% at 82% 20%, rgba(168,45,70,.20), transparent 55%), linear-gradient(150deg, #c2b1a1 0%, #8d7a6b 45%, #574a40 100%); }
+  .og .img .sl { position: absolute; top: 10px; left: 11px; display: inline-flex; align-items: center; gap: 6px; color: #fff; font-family: var(--serif); font-size: 12px; text-shadow: 0 1px 6px rgba(20,12,9,.6); }
+  .og .img .sl .seal-mark { width: 15px; height: 15px; }
+  .og .img .nm { position: absolute; left: 12px; bottom: 10px; font-family: var(--serif); color: #fff; font-size: 1.5rem; line-height: 1; letter-spacing: -.01em; text-shadow: 0 2px 18px rgba(0,0,0,.4); }
+  .og .img .tag { position: absolute; right: 11px; bottom: 11px; font-size: 10px; font-weight: 700; color: #fff; background: rgba(20,12,9,.4); padding: 3px 8px; border-radius: 999px; }
+  .og .meta { padding: 8px 11px 10px; }
+  .og .meta .t { font-weight: 700; font-size: 13px; color: #111B21; }
+  .og .meta .d { font-size: 12px; color: #667781; margin-top: 2px; line-height: 1.35; }
+  .og .meta .dom { font-size: 11px; color: #8696a0; margin-top: 5px; letter-spacing: .02em; }
+
+  /* standalone OG spec */
+  .og-spec { max-width: 420px; }
+  .og-spec .cap { margin-top: 10px; font-size: 12px; color: var(--faint); display: flex; align-items: center; gap: 7px; }
+
+  /* ===== one-pager (committed light paper) ===== */
+  .op { width: 100%; max-width: 400px; margin: 0 auto; background: #FCFAF7; color: #221F1B; border: 1px solid #E7E0D6; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); font-family: var(--sans); }
+  .op .hero { position: relative; aspect-ratio: 4 / 3;
+    background: radial-gradient(120% 100% at 80% 15%, rgba(168,45,70,.18), transparent 52%), linear-gradient(150deg, #c2b1a1 0%, #8a7768 46%, #4f4238 100%); }
+  .op .hero .sl { position: absolute; top: 12px; left: 13px; display: inline-flex; align-items: center; gap: 6px; color: #fff; font-family: var(--serif); font-size: 13px; text-shadow: 0 1px 6px rgba(20,12,9,.6); }
+  .op .hero .sl .seal-mark { width: 16px; height: 16px; }
+  .op .hero .scr { position: absolute; inset: auto 0 0 0; padding: 30px 15px 13px; background: linear-gradient(to top, rgba(22,13,9,.8), transparent); }
+  .op .hero .nm { font-family: var(--serif); color: #fff; font-size: 1.7rem; line-height: 1; letter-spacing: -.01em; }
+  .op .hero .fx { color: rgba(255,255,255,.85); font-size: 12.5px; margin-top: 4px; }
+  .op .body { padding: 16px 17px 6px; }
+  .op .grp { padding: 12px 0; border-top: 1px solid #F1EBE2; }
+  .op .grp:first-child { border-top: 0; padding-top: 2px; }
+  .op .grp .h { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #7B7266; font-weight: 700; margin-bottom: 9px; }
+  .op ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .op ul li { display: flex; gap: 9px; font-size: 13.5px; line-height: 1.45; }
+  .op ul .dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: #A82D46; margin-top: 6px; }
+  .op ul li.q { font-family: var(--serif); font-size: 1.02rem; line-height: 1.35; }
+  .op .foot { background: #F6EFE7; padding: 13px 17px 15px; display: flex; align-items: center; gap: 10px; }
+  .op .foot .qr { width: 40px; height: 40px; border-radius: 8px; flex: none; background:
+      conic-gradient(#221F1B 90deg, #fff 90deg 180deg, #221F1B 180deg 270deg, #fff 270deg) ; background-size: 10px 10px; border: 2px solid #221F1B; }
+  .op .foot .fl { flex: 1; min-width: 0; }
+  .op .foot .fl .a { font-size: 13px; font-weight: 700; }
+  .op .foot .fl .b { font-size: 11.5px; color: #6E655C; margin-top: 1px; }
+  .op .foot .lockline { font-size: 10.5px; color: #876214; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+
+  /* footer */
+  .foot-site { border-top: 1px solid var(--line); padding: 30px 0 46px; color: var(--faint); font-size: 12.5px; }
+
+  .js .reveal { opacity: 0; transform: translateY(18px); }
+  .js .reveal.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  @media (prefers-reduced-motion: reduce) { .reveal, .js .reveal, .reveal.in { opacity: 1 !important; transform: none !important; transition: none !important; } }
+</style>
+
+<div class="page">
+
+  <header class="top">
+    <div class="wrap">
+      <span class="brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
+      <h1>Built to be <em>forwarded.</em></h1>
+      <p class="lede">A shidduch travels on WhatsApp. So the profile is one living link — shaped for the two ways it actually gets passed along: a card that unfurls in a chat, and a one-pager you can send as an image.</p>
+    </div>
+  </header>
+
+  <!-- FORM 1 : the link that unfurls -->
+  <section class="fmt">
+    <div class="wrap fmt-grid">
+      <div class="reveal">
+        <div class="phone">
+          <div class="wa">
+            <div class="wa-head">
+              <span class="bk" aria-hidden="true">‹</span>
+              <span class="av">MC</span>
+              <span class="who"><div class="n">Mrs. Cohen</div><div class="s">online</div></span>
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg>
+              </span>
+            </div>
+            <div class="wa-body">
+              <span class="wa-day">TODAY</span>
+              <div class="bub in">Hi Mrs. Klein! I have someone in mind for Dovid — I really think she's worth a look 😊<span class="tm">10:22</span></div>
+              <div class="bub in card">
+                <div class="og">
+                  <div class="img">
+                    <span class="sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
+                    <span class="nm">Rivka Mandel</span>
+                    <span class="tag">View profile</span>
+                  </div>
+                  <div class="meta">
+                    <div class="t">Rivka Mandel · Lakewood, NJ</div>
+                    <div class="d">A morah building a home that stays warm when things get busy.</div>
+                    <div class="dom">zivugpath.com</div>
+                  </div>
+                </div>
+                <div class="txt"><span class="url">zivugpath.com/p/rivka-m-8fk2</span><span class="tm">10:22</span></div>
+              </div>
+              <div class="bub out">She looks lovely, thank you! I'll show them tonight.<span class="tm">10:31 <span class="tk">✓✓</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fmt-copy reveal">
+        <span class="lbl">The link, in a chat</span>
+        <h2>Paste the link — it unfurls into a card.</h2>
+        <p>When a shadchan drops the link into WhatsApp, it opens into a designed preview: her photo, her name, and one warm line. Glanceable like an image, but it's a live link — so it's never a stale screenshot.</p>
+        <ul class="pts">
+          <li><span class="dot"></span><div><b>Her photo stays gated.</b> The preview shows a tasteful portrait; the fuller gallery still opens only on the full link.</div></li>
+          <li><span class="dot"></span><div><b>Always current.</b> Update the profile once and every card already sent reflects it.</div></li>
+          <li><span class="dot"></span><div><b>One tap to the real thing.</b> The card is the hook; the full editorial profile is a tap away.</div></li>
+        </ul>
+        <div class="og-spec" style="margin-top:26px">
+          <div class="og">
+            <div class="img"><span class="sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span><span class="nm">Rivka Mandel</span></div>
+          </div>
+          <div class="cap"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg> The preview image · 1200 × 630, generated for you</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM 2 : the one-pager -->
+  <section class="fmt">
+    <div class="wrap fmt-grid flip">
+      <div class="fmt-copy reveal">
+        <span class="lbl">The one-pager</span>
+        <h2>Prefer to send a picture? Export the one-pager.</h2>
+        <p>Some people forward an image, not a link — a single clean sheet with the essentials in bullets. ZivugPath builds one from the same profile: photo, a few facts, her words in her voice, references on request. Save it as an image or PDF and send it however you like.</p>
+        <ul class="pts">
+          <li><span class="dot"></span><div><b>Same content, bullet voice.</b> The prose profile and the one-pager come from one source — write once.</div></li>
+          <li><span class="dot"></span><div><b>Screenshot-proof.</b> It's a real export, laid out to read well the moment it lands in a thread.</div></li>
+          <li><span class="dot"></span><div><b>Links back to the live page.</b> The footer carries the link (and a QR) so anyone can reach the always-current version.</div></li>
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <div class="op">
+          <div class="hero">
+            <span class="sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
+            <div class="scr"><div class="nm">Rivka Mandel</div><div class="fx">24 · Lakewood, NJ · open to relocating</div></div>
+          </div>
+          <div class="body">
+            <div class="grp">
+              <div class="h">At a glance</div>
+              <ul>
+                <li><span class="dot"></span>Teaches 3rd grade · loves it</li>
+                <li><span class="dot"></span>Bais Yaakov, then seminary in Yerushalayim</li>
+                <li><span class="dot"></span>Second of six — close, warm family</li>
+                <li><span class="dot"></span>Open to relocating</li>
+              </ul>
+            </div>
+            <div class="grp">
+              <div class="h">In her words</div>
+              <ul>
+                <li class="q">“A home where guests never feel like guests.”</li>
+                <li><span class="dot"></span>Looking for someone warm and steady, who takes growth seriously and himself a little less so.</li>
+              </ul>
+            </div>
+            <div class="grp">
+              <div class="h">References</div>
+              <ul><li><span class="dot"></span>Three available on request — shared privately with the shadchan.</li></ul>
+            </div>
+          </div>
+          <div class="foot">
+            <span class="qr" aria-hidden="true"></span>
+            <span class="fl">
+              <div class="a">See the full profile</div>
+              <div class="b">zivugpath.com/p/rivka-m · always current</div>
+            </span>
+            <span class="lockline"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot-site">
+    <div class="wrap">Prototype · placeholder person. Two share formats from one profile — a WhatsApp link-preview card and an exportable bullet one-pager, both in the ZivugPath warm-editorial system.</div>
+  </footer>
+
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    var io;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (e) { e.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    } else { document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); }); }
+  })();
+</script>
+
+</body>
+</html>

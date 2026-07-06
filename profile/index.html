@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rivka Mandel · ZivugPath</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #746B60;
+    --line: #E7E0D6; --line-soft: #F1EBE2;
+    --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5);
+    --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --rd: 720px; --wide: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+      --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+      --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+      --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #746B60;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+  }
+  :root[data-theme="dark"] {
+    --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+    --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+    --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+    --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .doc { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; margin: 0; }
+  a { color: var(--pom-ink); }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 4px; }
+  .rd { max-width: var(--rd); margin: 0 auto; padding: 0 24px; }
+  [id] { scroll-margin-top: 78px; }
+  .eyebrow { font-family: var(--sans); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--muted); }
+  .lk { width: 1em; height: 1em; vertical-align: -.14em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .skip { position: fixed; left: 12px; top: 12px; z-index: 60; background: var(--pom); color: var(--on-accent); padding: 10px 16px; border-radius: 8px; font-family: var(--sans); font-weight: 700; font-size: 13px; text-decoration: none; transform: translateY(-180%); transition: transform .2s; }
+  .skip:focus { transform: none; }
+
+  /* buttons — editorial radius, not app-pill */
+  .btn { font-family: var(--sans); font-size: 14px; font-weight: 700; letter-spacing: .01em; border: 0; border-radius: 12px; padding: 13px 22px; cursor: pointer; background: var(--pom); color: var(--on-accent); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: filter .18s, transform .1s; }
+  .btn:hover { filter: brightness(1.07); }
+  .btn:active { transform: translateY(1px); }
+
+  /* sticky header */
+  .hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(18px, 4vw, 36px); transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
+  .hdr.solid { background: var(--paper); background: color-mix(in srgb, var(--paper) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom-color: var(--line); }
+  .hdr .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 1.15rem; color: #fff; text-shadow: 0 1px 14px rgba(0,0,0,.42); transition: color .3s, text-shadow .3s; }
+  .hdr.solid .brand { color: var(--ink); text-shadow: none; }
+  .hdr .brand .seal { width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #d76277, #7e2447 72%); position: relative; }
+  .hdr .brand .seal::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; border: 1.3px solid rgba(255,255,255,.55); }
+  .hdr .cta { visibility: hidden; opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .3s, transform .3s, visibility .3s; padding: 10px 18px; font-size: 13px; }
+  .hdr.solid .cta { visibility: visible; opacity: 1; transform: none; pointer-events: auto; }
+  @media (max-width: 759px) { .hdr .cta { display: none; } }
+
+  /* hero */
+  .hero { position: relative; min-height: clamp(580px, 92vh, 940px); display: flex; align-items: flex-end;
+    background: linear-gradient(to bottom, rgba(20,12,9,.42) 0%, transparent 20%),
+                radial-gradient(130% 100% at 78% 18%, rgba(168,45,70,.16) 0%, transparent 52%),
+                linear-gradient(158deg, #c3b2a2 0%, #93806f 42%, #5b4d43 100%); }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.82) 0%, rgba(20,12,9,.55) 45%, rgba(20,12,9,.18) 75%, transparent 92%); }
+  .hero .mono { position: absolute; top: clamp(76px, 15vh, 150px); left: 50%; transform: translateX(-50%); font-family: var(--serif); font-size: clamp(9rem, 34vw, 22rem); line-height: 1; color: rgba(255,255,255,.12); pointer-events: none; user-select: none; }
+  .hero-in { position: relative; z-index: 2; width: 100%; max-width: var(--wide); margin: 0 auto; padding: 0 clamp(22px, 5vw, 48px) clamp(34px, 6vw, 60px); }
+  .hero .kick { color: #fff; }
+  .hero h1 { color: #fff; font-size: clamp(3.1rem, 11vw, 6.4rem); line-height: .96; letter-spacing: -.025em; margin: 14px 0 0; text-wrap: balance; }
+  .hero .essence { color: rgba(255,255,255,.94); font-family: var(--serif); font-style: italic; font-size: clamp(1.15rem, 3.2vw, 1.7rem); margin: 16px 0 0; max-width: 26ch; line-height: 1.3; }
+  .hero .facts { color: rgba(255,255,255,.9); font-size: 14px; letter-spacing: .01em; margin: 22px 0 0; }
+  .gate-chip { position: absolute; z-index: 2; top: clamp(76px, 12vh, 120px); right: clamp(18px, 4vw, 36px); display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; color: #fff; background: rgba(24,14,10,.62); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,.18); padding: 6px 12px; border-radius: 999px; }
+
+  /* opening pull-quote (signature) */
+  .opener { padding: clamp(56px, 10vw, 110px) 0 clamp(40px, 7vw, 72px); }
+  .opener .q { position: relative; font-family: var(--serif); font-size: clamp(1.9rem, 5.2vw, 3.3rem); line-height: 1.16; letter-spacing: -.015em; text-wrap: balance; }
+  .opener .mark { display: block; font-family: var(--serif); font-size: clamp(3.4rem, 9vw, 5.6rem); line-height: .5; color: var(--pom); height: .5em; margin-bottom: .12em; }
+  .opener .attrib { margin-top: 22px; font-size: 13px; letter-spacing: .04em; color: var(--muted); }
+
+  /* generic section */
+  .sec { padding: clamp(34px, 6vw, 60px) 0; border-top: 1px solid var(--line); }
+  h2.lbl { color: var(--pom); font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 22px; }
+
+  /* the basics — crisp hairline vitals sheet (0 radius, contrast to soft cards) */
+  .basics { display: grid; grid-template-columns: repeat(2, 1fr); border: 1px solid var(--line); border-radius: 0; overflow: hidden; }
+  @media (min-width: 620px) { .basics { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 400px) { .basics { grid-template-columns: 1fr; } }
+  .basics div { background: var(--paper); padding: 16px 18px 18px; min-width: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .basics .k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); font-weight: 700; }
+  .basics .v { font-family: var(--serif); font-size: 1.3rem; margin-top: 6px; letter-spacing: -.01em; overflow-wrap: anywhere; }
+
+  /* in her words */
+  .prompt { padding: 26px 0; border-top: 1px solid var(--line-soft); }
+  .prompt:first-of-type { border-top: 0; padding-top: 4px; }
+  .prompt .q { font-size: 12.5px; letter-spacing: .04em; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+  .prompt .a { font-family: var(--serif); font-size: clamp(1.35rem, 3.4vw, 2rem); line-height: 1.3; letter-spacing: -.012em; margin-top: 12px; text-wrap: balance; }
+
+  /* prose */
+  .prose p { font-size: 1.0625rem; line-height: 1.7; margin: 0 0 1.1em; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose .drop::first-letter { font-family: var(--serif); font-size: 3.1em; float: left; line-height: .78; padding: 4px 10px 0 0; color: var(--ink); }
+
+  /* vouched-for */
+  .vouch { display: flex; gap: 16px; align-items: flex-start; background: var(--raise); border: 1px solid var(--line); border-radius: 16px; padding: 22px; box-shadow: var(--shadow-sm); }
+  .vouch .seal { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--gold-soft); color: var(--gold); }
+  .vouch .t { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; letter-spacing: -.01em; }
+  .vouch .d { color: var(--muted); font-size: 14.5px; margin-top: 5px; line-height: 1.55; }
+
+  /* photos */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .shot { position: relative; aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+    background: linear-gradient(150deg, #c0af9f, #7d6b5e 60%, #4f4239); display: grid; place-items: center; }
+  .shot:nth-child(2) { background: linear-gradient(150deg, #bda99a, #6f5e54 60%, #47392f); }
+  .shot:nth-child(3) { background: linear-gradient(150deg, #c7b6a4, #8a7566 60%, #574a3f); }
+  .shot .lockwrap { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.9); background: rgba(22,13,9,.24); font-size: 20px; }
+  .gallery-note { color: var(--muted); font-size: 13.5px; margin-top: 12px; display: flex; align-items: center; gap: 7px; }
+
+  /* CTA close */
+  .close { padding: clamp(56px, 9vw, 104px) 0 clamp(80px, 10vw, 120px); border-top: 1px solid var(--line); text-align: center; }
+  .close h2 { font-size: clamp(2rem, 5vw, 3.1rem); letter-spacing: -.02em; line-height: 1.05; text-wrap: balance; }
+  .close p { color: var(--muted); max-width: 44ch; margin: 16px auto 0; font-size: 1.0625rem; }
+  .close .act { margin-top: 30px; display: inline-flex; flex-direction: column; align-items: center; gap: 12px; }
+  .close .btn { padding: 15px 30px; font-size: 15px; }
+  .close .fineprint { font-size: 12.5px; color: var(--faint); display: inline-flex; align-items: center; gap: 6px; }
+  .sent { display: none; background: var(--raise); border: 1px solid var(--line); border-radius: 16px; padding: 24px 26px; box-shadow: var(--shadow-sm); max-width: 40ch; margin: 0 auto; }
+  .sent.show { display: block; }
+  .sent .ic { width: 40px; height: 40px; border-radius: 50%; background: var(--pom-soft); color: var(--pom); display: grid; place-items: center; margin: 0 auto 12px; font-size: 18px; font-weight: 800; }
+  .sent .t { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; }
+  .sent .d { color: var(--muted); font-size: 14px; margin-top: 6px; line-height: 1.55; }
+
+  /* footer */
+  .foot { border-top: 1px solid var(--line); padding: 30px 0 46px; text-align: center; color: var(--faint); }
+  .foot .brand { font-family: var(--serif); font-size: 1.15rem; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; }
+  .foot .brand .seal { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #c74a5e, #7e2447 72%); }
+  .foot .priv { font-size: 12px; margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; }
+  @media (max-width: 759px) { .foot { padding-bottom: calc(96px + env(safe-area-inset-bottom)); } }
+
+  /* mobile sticky action */
+  .mact { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; padding: 12px 18px calc(12px + env(safe-area-inset-bottom)); background: var(--paper); background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); visibility: hidden; pointer-events: none; transform: translateY(120%); transition: transform .35s cubic-bezier(.2,.7,.2,1), visibility .35s; }
+  .mact.show { visibility: visible; pointer-events: auto; transform: none; }
+  .mact .btn { width: 100%; justify-content: center; }
+  @media (min-width: 760px) { .mact { display: none; } }
+
+  /* motion — a settle, not an entrance (opacity only); hero keeps the one entrance */
+  .js .reveal { opacity: 0; }
+  .js .reveal.in { opacity: 1; transition: opacity .4s ease; }
+  .hero .hz { opacity: 0; transform: translateY(18px); animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+  .hero .h1z { animation-delay: .1s; } .hero .h2z { animation-delay: .2s; } .hero .h3z { animation-delay: .3s; } .hero .h4z { animation-delay: .4s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    .js .reveal, .hero .hz { opacity: 1 !important; transform: none !important; }
+  }
+  html { scroll-behavior: smooth; }
+</style>
+
+<div class="doc">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="hdr" id="hdr">
+    <a class="brand" href="#top"><span class="seal" aria-hidden="true"></span> ZivugPath</a>
+    <a class="btn cta" href="#ask">Request an introduction</a>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <span class="mono" aria-hidden="true">R</span>
+      <span class="gate-chip"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · shared just for you</span>
+      <div class="hero-in">
+        <p class="eyebrow kick hz h1z">An introduction · shared by Mrs. Cohen</p>
+        <h1 class="hz h2z">Rivka<br>Mandel</h1>
+        <p class="essence hz h3z">A morah who's steady on the big things and light about the rest.</p>
+        <p class="facts hz h4z">24 &middot; Lakewood, NJ &middot; 3rd-grade morah &middot; Open to relocating</p>
+      </div>
+    </section>
+
+    <!-- OPENING PULL-QUOTE (signature) -->
+    <div class="opener">
+      <div class="rd reveal">
+        <p class="q"><span class="mark" aria-hidden="true">“</span>A home where guests never feel like guests — that's the one thing I won't compromise on.</p>
+        <p class="attrib">Rivka, in her own words</p>
+      </div>
+    </div>
+
+    <!-- THE BASICS -->
+    <section class="sec">
+      <div class="rd reveal">
+        <h2 class="lbl">The basics</h2>
+        <div class="basics">
+          <div><div class="k">Studied</div><div class="v">Bais Yaakov</div></div>
+          <div><div class="k">Seminary</div><div class="v">Yerushalayim</div></div>
+          <div><div class="k">Teaches</div><div class="v">Third grade</div></div>
+          <div><div class="k">Family</div><div class="v">Second of six</div></div>
+          <div><div class="k">Languages</div><div class="v">English, Hebrew</div></div>
+          <div><div class="k">Enjoys</div><div class="v">A full Shabbos table</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IN HER WORDS -->
+    <section class="sec">
+      <div class="rd reveal">
+        <h2 class="lbl">In her words</h2>
+        <div class="prompt"><div class="q">My ideal Friday night</div><div class="a">Too much food, a niggun that runs long, and no one checking the time.</div></div>
+        <div class="prompt"><div class="q">What I'm hoping to find</div><div class="a">Someone warm and steady — takes growth seriously, and himself a little less so.</div></div>
+        <div class="prompt"><div class="q">Something I'm working on</div><div class="a">Letting a plan change without treating it as a small crisis.</div></div>
+      </div>
+    </section>
+
+    <!-- A LITTLE MORE -->
+    <section class="sec">
+      <div class="rd reveal prose">
+        <h2 class="lbl">A little more</h2>
+        <p class="drop">Rivka is the second of six, and it shows in the easy way she runs a room full of people. She teaches third grade — the year kids stop being little and start being funny — and she talks about her class the way some people talk about a hobby they love.</p>
+        <p>Weeknights she learns with a chavrusa over the phone; Shabbos she's usually hosting, or at her parents' table with everyone talking over each other. She's looking for someone who wants that kind of home: full, warm, and a little loud.</p>
+      </div>
+    </section>
+
+    <!-- VOUCHED FOR -->
+    <section class="sec">
+      <div class="rd reveal">
+        <h2 class="lbl">Vouched for</h2>
+        <div class="vouch">
+          <span class="seal" aria-hidden="true"><svg class="lk" viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 21l-4.9 2.6.9-5.5-4-3.9 5.5-.8z"/></svg></span>
+          <div>
+            <h3 class="t">Three people will speak for her.</h3>
+            <div class="d">A former principal, a longtime friend, and a neighbor — their names are shared privately with Mrs. Cohen, not posted here.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTOS -->
+    <section class="sec">
+      <div class="rd reveal">
+        <h2 class="lbl">Photos</h2>
+        <div class="gallery">
+          <div class="shot" aria-label="Locked photo"><span class="lockwrap"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
+          <div class="shot" aria-label="Locked photo"><span class="lockwrap"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
+          <div class="shot" aria-label="Locked photo"><span class="lockwrap"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
+        </div>
+        <p class="gallery-note"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Photos unlock once Rivka approves an introduction.</p>
+      </div>
+    </section>
+
+    <!-- CLOSE / CTA -->
+    <section class="close" id="ask">
+      <div class="rd reveal">
+        <h2>Think this could be a shidduch?</h2>
+        <p>Send a request. Rivka sees it first — her contact, and yours, stay private until she says yes.</p>
+        <div class="act" id="askAct">
+          <a class="btn" href="#ask" id="askBtn">Request an introduction</a>
+          <span class="fineprint"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Nothing is shared without her yes.</span>
+        </div>
+        <div class="sent" id="sent" role="status" tabindex="-1">
+          <div class="ic" aria-hidden="true">✓</div>
+          <h3 class="t">Request sent</h3>
+          <div class="d">Rivka will see it first. If she's open to it, Mrs. Cohen will be in touch — no details change hands until then.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="brand"><span class="seal" aria-hidden="true"></span> ZivugPath</div>
+    <div class="priv"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · never indexed, never listed</div>
+  </footer>
+
+  <div class="mact" id="mact"><a class="btn" href="#ask">Request an introduction</a></div>
+
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    var hdr = document.getElementById('hdr');
+    var mact = document.getElementById('mact');
+    var hero = document.getElementById('top');
+    function onScroll() {
+      var past = window.scrollY > (hero.offsetHeight - 90);
+      hdr.classList.toggle('solid', past);
+      mact.classList.toggle('show', past);
+    }
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    var askBtn = document.getElementById('askBtn');
+    if (askBtn) askBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.getElementById('askAct').style.display = 'none';
+      var s = document.getElementById('sent');
+      var d = s.querySelector('.d');
+      if (d) d.textContent = d.textContent; // re-set to fire the live-region update
+      s.classList.add('show');
+      s.focus();
+    });
+
+    var io;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .14, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+    }
+  })();
+</script>
+
+</body>
+</html>

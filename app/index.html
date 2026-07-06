@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ZivugPath · How it works</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
+    --line: #E7E0D6; --line-soft: #F1EBE2;
+    --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4;
+    --on-accent: #ffffff;
+    --shadow: 26px 44px 80px -50px rgba(58, 34, 22, .45);
+    --shadow-sm: 12px 20px 38px -26px rgba(58, 34, 22, .34);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --r: 18px; --r-sm: 12px; --maxw: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+      --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+      --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+      --shadow: 26px 44px 80px -48px rgba(0,0,0,.66); --shadow-sm: 12px 20px 38px -24px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --shadow: 26px 44px 80px -50px rgba(58,34,22,.45); --shadow-sm: 12px 20px 38px -26px rgba(58,34,22,.34);
+  }
+  :root[data-theme="dark"] {
+    --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+    --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+    --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+    --shadow: 26px 44px 80px -48px rgba(0,0,0,.66); --shadow-sm: 12px 20px 38px -24px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .page { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(18px, 5vw, 40px); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; }
+  .serif { font-family: var(--serif); }
+  a { color: var(--pom-ink); }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 5px; }
+  .screen :focus-visible { outline-offset: 1px; }
+  .eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 0; }
+  .lk { width: 1em; height: 1em; vertical-align: -.14em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* top bar */
+  .topbar { position: sticky; top: 0; z-index: 20; background: var(--paper); background: color-mix(in srgb, var(--paper) 86%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar .row { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-family: var(--serif); font-size: 1.28rem; letter-spacing: -.01em; }
+  .brand .seal { width: 24px; height: 24px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #c74a5e, #7e2447 70%); display: inline-block; position: relative; }
+  .brand .seal::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; border: 1.4px solid rgba(255,255,255,.5); }
+  .topbar .actions { display: flex; align-items: center; gap: 8px; }
+  .link-quiet { font-size: 13.5px; font-weight: 600; color: var(--muted); text-decoration: none; padding: 8px 6px; }
+  .link-quiet:hover { color: var(--ink); }
+  @media (max-width: 560px) { .topbar .actions .link-quiet { display: none; } }
+
+  /* buttons */
+  .btn { font-family: var(--sans); font-size: 13.5px; font-weight: 700; letter-spacing: .01em; border: 0; border-radius: 10px; padding: 10px 16px; cursor: pointer; background: var(--pom); color: var(--on-accent); text-decoration: none; display: inline-flex; align-items: center; gap: 7px; transition: filter .18s, transform .1s; }
+  .btn:hover { filter: brightness(1.07); }
+  .btn:active { transform: translateY(1px); }
+  .btn.block { display: flex; width: 100%; justify-content: center; padding: 13px; font-size: 14px; }
+  .btn.sm { padding: 8px 12px; font-size: 12.5px; }
+  .btn.copied { background: var(--ink); color: var(--paper); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--muted); filter: none; }
+
+  /* hero */
+  .hero { padding: clamp(40px, 8vw, 92px) 0 clamp(40px, 7vw, 78px); }
+  .hero .grid { display: grid; grid-template-columns: 1fr; gap: clamp(38px, 6vw, 56px); align-items: center; }
+  @media (min-width: 900px) { .hero .grid { grid-template-columns: 1.05fr .95fr; } }
+  .hero h1 { font-size: clamp(2.7rem, 6.4vw, 4.6rem); line-height: 1.01; letter-spacing: -.02em; margin: 20px 0 0; text-wrap: balance; }
+  .hero h1 em { font-style: italic; color: var(--pom); }
+  .hero .lede { font-size: clamp(1.05rem, 2.1vw, 1.28rem); color: var(--muted); max-width: 46ch; margin: 22px 0 0; line-height: 1.55; }
+  .hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .hero .meta { margin-top: 26px; font-size: 12.5px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .hero .meta .privatemark { color: var(--muted); font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+
+  .hero-card-stage { position: relative; display: grid; place-items: center; }
+  .float-card { width: min(340px, 88vw); transform: rotate(-1.6deg); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .float-card:hover { transform: rotate(0deg) translateY(-4px); }
+  .float-note { position: absolute; z-index: 3; background: var(--raise); border: 1px solid var(--line); box-shadow: var(--shadow-sm); border-radius: 12px; padding: 9px 13px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .float-note .k { color: var(--faint); font-weight: 600; }
+  .float-note.one { top: 4%; right: -2%; }
+  .float-note.two { bottom: 6%; left: -3%; color: var(--gold); }
+  @media (max-width: 720px) { .float-note { display: none; } }
+
+  /* profile card (signature) */
+  .card { background: var(--raise); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; }
+  .pc-photo { position: relative; aspect-ratio: 5 / 4;
+    background: radial-gradient(120% 90% at 18% 12%, rgba(168,45,70,.13) 0%, transparent 55%),
+                radial-gradient(130% 120% at 88% 96%, rgba(135,98,20,.10) 0%, transparent 50%),
+                linear-gradient(150deg, #b8a596 0%, #7d6b5f 52%, #4b4038 100%);
+    display: grid; place-items: center; }
+  .pc-photo .mono { font-family: var(--serif); font-size: 4.4rem; color: rgba(255,255,255,.92); text-shadow: 0 2px 30px rgba(0,0,0,.28); }
+  .pc-photo .gate { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #fff; background: rgba(28,16,12,.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); padding: 5px 10px; border-radius: 999px; }
+  .pc-body { padding: 18px 20px 20px; }
+  .pc-name { font-family: var(--serif); font-size: 1.7rem; letter-spacing: -.01em; margin: 0; }
+  .pc-facts { color: var(--muted); font-size: 14px; margin: 3px 0 0; }
+  .pc-line { margin: 13px 0 0; font-size: 15px; line-height: 1.5; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
+  .tag { font-size: 12px; font-weight: 600; color: var(--ink); background: var(--pom-soft); border-radius: 999px; padding: 5px 11px; }
+  .tag.gold { background: var(--gold-soft); color: var(--gold); display: inline-flex; align-items: center; gap: 5px; }
+
+  /* section scaffolding */
+  section { padding: clamp(48px, 8vw, 92px) 0; border-top: 1px solid var(--line); }
+  .sec-head { max-width: 40ch; margin: 0 0 clamp(28px, 4vw, 44px); }
+  .sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); letter-spacing: -.015em; margin: 12px 0 0; line-height: 1.08; text-wrap: balance; }
+  .sec-head p { color: var(--muted); font-size: clamp(1rem, 1.8vw, 1.1rem); margin: 14px 0 0; line-height: 1.55; }
+
+  /* the loop */
+  .loop { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media (min-width: 760px) { .loop { grid-template-columns: repeat(3, 1fr); } }
+  .step { background: var(--raise); border: 1px solid var(--line); border-radius: var(--r); padding: 24px 22px 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+  .step .n { font-family: var(--serif); font-size: 14px; color: var(--pom); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+  .step h3 { font-size: 1.4rem; margin: 12px 0 0; letter-spacing: -.01em; }
+  .step p { color: var(--muted); font-size: 14px; margin: 9px 0 0; line-height: 1.55; }
+  .step .viz { margin-top: 20px; border-top: 1px solid var(--line-soft); padding-top: 18px; }
+  .mini-chat { display: flex; flex-direction: column; gap: 8px; }
+  .mini-b { max-width: 88%; padding: 9px 12px; border-radius: 13px; font-size: 12.5px; line-height: 1.4; }
+  .mini-a { align-self: flex-start; background: var(--paper); border: 1px solid var(--line); border-bottom-left-radius: 4px; font-family: var(--serif); font-size: .95rem; }
+  .mini-u { align-self: flex-end; background: var(--pom-soft); border-bottom-right-radius: 4px; }
+  .mini-link { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 5px 5px 5px 12px; background: var(--paper); }
+  .mini-link .u { flex: 1; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mini-link .u b { color: var(--ink); }
+  .mini-seg { display: inline-flex; background: var(--line-soft); border-radius: 9px; padding: 3px; margin-top: 9px; }
+  .mini-seg span { font-size: 11.5px; font-weight: 700; color: var(--muted); padding: 5px 11px; border-radius: 7px; }
+  .mini-seg span.on { background: var(--raise); color: var(--ink); box-shadow: var(--shadow-sm); }
+  .mini-approve { display: flex; gap: 8px; }
+  .mini-approve .b { flex: 1; text-align: center; font-size: 12px; font-weight: 700; padding: 9px; border-radius: 9px; }
+  .mini-approve .yes { background: var(--pom); color: var(--on-accent); }
+  .mini-approve .no { border: 1px solid var(--line); color: var(--ink); }
+
+  /* device frames */
+  .device { width: 100%; max-width: 380px; margin: 0 auto; border: 1px solid var(--line); border-radius: 42px; background: var(--raise); box-shadow: var(--shadow); padding: 11px; }
+  .device .screen { border-radius: 32px; overflow: hidden; background: var(--paper); border: 1px solid var(--line-soft); }
+  .statusbar { display: flex; align-items: center; justify-content: space-between; padding: 11px 22px 7px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .statusbar .dots { letter-spacing: 2px; }
+  .screen-label { display: flex; align-items: center; gap: 8px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .13em; color: var(--faint); font-weight: 700; margin: 0 0 14px; }
+  .screen-label::before { content: ""; width: 16px; height: 1px; background: var(--pom); display: inline-block; }
+
+  .app-row { display: grid; gap: 26px; grid-template-columns: 1fr; }
+  @media (min-width: 680px) { .app-row { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) { .app-row { grid-template-columns: repeat(3, 1fr); } }
+  .app-row .device { max-width: 340px; }
+
+  /* conversation */
+  .cv-top { padding: 13px 16px 0; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); font-weight: 600; }
+  .cv-top .est { color: var(--faint); }
+  .cv-thread { padding: 16px 16px 4px; display: flex; flex-direction: column; gap: 11px; }
+  .cv-b { max-width: 82%; padding: 11px 14px; border-radius: 16px; font-size: 13.5px; line-height: 1.45; }
+  .cv-a { align-self: flex-start; background: var(--raise); border: 1px solid var(--line); border-bottom-left-radius: 5px; }
+  .cv-a.q { font-family: var(--serif); font-size: 1.05rem; line-height: 1.3; }
+  .cv-u { align-self: flex-end; background: var(--pom-soft); border-bottom-right-radius: 5px; color: var(--ink); }
+  .cv-saved { align-self: center; font-size: 11px; color: var(--muted); font-weight: 700; display: inline-flex; gap: 5px; align-items: center; padding: 2px 0; }
+  .cv-chips { display: flex; gap: 7px; flex-wrap: wrap; padding: 8px 16px 10px; }
+  .cv-chip { font-family: var(--sans); font-size: 12px; font-weight: 600; border: 1px solid var(--line); background: var(--raise); color: var(--ink); border-radius: 999px; padding: 7px 12px; cursor: pointer; transition: background .16s, border-color .16s; }
+  .cv-chip:hover { border-color: var(--pom); background: var(--pom-soft); }
+  .cv-input { margin: 0 12px 14px; display: flex; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 5px 5px 5px 15px; background: var(--paper); }
+  .cv-input .ph { flex: 1; font-size: 13px; color: var(--faint); }
+  .cv-send { width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--pom); color: var(--on-accent); font-size: 15px; cursor: pointer; flex: none; }
+
+  /* home */
+  .hm-head { display: flex; align-items: center; gap: 11px; padding: 14px 16px 2px; }
+  .hm-ava { width: 40px; height: 40px; border-radius: 50%; flex: none; display: grid; place-items: center; font-family: var(--serif); color: #fff; font-size: 1.2rem; background: linear-gradient(150deg, #9a8a7d, #5f524a); }
+  .hm-hi .k { font-size: 12px; color: var(--muted); }
+  .hm-hi .n { font-family: var(--serif); font-size: 1.25rem; line-height: 1.1; }
+  .hm-card { margin: 14px 16px 0; border: 1px solid var(--line); border-radius: 16px; background: var(--raise); padding: 15px; box-shadow: var(--shadow-sm); }
+  .hm-card .top { display: flex; align-items: center; justify-content: space-between; }
+  .hm-card .lab { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--faint); font-weight: 700; }
+  .hm-live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--pom); }
+  .hm-live .d { width: 7px; height: 7px; border-radius: 50%; background: var(--pom); }
+  .hm-link { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 5px 5px 5px 12px; background: var(--paper); margin-top: 12px; }
+  .hm-link .u { flex: 1; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hm-link .u b { color: var(--ink); }
+  .hm-stat { margin: 14px 16px 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .hm-stat b { color: var(--ink); font-weight: 700; }
+  .hm-intro { margin: 12px 16px 0; border: 1px solid var(--line); border-radius: 14px; padding: 12px 13px; display: flex; align-items: center; gap: 11px; background: var(--pom-soft); }
+  .hm-intro .ic { width: 32px; height: 32px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--pom); color: var(--on-accent); font-size: 14px; }
+  .hm-intro .t { font-weight: 700; font-size: 13px; }
+  .hm-intro .s { font-size: 11.5px; color: var(--muted); }
+  .hm-intro .chev { margin-left: auto; color: var(--pom); font-weight: 800; }
+  .hm-nav { display: flex; margin-top: 16px; border-top: 1px solid var(--line-soft); }
+  .hm-nav a { flex: 1; text-align: center; padding: 10px 0 13px; font-size: 10.5px; font-weight: 700; color: var(--faint); text-decoration: none; }
+  .hm-nav a .ic { display: block; font-size: 16px; margin-bottom: 3px; }
+  .hm-nav a.on { color: var(--pom); }
+
+  /* introductions */
+  .rq-h { padding: 16px 16px 2px; font-family: var(--serif); font-size: 1.4rem; }
+  .rq-sub { padding: 0 16px; font-size: 12.5px; color: var(--muted); }
+  .rq-list { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .rq-card { border: 1px solid var(--line); border-radius: 16px; padding: 14px; background: var(--raise); }
+  .rq-card.settled { background: var(--paper); }
+  .rq-from { display: flex; align-items: center; gap: 10px; }
+  .rq-from .ic { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--gold-soft); color: var(--gold); font-weight: 700; font-family: var(--serif); }
+  .rq-from .t { font-weight: 700; font-size: 13.5px; }
+  .rq-from .s { font-size: 12px; color: var(--muted); }
+  .rq-from .time { margin-left: auto; font-size: 11px; color: var(--faint); }
+  .rq-note { font-size: 13.5px; line-height: 1.5; margin: 11px 0 0; }
+  .rq-actions { display: flex; gap: 9px; margin-top: 14px; }
+  .rq-actions .btn { flex: 1; }
+  .rq-actions .ghost { flex: 1; background: transparent; border: 1px solid var(--line); color: var(--ink); border-radius: 9px; font-family: var(--sans); font-weight: 700; font-size: 13px; cursor: pointer; padding: 9px 12px; }
+  .rq-actions .ghost:hover { border-color: var(--muted); }
+  .rq-settled { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--pom-ink); font-weight: 700; }
+  .rq-settled.declined { color: var(--muted); }
+
+  /* featured: shared profile */
+  .feature { display: grid; grid-template-columns: 1fr; gap: clamp(34px, 6vw, 60px); align-items: center; }
+  @media (min-width: 860px) { .feature { grid-template-columns: .9fr 1.1fr; } }
+  .feature .copy h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); letter-spacing: -.015em; margin: 12px 0 0; line-height: 1.1; }
+  .feature .copy p.intro { color: var(--muted); font-size: 1.05rem; margin: 14px 0 0; line-height: 1.55; }
+  .feat-list { list-style: none; padding: 0; margin: 24px 0 0; display: flex; flex-direction: column; gap: 2px; }
+  .feat-list li { display: flex; gap: 13px; padding: 14px 0; border-top: 1px solid var(--line-soft); }
+  .feat-list li .ic { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--pom-soft); color: var(--pom); display: grid; place-items: center; font-size: 13px; font-weight: 800; }
+  .feat-list li .t { font-weight: 700; font-size: 14.5px; }
+  .feat-list li .d { color: var(--muted); font-size: 13.5px; margin-top: 2px; line-height: 1.5; }
+
+  /* profile page internals */
+  .pp-photo { position: relative; aspect-ratio: 4 / 5;
+    background: radial-gradient(120% 90% at 20% 10%, rgba(168,45,70,.13) 0%, transparent 55%),
+                radial-gradient(130% 120% at 85% 95%, rgba(135,98,20,.10) 0%, transparent 50%),
+                linear-gradient(155deg, #bcab9c 0%, #7c6a5e 50%, #484037 100%);
+    display: grid; place-items: center; }
+  .pp-photo .mono { font-family: var(--serif); font-size: 5rem; color: rgba(255,255,255,.9); text-shadow: 0 3px 40px rgba(0,0,0,.32); }
+  .pp-scrim { position: absolute; inset: auto 0 0 0; padding: 34px 18px 16px; background: linear-gradient(to top, rgba(24,14,11,.82), transparent); }
+  .pp-scrim .nm { font-family: var(--serif); font-size: 1.85rem; color: #fff; letter-spacing: -.01em; line-height: 1; }
+  .pp-scrim .fx { color: rgba(255,255,255,.82); font-size: 13px; margin-top: 5px; }
+  .pp-sec { padding: 17px 18px; border-top: 1px solid var(--line-soft); }
+  .pp-sec:first-of-type { border-top: 0; }
+  .pp-sec .h { font-size: 11px; text-transform: uppercase; letter-spacing: .13em; color: var(--faint); font-weight: 700; margin: 0 0 10px; }
+  .pp-intro { font-size: 14.5px; line-height: 1.55; margin: 0; }
+  .pp-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 12px; overflow: hidden; }
+  .pp-facts div { background: var(--raise); padding: 10px 13px; }
+  .pp-facts .k { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--faint); font-weight: 700; }
+  .pp-facts .v { font-size: 13.5px; margin-top: 2px; }
+  .pp-prompt { border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; }
+  .pp-prompt + .pp-prompt { margin-top: 10px; }
+  .pp-prompt .q { font-size: 12px; color: var(--pom); font-weight: 700; }
+  .pp-prompt .a { font-family: var(--serif); font-size: 1.15rem; line-height: 1.35; margin-top: 5px; }
+  .pp-refs { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 13px; }
+  .pp-refs .ic { width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--gold-soft); color: var(--gold); font-size: 15px; }
+  .pp-refs .t { font-weight: 700; font-size: 13.5px; }
+  .pp-refs .s { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .pp-cta { padding: 15px 16px 17px; border-top: 1px solid var(--line-soft); }
+  .pp-cta .note { text-align: center; font-size: 11.5px; color: var(--muted); margin: 9px 0 0; }
+  .pp-foot { text-align: center; font-size: 11px; color: var(--faint); padding: 0 0 15px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+  /* the look */
+  .look-grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+  @media (min-width: 820px) { .look-grid { grid-template-columns: 1.15fr .85fr; } }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .sw { border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; background: var(--raise); }
+  .sw .chip { height: 66px; }
+  .sw .meta { padding: 10px 12px 12px; }
+  .sw .nm { font-weight: 700; font-size: 13px; }
+  .sw .hx { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: 1px; }
+  .ratio { margin-top: 16px; display: flex; height: 26px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); font-size: 11px; font-weight: 700; }
+  .ratio span { display: grid; place-items: center; letter-spacing: .03em; }
+  .spec { background: var(--raise); border: 1px solid var(--line); border-radius: var(--r); padding: clamp(20px, 3vw, 28px); box-shadow: var(--shadow-sm); }
+  .spec .tag2 { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); font-weight: 700; }
+  .spec .face { color: var(--faint); font-size: 12px; margin-top: 3px; }
+  .spec .big { font-family: var(--serif); font-size: clamp(2.3rem, 5vw, 3.2rem); line-height: 1; letter-spacing: -.02em; margin: 16px 0 14px; }
+  .spec .big em { font-style: italic; color: var(--pom); }
+  .spec .body-eg { font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0; }
+  .spec .body-eg .l2 { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--pom); font-weight: 700; margin-bottom: 6px; }
+
+  /* footer */
+  footer.site { border-top: 1px solid var(--line); padding: clamp(40px, 6vw, 64px) 0 clamp(48px, 6vw, 64px); }
+  .foot-grid { display: flex; flex-wrap: wrap; gap: 24px 40px; align-items: flex-start; justify-content: space-between; }
+  .foot-brand { font-family: var(--serif); font-size: 1.4rem; display: flex; align-items: center; gap: 9px; }
+  .foot-tag { color: var(--muted); font-size: 14px; margin: 10px 0 0; max-width: 34ch; line-height: 1.55; }
+  .foot-note { font-size: 12px; color: var(--faint); max-width: 30ch; line-height: 1.5; }
+
+  /* load choreography */
+  .rise { opacity: 0; transform: translateY(16px); }
+  .hero .rise.now { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .js .reveal { opacity: 0; transform: translateY(18px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .hero .d1 { transition-delay: .05s; } .hero .d2 { transition-delay: .13s; } .hero .d3 { transition-delay: .21s; }
+  .hero .d4 { transition-delay: .29s; } .hero .d5 { transition-delay: .18s; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+    .rise, .reveal, .js .reveal, .reveal.in, .hero .rise.now { opacity: 1 !important; transform: none !important; }
+    .float-card, .float-card:hover { transform: none; }
+  }
+</style>
+
+<div class="page">
+
+  <div class="topbar">
+    <div class="wrap row">
+      <span class="brand"><span class="seal" aria-hidden="true"></span> ZivugPath</span>
+      <span class="actions">
+        <a class="link-quiet" href="#how">How it works</a>
+        <a class="link-quiet" href="#look">The look</a>
+        <a class="btn sm" href="#app">Start your profile</a>
+      </span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" id="start">
+    <div class="wrap grid">
+      <div>
+        <p class="eyebrow rise now d1">A quieter way to be redt</p>
+        <h1 class="rise now d2">A shidduch profile <em>worth</em> sending.</h1>
+        <p class="lede rise now d3">Build it by talking, not filling out forms. Share one link that's always current. And decide, every single time, who gets an introduction.</p>
+        <div class="cta-row rise now d4">
+          <a class="btn" href="#app">Start your profile</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <p class="meta rise now d4"><span class="privatemark"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private by default</span> · never indexed, never listed</p>
+      </div>
+      <div class="hero-card-stage rise now d5">
+        <div class="float-note one">Your link is live <span class="k">· always current</span></div>
+        <article class="card float-card">
+          <div class="pc-photo">
+            <span class="mono">R</span>
+            <span class="gate"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Photos on the full link only</span>
+          </div>
+          <div class="pc-body">
+            <h2 class="pc-name">Rivka Mandel</h2>
+            <p class="pc-facts">24 · Lakewood, NJ · open to relocating</p>
+            <p class="pc-line">A morah who runs on early mornings, long Shabbos tables, and a good argument about a Rashi.</p>
+            <div class="tags">
+              <span class="tag">Teaching</span>
+              <span class="tag">Seminary in Yerushalayim</span>
+              <span class="tag gold"><span aria-hidden="true">✦</span> 3 references</span>
+            </div>
+          </div>
+        </article>
+        <div class="float-note two"><span aria-hidden="true">✦</span> Vouched for by 3 people</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- THE LOOP -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">How it works</p>
+        <h2>Three steps, and your part is the important one.</h2>
+        <p>The profile writes itself from a conversation. The link keeps itself current. You stay in charge of who ever sees it.</p>
+      </div>
+      <div class="loop">
+        <div class="step reveal">
+          <span class="n">01</span>
+          <h3>Talk it through</h3>
+          <p>Answer a few warm questions in a conversation. Your words become a profile that still sounds like you.</p>
+          <div class="viz">
+            <div class="mini-chat">
+              <div class="mini-b mini-a">Picture your Shabbos table a few years from now — who's around it?</div>
+              <div class="mini-b mini-u">A full one. Family, friends who had nowhere else, a couple of my students.</div>
+            </div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <span class="n">02</span>
+          <h3>Share one link</h3>
+          <p>Send a single link that's always the latest version. Choose a full or limited view; keep your contact hidden until you're ready.</p>
+          <div class="viz">
+            <div class="mini-link"><span class="u">zivugpath.com/p/<b>rivka-m</b></span><span class="btn sm">Copy</span></div>
+            <div class="mini-seg"><span class="on">Full profile</span><span>Limited</span></div>
+          </div>
+        </div>
+        <div class="step reveal">
+          <span class="n">03</span>
+          <h3>Approve every introduction</h3>
+          <p>When a shadchan wants to redt a shidduch, it's your yes or no. Nothing — not your photos, not your number — leaves without it.</p>
+          <div class="viz">
+            <div class="mini-approve"><span class="b yes">Approve</span><span class="b no">Not now</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIDE THE APP -->
+  <section id="app">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Inside the app</p>
+        <h2>The three screens you'll actually live in.</h2>
+        <p>Everything here is a working prototype — tap the chips, copy the link, approve a request.</p>
+      </div>
+      <div class="app-row">
+
+        <div class="reveal">
+          <p class="screen-label">Build · you talk, it writes</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots" aria-hidden="true">● ● ●</span></div>
+              <div class="cv-top"><span>Building your profile</span><span class="est">about 3 min left</span></div>
+              <div class="cv-thread">
+                <div class="cv-b cv-a q">Picture your Shabbos table a few years from now — who's around it?</div>
+                <div class="cv-b cv-u">Honestly, a full one. Family, friends who had nowhere else, a couple of my students who stayed in town.</div>
+                <div class="cv-saved">✓ Saved to your profile</div>
+                <div class="cv-b cv-a q">That says a lot. What makes a guest feel like they belong at your table?</div>
+              </div>
+              <div class="cv-chips">
+                <button class="cv-chip" type="button" data-chip>No fuss, just a seat</button>
+                <button class="cv-chip" type="button" data-chip>Being remembered</button>
+                <button class="cv-chip" type="button" data-chip>Let me type…</button>
+              </div>
+              <div class="cv-input"><span class="ph">Type your answer…</span><button class="cv-send" type="button" aria-label="Send">↑</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="screen-label">Home · manage &amp; share</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots" aria-hidden="true">● ● ●</span></div>
+              <div class="hm-head"><span class="hm-ava">R</span><div class="hm-hi"><div class="k">Good morning</div><div class="n">Rivka</div></div></div>
+              <div class="hm-card">
+                <div class="top"><span class="lab">Your profile</span><span class="hm-live"><span class="d"></span> Live</span></div>
+                <div class="hm-link"><span class="u">zivugpath.com/p/<b>rivka-m</b>-8fk2</span><button class="btn sm" id="copyHome" type="button">Copy</button></div>
+              </div>
+              <p class="hm-stat">Your link is live. It always shows your latest version — no re-sending, no stale PDF.</p>
+              <div class="hm-intro"><span class="ic" aria-hidden="true">✦</span><div><div class="t">1 new introduction</div><div class="s">Mrs. Cohen would like to share your profile</div></div><span class="chev" aria-hidden="true">→</span></div>
+              <nav class="hm-nav" aria-label="App sections">
+                <a class="on" href="#app"><span class="ic" aria-hidden="true">⌂</span>Home</a>
+                <a href="#app"><span class="ic" aria-hidden="true">✎</span>Profile</a>
+                <a href="#app"><span class="ic" aria-hidden="true">✦</span>Intros</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <p class="screen-label">Introductions · your call, always</p>
+          <div class="device">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><span class="dots" aria-hidden="true">● ● ●</span></div>
+              <div class="rq-h">Introductions</div>
+              <p class="rq-sub">Approve before anyone sees your full profile or contact.</p>
+              <div class="rq-list">
+                <div class="rq-card">
+                  <div class="rq-from"><span class="ic">MC</span><div><div class="t">Mrs. Cohen</div><div class="s">Shadchan · Lakewood</div></div><span class="time">2h ago</span></div>
+                  <p class="rq-note">“I have someone in mind who I think fits what you described. May I share your profile with his side?”</p>
+                  <div class="rq-actions"><button class="btn" type="button" data-approve>Approve</button><button class="ghost" type="button" data-decline>Not now</button></div>
+                </div>
+                <div class="rq-card settled">
+                  <div class="rq-from"><span class="ic">RW</span><div><div class="t">R' Weiss</div><div class="s">Shadchan · Passaic</div></div><span class="time">Mon</span></div>
+                  <p class="rq-note" style="color:var(--muted)">“Would love to redt a shidduch — sharing with the other side now.”</p>
+                  <div class="rq-actions"><span class="rq-settled">✓ Approved · contact shared</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED: SHARED PROFILE -->
+  <section>
+    <div class="wrap feature">
+      <div class="copy reveal">
+        <p class="eyebrow">The page you send</p>
+        <h2>What opens when someone taps your link.</h2>
+        <p class="intro">Not a swipe card in a stack — a page that reads like a real introduction. Warm, unhurried, and yours to gate.</p>
+        <ul class="feat-list">
+          <li><span class="ic" aria-hidden="true">◐</span><div><div class="t">Photos on the full link only</div><div class="d">A limited link tells the story in words first; photos open when you choose to share them.</div></div></li>
+          <li><span class="ic" aria-hidden="true">✦</span><div><div class="t">References, kept private</div><div class="d">Vouching happens the way the community already trusts — a name, shared with the shadchan, not posted for all.</div></div></li>
+          <li><span class="ic" aria-hidden="true">→</span><div><div class="t">Contact after your yes</div><div class="d">Your number stays hidden until you approve the introduction.</div></div></li>
+          <li><span class="ic" aria-hidden="true"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><div><div class="t">Never on a search engine</div><div class="d">Private by default. The link works for the person you send it to, and no one else.</div></div></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="device">
+          <div class="screen">
+            <div class="statusbar"><span>9:41</span><span class="dots" aria-hidden="true">● ● ●</span></div>
+            <div class="pp-photo"><span class="mono">R</span><div class="pp-scrim"><div class="nm">Rivka Mandel</div><div class="fx">24 · Lakewood, NJ · open to relocating</div></div></div>
+            <div class="pp-sec"><p class="pp-intro">A morah who runs on early mornings, long Shabbos tables, and a good argument about a Rashi. Hoping to build a home that stays warm when things get busy.</p></div>
+            <div class="pp-sec"><p class="h">The basics</p><div class="pp-facts"><div><div class="k">Age</div><div class="v">24</div></div><div><div class="k">From</div><div class="v">Lakewood, NJ</div></div><div><div class="k">Does</div><div class="v">3rd-grade morah</div></div><div><div class="k">Learned</div><div class="v">Bais Yaakov · seminary</div></div></div></div>
+            <div class="pp-sec"><p class="h">In her words</p><div class="pp-prompt"><div class="q">A value I won't compromise on</div><div class="a">A home where guests never feel like guests.</div></div><div class="pp-prompt"><div class="q">My ideal Friday night</div><div class="a">Too much food, a niggun that runs long, no one checking the time.</div></div></div>
+            <div class="pp-sec"><p class="h">Vouched for</p><div class="pp-refs"><span class="ic" aria-hidden="true">✦</span><div><div class="t">3 references</div><div class="s">Shared privately with the shadchan</div></div></div></div>
+            <div class="pp-cta"><a class="btn block" href="#" onclick="return false">Request an introduction</a><p class="note">Contact details open only after Rivka approves.</p></div>
+            <div class="pp-foot"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · never indexed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE LOOK -->
+  <section id="look">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">The look</p>
+        <h2>Warm editorial. Calm neutral, one warm accent.</h2>
+        <p>Roughly 85% of every screen is quiet paper and ink; pomegranate — <em>rimon</em>, a sign of blessing — is the single accent, spent only where it counts. Candle-gold appears once, for trust.</p>
+      </div>
+      <div class="look-grid">
+        <div class="reveal">
+          <div class="swatches">
+            <div class="sw"><div class="chip" style="background:#FCFAF7"></div><div class="meta"><div class="nm">Paper</div><div class="hx">#FCFAF7</div></div></div>
+            <div class="sw"><div class="chip" style="background:#221F1B"></div><div class="meta"><div class="nm">Ink</div><div class="hx">#221F1B</div></div></div>
+            <div class="sw"><div class="chip" style="background:#6E655C"></div><div class="meta"><div class="nm">Greige</div><div class="hx">#6E655C</div></div></div>
+            <div class="sw"><div class="chip" style="background:#A82D46"></div><div class="meta"><div class="nm">Pomegranate</div><div class="hx">#A82D46</div></div></div>
+            <div class="sw"><div class="chip" style="background:#F6E5E6"></div><div class="meta"><div class="nm">Blush</div><div class="hx">#F6E5E6</div></div></div>
+            <div class="sw"><div class="chip" style="background:#876214"></div><div class="meta"><div class="nm">Candle gold</div><div class="hx">#876214</div></div></div>
+          </div>
+          <div class="ratio" aria-label="About 85 percent neutral, 15 percent accent">
+            <span style="background:#F1EBE2;color:#6E655C;flex:85">85% calm neutral</span>
+            <span style="background:#A82D46;color:#fff;flex:15">15% accent</span>
+          </div>
+        </div>
+        <div class="spec reveal">
+          <div class="tag2">Type · a pairing</div>
+          <div class="face">Editorial serif (Fraunces / Newsreader class) with a quiet, low-contrast humanist sans</div>
+          <div class="big">Rivka &amp; <em>Dovid</em></div>
+          <p class="body-eg"><span class="l2">Body · sans</span>Names and moments get the serif; buttons, labels, and forms stay in a quiet, legible sans, so the page is easy to move through. The contrast between the two is the personality.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site">
+    <div class="wrap foot-grid">
+      <div>
+        <span class="foot-brand"><span class="seal" aria-hidden="true"></span> ZivugPath</span>
+        <p class="foot-tag">A dignified way to build a shidduch profile and share it — on your terms.</p>
+      </div>
+      <p class="foot-note">Prototype. Names, photos, and numbers are placeholder. Warm editorial design direction, fully responsive, light &amp; dark.</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    function flash(btn, word) {
+      var orig = btn.textContent; btn.textContent = word; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = orig; btn.classList.remove('copied'); }, 1600);
+    }
+    var ch = document.getElementById('copyHome');
+    if (ch) ch.addEventListener('click', function () {
+      var t = 'zivugpath.com/p/rivka-m-8fk2';
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function(){flash(ch,'Copied');}, function(){flash(ch,'Copied');});
+      else flash(ch, 'Copied');
+    });
+    document.querySelectorAll('[data-approve]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var a = b.closest('.rq-actions'), c = b.closest('.rq-card');
+        if (c) c.classList.add('settled');
+        if (a) a.innerHTML = '<span class="rq-settled">✓ Approved · contact shared</span>';
+      });
+    });
+    document.querySelectorAll('[data-decline]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var a = b.closest('.rq-actions'), c = b.closest('.rq-card');
+        if (c) c.classList.add('settled');
+        if (a) a.innerHTML = '<span class="rq-settled declined">Set aside for now · nothing was shared</span>';
+      });
+    });
+    document.querySelectorAll('[data-chip]').forEach(function (c) {
+      c.addEventListener('click', function () {
+        var thread = document.querySelector('.cv-thread'), chips = c.closest('.cv-chips');
+        if (thread && c.textContent.indexOf('type') === -1) {
+          var bub = document.createElement('div'); bub.className = 'cv-b cv-u'; bub.textContent = c.textContent; thread.appendChild(bub);
+        }
+        if (chips) chips.remove();
+      });
+    });
+    var io;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    } else {
+      document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -366,7 +366,8 @@
 <script>
   (function () {
     var dirs = ['a', 'b'];
-    function select(id) {
+    function norm() { var h = (location.hash || '').replace('#', ''); return dirs.indexOf(h) > -1 ? h : 'a'; }
+    function apply(id) {
       dirs.forEach(function (k) {
         var on = (k === id);
         document.getElementById('t-' + k).setAttribute('aria-selected', on ? 'true' : 'false');
@@ -376,14 +377,18 @@
       });
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
+    // hash routes each direction so feedback pins are tagged #a / #b
+    if (!location.hash) { try { history.replaceState(null, '', '#a'); } catch (e) {} }
+    apply(norm());
+    window.addEventListener('hashchange', function () { apply(norm()); });
     dirs.forEach(function (k, i) {
       var tab = document.getElementById('t-' + k);
-      tab.addEventListener('click', function () { select(k); });
+      tab.addEventListener('click', function () { location.hash = k; });
       tab.addEventListener('keydown', function (e) {
         var j = -1;
         if (e.key === 'ArrowRight') j = (i + 1) % dirs.length;
         if (e.key === 'ArrowLeft') j = (i - 1 + dirs.length) % dirs.length;
-        if (j > -1) { e.preventDefault(); select(dirs[j]); document.getElementById('t-' + dirs[j]).focus(); }
+        if (j > -1) { e.preventDefault(); location.hash = dirs[j]; document.getElementById('t-' + dirs[j]).focus(); }
       });
     });
   })();

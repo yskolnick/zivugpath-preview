@@ -3,13 +3,17 @@
    type, save. "Copy" produces a text block to paste back to the designer. */
 (function () {
   'use strict';
-  var KEY = 'zp-fb:' + location.pathname;
+  // Key pins by path + hash, so tabbed prototypes (e.g. #a / #b) keep separate,
+  // labeled feedback per variant instead of piling everything onto one bucket.
+  function keyFor() { return 'zp-fb:' + location.pathname + location.hash; }
+  var KEY = keyFor();
   var qs = new URLSearchParams(location.search);
   if (qs.has('fb')) sessionStorage.setItem('zp-fb-on', '1');
   if (!sessionStorage.getItem('zp-fb-on') && !localStorage.getItem(KEY)) return;
 
   var pins = [];
-  try { pins = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { pins = []; }
+  function loadPins() { try { pins = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { pins = []; } }
+  loadPins();
   var adding = false;
 
   var css = document.createElement('style');
@@ -134,6 +138,9 @@
     sessionStorage.removeItem('zp-fb-on');
     bar.remove(); layer.remove(); document.body.classList.remove('zpfb-aim');
   });
+
+  // switching variant tabs (#a / #b) re-keys to that variant's own notes
+  window.addEventListener('hashchange', function () { KEY = keyFor(); loadPins(); render(); });
 
   render();
 })();

@@ -8,8 +8,11 @@
   function keyFor() { return 'zp-fb:' + location.pathname + location.hash; }
   var KEY = keyFor();
   var qs = new URLSearchParams(location.search);
-  if (qs.has('fb')) sessionStorage.setItem('zp-fb-on', '1');
-  if (!sessionStorage.getItem('zp-fb-on') && !localStorage.getItem(KEY)) return;
+  // ?fb=1 turns feedback on and makes it STICKY (localStorage) — it survives refreshes,
+  // plain URLs without the query, and new tabs, until the ✕ dismisses it. Per-browser,
+  // so reviewers keep the bar while other viewers of the same page never see it.
+  if (qs.has('fb')) { sessionStorage.setItem('zp-fb-on', '1'); localStorage.setItem('zp-fb-sticky', '1'); }
+  if (!sessionStorage.getItem('zp-fb-on') && !localStorage.getItem('zp-fb-sticky') && !localStorage.getItem(KEY)) return;
 
   var pins = [];
   function loadPins() { try { pins = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { pins = []; } }
@@ -190,6 +193,7 @@
 
   bar.querySelector('.zpfb-x').addEventListener('click', function () {
     sessionStorage.removeItem('zp-fb-on');
+    localStorage.removeItem('zp-fb-sticky');
     bar.remove(); layer.remove(); document.body.classList.remove('zpfb-aim');
   });
 

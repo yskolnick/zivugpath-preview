@@ -241,7 +241,7 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v4</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v5</span></span>
     <div class="lab-vp" role="group" aria-label="Screen size" data-fb-state="Viewport">
       <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
       <button type="button" data-vp="web" aria-pressed="false">Web</button>
@@ -411,11 +411,12 @@
 </div>
 
 <div class="foot-note">
-  <div class="stamp">Lab · profile-redesign · v4 · 2026-07-07</div>
+  <div class="stamp">Lab · profile-redesign · v5 · 2026-07-07</div>
   <p><b>What this is:</b> two directions for the shared profile — <b>A · Photo-forward</b> and <b>B · Refined classic</b>. Toggle <b>Mobile / Web</b> and the direction up top. The “How this reached you” switcher (shadchan / AI / forwarded / direct) is a demo control to show how the page adapts — it isn't part of the real page.</p>
   <p><b>v4 notes:</b> removed quote name-tags &amp; the top blurbs (moved here) · smaller hero, especially on web · trimmed extra wording.</p>
   <p><b>Parked (not now):</b> what actually belongs in the badges / visual elements deserves a dedicated deep-research pass later.</p>
-  <p><b>Open questions:</b> (1) is the top “suggested by …” line needed if the same attribution sits at the bottom? · (2) on the AI / forwarded / direct tabs, should it say “Message Rivka” or route through someone? · (3) A vs B as the base direction.</p>
+  <p><b>Open question:</b> A vs B as the base direction (still deciding — keeping both for now).</p>
+  <p><b>Decided:</b> keep the top “suggested by …” line · non-shadchan contact now routes through an intermediary (the app or the person who shared), never a direct “Message Rivka”.</p>
   <p>Placeholder person; illustrated portrait stands in for the real photo.</p>
 </div>
 
@@ -457,14 +458,14 @@
       ai: { av: SEAL, top: 'Suggested by <b>ZivugPath</b>',
         who: '<b>ZivugPath</b> suggested this match', sub: 'From what you\'re both looking for',
         note: '“You\'re both after a warm, open home and a steady pace — there\'s real overlap in what matters to you.”',
-        cta: 'Message Rivka', priv: 'Your message goes through ZivugPath. Your contact stays private until you choose to share it.' },
+        cta: 'Request an introduction', priv: 'ZivugPath passes your interest to Rivka — no contact details are shared until you both say yes.' },
       friend: { av: 'CS', top: '<b>Chaya S.</b> forwarded you this',
         who: '<b>Chaya S.</b> forwarded you this profile', sub: 'Passed along by a friend',
         note: '“You came to mind the second I saw it — just take a look 😊”',
-        cta: 'Message Rivka', priv: 'Your reply reaches Rivka\'s side. Your contact stays private until you choose to share it.' },
+        cta: 'Ask Chaya to introduce you', priv: 'Your interest goes to Chaya, who\'ll make the introduction. Contact stays private until you both agree.' },
       direct: { av: 'R', top: '<b>Rivka</b> shared her profile',
-        who: '<b>Rivka</b> shared her profile', sub: 'Reach out directly',
-        note: '', cta: 'Message Rivka', priv: 'Your contact stays private until you choose to share it.' }
+        who: '<b>Rivka</b> shared her profile', sub: 'Reach out through ZivugPath',
+        note: '', cta: 'Request an introduction', priv: 'ZivugPath passes your interest to Rivka. Contact stays private until you both agree.' }
     };
     function paintArrival(dir, state) {
       var d = ARR[state];

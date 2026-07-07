@@ -22,7 +22,7 @@
   @media (prefers-color-scheme: dark) {
     :root { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
       --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
-      --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+      --gold: #DBB161; --gold-soft: #2A2114; --on-accent: #17130F;
       --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
       --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5); }
   }
@@ -33,7 +33,7 @@
     --shadow-xs: 8px 14px 26px -20px rgba(58,34,22,.3); }
   :root[data-theme="dark"] { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
     --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
-    --gold: #DBB161; --gold-soft: #33281633; --on-accent: #17130F;
+    --gold: #DBB161; --gold-soft: #2A2114; --on-accent: #17130F;
     --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
     --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5); }
 
@@ -58,110 +58,99 @@
   .lab-tab[aria-selected="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
   .bet { max-width: 1080px; margin: 0 auto; padding: 18px clamp(16px, 5vw, 34px) 4px; }
   .bet .k { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); }
-  .bet p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; max-width: 64ch; line-height: 1.55; }
+  .bet p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; max-width: 68ch; line-height: 1.55; }
   .bet b { color: var(--ink); font-weight: 700; }
 
   .stage { display: none; padding: clamp(20px, 4vw, 40px) clamp(12px, 4vw, 30px) 70px; }
   .stage.on { display: block; }
-  .device { width: 100%; max-width: 480px; margin: 0 auto; background: var(--raise); border: 1px solid var(--line); border-radius: 30px; box-shadow: var(--shadow); overflow: hidden; }
+  .device { width: 100%; max-width: 470px; margin: 0 auto; background: var(--raise); border: 1px solid var(--line); border-radius: 30px; box-shadow: var(--shadow); overflow: hidden; }
+  .por { display: block; width: 100%; height: 100%; }
 
-  /* shared portrait sizing helper */
-  .por { display: block; width: 100%; height: 100%; object-fit: cover; }
+  /* ============ shared badge system ============ */
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 650; line-height: 1; padding: 8px 13px; border-radius: 999px; background: var(--pom-soft); color: var(--pom-ink); }
+  .badge svg { width: 14px; height: 14px; flex: none; opacity: .85; }
+  .badge.soft { background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-weight: 600; }
+  .badge.soft svg { color: var(--muted); }
 
-  /* ============ DIRECTION A — PHOTO-FORWARD ============ */
+  /* section label used across both directions */
+  .lbl { display: block; font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); margin: 0 0 12px; }
+
+  /* who-shared strip (fixes the "who is this / why contact her" confusion) */
+  .sharer { display: flex; align-items: center; gap: 11px; }
+  .sharer .av { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 15px; }
+  .sharer .t { min-width: 0; }
+  .sharer .t .a, .sharer .t .s { display: block; }
+  .sharer .t .a { font-size: 13.5px; line-height: 1.35; }
+  .sharer .t .a b { font-weight: 700; }
+  .sharer .t .s { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+  .btn { font-family: var(--sans); font-weight: 700; font-size: 14.5px; border-radius: 12px; padding: 13px 18px; cursor: pointer; border: 1px solid var(--line); background: var(--raise); color: var(--ink); }
+  .btn.primary { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+
+  /* ============ DIRECTION A — PHOTO-FORWARD, FLOWING ============ */
   .a-hero { position: relative; aspect-ratio: 4 / 5; }
   .a-hero .por { position: absolute; inset: 0; }
-  .a-hero .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.82) 0%, rgba(20,12,9,.32) 42%, transparent 66%); }
+  .a-hero .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.8) 0%, rgba(20,12,9,.24) 44%, transparent 64%); }
   .a-hero .chip-top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; align-items: center; justify-content: space-between; }
   .a-hero .sl { display: inline-flex; align-items: center; gap: 6px; color: #fff; font-family: var(--serif); font-size: 13px; text-shadow: 0 1px 8px rgba(20,12,9,.7); }
   .a-hero .sl .seal-mark { width: 15px; height: 15px; }
   .a-hero .priv { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; color: #fff; background: rgba(20,12,9,.42); border: 1px solid rgba(255,255,255,.22); padding: 4px 9px; border-radius: 999px; }
   .a-hero .priv svg { width: 11px; height: 11px; }
-  .a-hero .cap { position: absolute; left: 20px; right: 20px; bottom: 20px; color: #fff; }
-  .a-hero .cap .from { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.82); }
-  .a-hero .cap h1 { color: #fff; font-size: 2.6rem; line-height: .98; letter-spacing: -.02em; margin: 7px 0 0; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
-  .a-hero .cap .facts { margin-top: 9px; font-size: 13.5px; color: rgba(255,255,255,.92); display: flex; flex-wrap: wrap; gap: 5px 9px; }
+  .a-hero .cap { position: absolute; left: 20px; right: 20px; bottom: 18px; color: #fff; }
+  .a-hero .cap h1 { color: #fff; font-size: 2.6rem; line-height: .98; letter-spacing: -.02em; margin: 0; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
+  .a-hero .cap .facts { margin-top: 9px; font-size: 13.5px; color: rgba(255,255,255,.94); display: flex; flex-wrap: wrap; gap: 5px 9px; }
   .a-hero .cap .facts span { display: inline-flex; align-items: center; gap: 8px; }
-  .a-hero .cap .facts span::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--pom); }
-  .a-hero .cap .facts span:first-child::before { display: none; }
-  .a-body { padding: 20px clamp(16px, 5vw, 22px) 26px; }
-  .a-quote { font-family: var(--serif); font-style: italic; font-size: 1.28rem; line-height: 1.34; text-wrap: balance; margin: 6px 0 4px; }
+  .a-hero .cap .facts span + span::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--pom); }
+  .a-body { padding: 20px clamp(18px, 5vw, 24px) 24px; display: flex; flex-direction: column; gap: 22px; }
+  .a-share { padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  .a-quote { font-family: var(--serif); font-style: italic; font-size: 1.34rem; line-height: 1.34; text-wrap: balance; margin: 0; }
   .a-quote .mk { color: var(--pom); font-style: normal; }
-  .a-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 16px 17px; margin-top: 16px; box-shadow: var(--shadow-xs); }
-  .a-h { font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); margin: 0 0 11px; }
-  .glance { display: flex; flex-direction: column; gap: 10px; }
-  .glance .g { display: flex; gap: 11px; font-size: 14.5px; line-height: 1.42; }
-  .glance .g .dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--pom); margin-top: 7px; }
-  .a-prose { font-size: 14.8px; line-height: 1.62; color: var(--ink); }
+  .a-prose { font-size: 15px; line-height: 1.64; margin: 0; }
   .a-prose + .a-prose { margin-top: 11px; }
-  .fam { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
-  .fam .f .r { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
-  .fam .f .v { font-size: 14px; margin-top: 2px; }
-  .photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .photos .th { aspect-ratio: 1; border-radius: 11px; overflow: hidden; border: 1px solid var(--line); }
-  .vouch { font-size: 14px; color: var(--muted); line-height: 1.55; }
-  .vouch b { color: var(--ink); font-weight: 700; }
-  .a-cta { position: sticky; bottom: 0; margin: 18px -22px -26px; padding: 15px 22px calc(15px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--raise) 92%, transparent); backdrop-filter: blur(8px); border-top: 1px solid var(--line); display: flex; gap: 10px; }
-  .btn { font-family: var(--sans); font-weight: 700; font-size: 14.5px; border-radius: 12px; padding: 13px 18px; cursor: pointer; border: 1px solid var(--line); background: var(--raise); color: var(--ink); }
-  .btn.primary { flex: 1; background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+  .a-fam { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin: 0; }
+  .a-fam b { color: var(--faint); font-weight: 700; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .a-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .a-photos .th { aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+  .a-refs { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
+  .a-refs svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
+  .a-refs b { color: var(--ink); font-weight: 700; }
+  .contact { border-top: 1px solid var(--line); padding-top: 20px; }
+  .contact .sharer { margin-bottom: 14px; }
+  .contact .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .contact .btn svg { width: 17px; height: 17px; }
+  .contact .sub { text-align: center; font-size: 12px; color: var(--faint); margin: 9px 0 0; }
 
-  /* ============ DIRECTION B — INTRO LETTER ============ */
-  .b-wrap { padding: clamp(18px, 5vw, 26px) clamp(16px, 5vw, 26px) 26px; }
-  .b-top { display: flex; align-items: center; justify-content: space-between; }
+  /* ============ DIRECTION B — REFINED CLASSIC, FLOWING ============ */
+  .b-wrap { padding: clamp(18px, 5vw, 26px) clamp(18px, 5vw, 26px) 24px; }
+  .b-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
   .b-sl { display: inline-flex; align-items: center; gap: 7px; font-family: var(--serif); font-size: 1rem; }
-  .b-sl .seal-mark { width: 16px; height: 16px; }
-  .b-priv { font-size: 10.5px; font-weight: 700; color: var(--gold); background: var(--gold-soft); padding: 4px 9px; border-radius: 999px; }
-  .b-head { display: flex; gap: 16px; align-items: center; margin-top: 20px; }
-  .b-head .pf { flex: none; width: 108px; height: 132px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
-  .b-head .hd .from { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
-  .b-head .hd h1 { font-size: 2.1rem; line-height: .98; letter-spacing: -.02em; margin: 6px 0 0; }
-  .b-head .hd .facts { color: var(--muted); font-size: 13px; margin-top: 8px; line-height: 1.5; }
-  .b-letter { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
-  .b-letter .lead { font-family: var(--serif); font-size: 1.5rem; line-height: 1; color: var(--pom); float: left; margin: 4px 9px -2px 0; }
-  .b-letter p { font-family: var(--serif); font-size: 1.06rem; line-height: 1.62; margin: 0 0 13px; text-wrap: pretty; }
-  .b-sign { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
-  .b-sign .av { width: 34px; height: 34px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 14px; }
-  .b-sign .t .n { font-weight: 700; font-size: 14px; }
-  .b-sign .t .s { font-size: 12px; color: var(--muted); }
-  .b-facts { margin-top: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 6px 18px; }
-  .b-facts .row { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
-  .b-facts .row:last-child { border-bottom: 0; }
-  .b-facts .row .r { flex: none; width: 92px; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding-top: 2px; }
-  .b-facts .row .v { font-size: 14.5px; line-height: 1.5; }
-  .b-more h3 { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--pom); font-family: var(--sans); margin: 26px 0 10px; }
-  .b-more p { font-size: 14.6px; line-height: 1.62; margin: 0 0 10px; color: var(--ink); }
-  .b-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top: 12px; }
-  .b-strip .th { aspect-ratio: 1; border-radius: 11px; overflow: hidden; border: 1px solid var(--line); }
-  .b-cta { margin-top: 26px; padding: 18px; background: var(--pom-soft); border-radius: 16px; text-align: center; }
-  .b-cta .q { font-family: var(--serif); font-size: 1.15rem; }
-  .b-cta .btn { margin-top: 12px; width: 100%; }
+  .b-sl .seal-mark { width: 15px; height: 15px; }
+  .b-priv { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 5px; }
+  .b-priv svg { width: 11px; height: 11px; }
+  .b-id { display: flex; gap: 17px; align-items: center; }
+  .b-id .pf { flex: none; width: 104px; height: 128px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+  .b-id .hd h1 { font-size: 2.05rem; line-height: 1; letter-spacing: -.015em; }
+  .b-id .hd .heb { font-family: var(--serif); color: var(--muted); font-size: .98rem; margin-top: 3px; }
+  .b-id .hd .one { font-size: 13px; color: var(--muted); margin-top: 9px; line-height: 1.5; }
+  .b-badges { margin: 22px 0 0; }
+  .b-sec { margin-top: 24px; }
+  .b-sec .q { font-family: var(--serif); font-style: italic; font-size: 1.28rem; line-height: 1.36; margin: 0; text-wrap: balance; }
+  .b-sec p { font-size: 14.6px; line-height: 1.62; margin: 10px 0 0; }
+  .b-sec p:first-of-type { margin-top: 0; }
+  .b-div { height: 1px; background: var(--line); margin: 24px 0 0; }
+  .b-refs { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+  .b-refs svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
+  .b-refs b { color: var(--ink); font-weight: 700; }
+  .b-contact { margin-top: 26px; padding: 17px; background: var(--pom-soft); border-radius: 18px; }
+  .b-contact .sharer { margin-bottom: 13px; }
+  .b-contact .sharer .av { background: var(--raise); }
+  .b-contact .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .b-contact .btn svg { width: 17px; height: 17px; }
+  .b-contact .sub { text-align: center; font-size: 12px; color: var(--pom-ink); opacity: .8; margin: 9px 0 0; }
 
-  /* ============ DIRECTION C — CLEAN CLASSIC ============ */
-  .c-wrap { padding: 0 0 22px; }
-  .c-top { display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(16px,5vw,22px); border-bottom: 2px solid var(--ink); }
-  .c-sl { display: inline-flex; align-items: center; gap: 7px; font-family: var(--serif); font-size: 1rem; }
-  .c-sl .seal-mark { width: 15px; height: 15px; }
-  .c-priv { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 5px; }
-  .c-priv svg { width: 11px; height: 11px; }
-  .c-id { display: flex; gap: 16px; padding: 20px clamp(16px,5vw,22px); align-items: flex-start; }
-  .c-id .pf { flex: none; width: 120px; height: 144px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
-  .c-id .hd h1 { font-size: 2rem; line-height: 1; letter-spacing: -.01em; }
-  .c-id .hd .heb { font-family: var(--serif); color: var(--muted); font-size: 1rem; margin-top: 3px; }
-  .c-id .hd .one { font-size: 13.5px; color: var(--muted); margin-top: 10px; line-height: 1.5; max-width: 30ch; }
-  .c-sec { padding: 0 clamp(16px,5vw,22px); }
-  .c-sec h2 { font-size: 11px; font-family: var(--sans); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); margin: 22px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
-  .c-row { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 14px; }
-  .c-row:last-child { border-bottom: 0; }
-  .c-row .r { flex: none; width: 104px; color: var(--faint); font-weight: 600; }
-  .c-row .v { flex: 1; line-height: 1.5; }
-  .c-note { font-size: 14px; line-height: 1.6; padding: 12px 0 2px; }
-  .c-quote { font-family: var(--serif); font-style: italic; font-size: 1.12rem; line-height: 1.4; padding: 12px 0 4px; color: var(--ink); }
-  .c-cta { margin: 24px clamp(16px,5vw,22px) 0; padding-top: 18px; border-top: 2px solid var(--ink); display: flex; gap: 10px; align-items: center; }
-  .c-cta .btn { flex: 1; text-align: center; }
-  .c-cta .foot { font-size: 11.5px; color: var(--faint); }
-
-  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 8px 20px 40px; }
-  .foot-note .stamp { font-weight: 700; letter-spacing: .04em; }
+  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 8px 20px 40px; line-height: 1.6; }
+  .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
 
   @media (prefers-reduced-motion: no-preference) {
     .stage.on .device { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
@@ -173,73 +162,60 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="portrait" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
     <defs>
-      <linearGradient id="pbg" x1="0" y1="0" x2="0.4" y2="1">
-        <stop offset="0" stop-color="#efe1d0"/><stop offset="1" stop-color="#d9c2a9"/>
-      </linearGradient>
-      <linearGradient id="pcloth" x1="0" y1="0" x2="0.2" y2="1">
-        <stop offset="0" stop-color="#9a3350"/><stop offset="1" stop-color="#71243a"/>
-      </linearGradient>
-      <linearGradient id="pscarf" x1="0.1" y1="0" x2="0.9" y2="1">
-        <stop offset="0" stop-color="#c39457"/><stop offset="1" stop-color="#9c6f39"/>
-      </linearGradient>
-      <radialGradient id="pglow" cx="0.5" cy="0.32" r="0.6">
-        <stop offset="0" stop-color="#f6ecdd" stop-opacity=".7"/><stop offset="1" stop-color="#f6ecdd" stop-opacity="0"/>
-      </radialGradient>
+      <linearGradient id="pbg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#efe1d0"/><stop offset="1" stop-color="#d9c2a9"/></linearGradient>
+      <linearGradient id="pcloth" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0" stop-color="#9a3350"/><stop offset="1" stop-color="#71243a"/></linearGradient>
+      <linearGradient id="pscarf" x1="0.1" y1="0" x2="0.9" y2="1"><stop offset="0" stop-color="#c39457"/><stop offset="1" stop-color="#9c6f39"/></linearGradient>
+      <radialGradient id="pglow" cx="0.5" cy="0.32" r="0.6"><stop offset="0" stop-color="#f6ecdd" stop-opacity=".7"/><stop offset="1" stop-color="#f6ecdd" stop-opacity="0"/></radialGradient>
     </defs>
     <rect width="400" height="500" fill="url(#pbg)"/>
     <rect width="400" height="500" fill="url(#pglow)"/>
-    <!-- neck -->
     <rect x="177" y="286" width="46" height="76" rx="23" fill="#e3b184"/>
-    <!-- garment / shoulders -->
     <path d="M52 500 C64 404 118 366 200 366 C282 366 336 404 348 500 Z" fill="url(#pcloth)"/>
     <path d="M200 366 C168 366 150 404 150 500 L250 500 C250 404 232 366 200 366 Z" fill="#000" opacity=".07"/>
-    <!-- tichel drape (behind head) -->
     <path d="M108 372 C86 250 108 116 200 114 C292 116 314 250 292 372 C286 330 292 210 200 210 C108 210 114 330 108 372 Z" fill="url(#pscarf)"/>
-    <!-- face -->
     <ellipse cx="200" cy="226" rx="78" ry="92" fill="#f2c99e"/>
     <ellipse cx="228" cy="238" rx="52" ry="78" fill="#e7b98c" opacity=".4"/>
-    <!-- tichel crown band (front, covers hairline) -->
     <path d="M122 214 C122 150 154 118 200 118 C246 118 278 150 278 214 C278 214 250 168 200 168 C150 168 122 214 122 214 Z" fill="url(#pscarf)"/>
     <path d="M122 214 C122 150 154 118 200 118 C246 118 278 150 278 214" fill="none" stroke="#7d572c" stroke-width="2" opacity=".35"/>
-    <!-- cheeks -->
     <ellipse cx="164" cy="252" rx="15" ry="10" fill="#e8917f" opacity=".28"/>
     <ellipse cx="236" cy="252" rx="15" ry="10" fill="#e8917f" opacity=".28"/>
-    <!-- brows -->
     <path d="M158 214 Q176 206 192 213" fill="none" stroke="#7a5334" stroke-width="3" stroke-linecap="round" opacity=".55"/>
     <path d="M208 213 Q224 206 242 214" fill="none" stroke="#7a5334" stroke-width="3" stroke-linecap="round" opacity=".55"/>
-    <!-- serene eyes -->
     <path d="M160 230 Q175 220 190 230" fill="none" stroke="#6b4a30" stroke-width="3.4" stroke-linecap="round"/>
     <path d="M210 230 Q225 220 240 230" fill="none" stroke="#6b4a30" stroke-width="3.4" stroke-linecap="round"/>
-    <!-- nose -->
     <path d="M200 236 L195 262 Q200 268 206 261" fill="none" stroke="#c88f5f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <!-- soft smile -->
     <path d="M180 276 Q200 289 220 276" fill="none" stroke="#b5573f" stroke-width="3.2" stroke-linecap="round"/>
   </symbol>
+
+  <!-- badge icons -->
+  <symbol id="i-cap" viewBox="0 0 24 24"><path class="lk" d="M22 10L12 5 2 10l10 5 10-5z"/><path class="lk" d="M6 12v5c0 1 3 2.5 6 2.5s6-1.5 6-2.5v-5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path class="lk" d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path class="lk" d="M19 3v18"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path class="lk" d="M4 11l8-7 8 7"/><path class="lk" d="M6 10v10h12V10"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path class="lk" d="M14 3l7 4-9 3-3 6-2-1 1-5-6-2 2-2 6 1z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path class="lk" d="M12 20s-7-4.6-7-9.7A3.7 3.7 0 0 1 12 7a3.7 3.7 0 0 1 7 3.3C19 15.4 12 20 12 20z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle class="lk" cx="9" cy="8" r="3.2"/><path class="lk" d="M3.5 20c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><path class="lk" d="M16 5.2A3.2 3.2 0 0 1 19 11"/><path class="lk" d="M17 15c2 .5 3.5 2.3 4 5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path class="lk" d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path class="lk" d="M21 11.5a8.4 8.4 0 0 1-11.9 7.6L3 21l1.9-6.1A8.4 8.4 0 1 1 21 11.5z"/></symbol>
 </svg>
 
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v2</span></span>
     <div class="lab-tabs" role="tablist" aria-label="Design direction">
       <button class="lab-tab" role="tab" id="t-a" aria-selected="true" aria-controls="s-a">A · Photo-forward</button>
-      <button class="lab-tab" role="tab" id="t-b" aria-selected="false" aria-controls="s-b" tabindex="-1">B · Intro letter</button>
-      <button class="lab-tab" role="tab" id="t-c" aria-selected="false" aria-controls="s-c" tabindex="-1">C · Clean classic</button>
+      <button class="lab-tab" role="tab" id="t-b" aria-selected="false" aria-controls="s-b" tabindex="-1">B · Refined classic</button>
     </div>
   </div>
 </div>
 
 <div class="bet" id="bet-a">
-  <span class="k">A · Photo-forward</span>
-  <p><b>Bets the face earns the moment.</b> A full-bleed portrait leads, name and facts sit right on it, and everything below is a short stack of warm cards. Feels like a person you'd want to meet — glanceable, modern, dignified.</p>
+  <span class="k">A · Photo-forward, flowing</span>
+  <p><b>Your notes applied:</b> intro-letter dropped, boxes gone. The portrait leads, the facts you'd skim are now <b>badges</b>, and the rest flows as prose with hairline breaks. Up top and at the bottom it's clear <b>Mrs. Cohen is the shadchan who sent this</b> — so contacting her makes sense.</p>
 </div>
 <div class="bet" id="bet-b" hidden>
-  <span class="k">B · Intro letter</span>
-  <p><b>Bets the matchmaker's voice does the work.</b> The photo and name are the header, then a short, warm written introduction from the shadchan carries the page, with the facts kept tidy underneath. Human and personal, never a form.</p>
-</div>
-<div class="bet" id="bet-c" hidden>
-  <span class="k">C · Clean classic</span>
-  <p><b>Bets on trust and legibility.</b> Photo, name, then structured field rows a shadchan already knows how to read. Restrained, scannable, prints clean — the familiar shidduch résumé, done well.</p>
+  <span class="k">B · Refined classic, flowing</span>
+  <p><b>The de-boxed résumé.</b> Same trustworthy, structured read you liked in the old "clean classic," but the stacked rows are gone: vitals become a <b>badge row</b>, everything else flows under hairline dividers. Photo + name lead; the shadchan and the contact are spelled out.</p>
 </div>
 
 <!-- ============================================================ -->
@@ -255,42 +231,45 @@
         <span class="priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
       </div>
       <div class="cap">
-        <div class="from">An introduction · shared by Mrs. Cohen</div>
         <h1>Rivka Mandel</h1>
         <div class="facts"><span>24</span><span>Lakewood, NJ</span><span>Open to relocating</span></div>
       </div>
     </div>
     <div class="a-body">
+
+      <div class="a-share sharer">
+        <span class="av" aria-hidden="true">MC</span>
+        <span class="t">
+          <span class="a"><b>Mrs. Cohen</b> shared Rivka's profile with you</span>
+          <span class="s">Shadchan · Lakewood — she's making this introduction</span>
+        </span>
+      </div>
+
       <p class="a-quote"><span class="mk">“</span>A home where guests never feel like guests.<span class="mk">”</span></p>
 
-      <div class="a-card">
-        <p class="a-h">At a glance</p>
-        <div class="glance">
-          <div class="g"><span class="dot"></span>Teaches 3rd grade — and genuinely loves it</div>
-          <div class="g"><span class="dot"></span>Bais Yaakov, then seminary in Yerushalayim</div>
-          <div class="g"><span class="dot"></span>Second of six — close, warm family</div>
+      <div>
+        <span class="lbl">At a glance</span>
+        <div class="badges">
+          <span class="badge"><svg><use href="#i-cap"/></svg>Teaches 3rd grade</span>
+          <span class="badge"><svg><use href="#i-book"/></svg>Seminary in Yerushalayim</span>
+          <span class="badge"><svg><use href="#i-users"/></svg>Second of six</span>
+          <span class="badge"><svg><use href="#i-plane"/></svg>Open to relocating</span>
+          <span class="badge soft"><svg><use href="#i-home"/></svg>Loves hosting</span>
+          <span class="badge soft"><svg><use href="#i-heart"/></svg>Baking &amp; long walks</span>
         </div>
       </div>
 
-      <div class="a-card">
-        <p class="a-h">A little more</p>
+      <div>
+        <span class="lbl">A little more</span>
         <p class="a-prose">Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
         <p class="a-prose">She's looking for someone warm and steady, serious about growing — and able to take himself a little less seriously.</p>
       </div>
 
-      <div class="a-card">
-        <p class="a-h">Family</p>
-        <div class="fam">
-          <div class="f"><div class="r">Father</div><div class="v">Rebbi in Lakewood</div></div>
-          <div class="f"><div class="r">Mother</div><div class="v">Speech therapist</div></div>
-          <div class="f"><div class="r">Siblings</div><div class="v">Second of six</div></div>
-          <div class="f"><div class="r">Background</div><div class="v">Warm, close-knit</div></div>
-        </div>
-      </div>
+      <p class="a-fam"><b>Family</b>Father a rebbi in Lakewood, mother a speech therapist. Second of six in a close, warm home.</p>
 
-      <div class="a-card">
-        <p class="a-h">Photos</p>
-        <div class="photos">
+      <div>
+        <span class="lbl">Photos</span>
+        <div class="a-photos">
           <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
           <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
           <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
@@ -298,15 +277,17 @@
         </div>
       </div>
 
-      <div class="a-card">
-        <p class="a-h">Vouched for</p>
-        <p class="vouch"><b>Three references</b> available on request — shared privately with the shadchan, not posted here.</p>
+      <p class="a-refs"><svg><use href="#i-star"/></svg><span><b>Three references</b> available on request — shared privately with the shadchan.</span></p>
+
+      <div class="contact">
+        <div class="sharer">
+          <span class="av" aria-hidden="true">MC</span>
+          <span class="t"><span class="a"><b>Mrs. Cohen</b></span><span class="s">Shadchan handling this introduction</span></span>
+        </div>
+        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> Message Mrs. Cohen</button>
+        <p class="sub">She'll pass your interest along to Rivka's family. Your contact isn't shown publicly.</p>
       </div>
 
-      <div class="a-cta">
-        <button class="btn primary">Reach Mrs. Cohen</button>
-        <button class="btn" aria-label="Save">Save</button>
-      </div>
     </div>
   </div>
 </div>
@@ -318,67 +299,11 @@
   <div class="device">
     <div class="b-wrap">
       <div class="b-top">
-        <span class="b-sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
-        <span class="b-priv">Private link · just for you</span>
+        <span class="b-sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath · Profile</span>
+        <span class="b-priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
       </div>
 
-      <div class="b-head">
-        <div class="pf"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Portrait of Rivka Mandel"><use href="#portrait"/></svg></div>
-        <div class="hd">
-          <div class="from">An introduction</div>
-          <h1>Rivka<br>Mandel</h1>
-          <div class="facts">24 · Lakewood, NJ<br>Open to relocating</div>
-        </div>
-      </div>
-
-      <div class="b-letter">
-        <p><span class="lead">I</span> wanted you to meet Rivka. I've known her family for years, and she's the kind of person a room gets warmer around — steady about the things that matter, and light about the ones that don't.</p>
-        <p>She teaches third grade and lights up talking about it. She grew up second of six in a close, warm home, and she's building toward one just like it — where guests never quite feel like guests.</p>
-        <p>She's looking for someone warm and steady, serious about growing, and able to take himself a little less seriously. I think she's worth a real look.</p>
-        <div class="b-sign">
-          <span class="av" aria-hidden="true">MC</span>
-          <span class="t"><div class="n">Mrs. Cohen</div><div class="s">Shadchan · Lakewood</div></span>
-        </div>
-      </div>
-
-      <div class="b-facts">
-        <div class="row"><div class="r">In her words</div><div class="v" style="font-family:var(--serif);font-style:italic;">“A home where guests never feel like guests.”</div></div>
-        <div class="row"><div class="r">Learning</div><div class="v">Bais Yaakov, then seminary in Yerushalayim</div></div>
-        <div class="row"><div class="r">Work</div><div class="v">3rd-grade morah</div></div>
-        <div class="row"><div class="r">Family</div><div class="v">Father a rebbi, mother a speech therapist; second of six</div></div>
-        <div class="row"><div class="r">References</div><div class="v">Three, on request — shared privately with the shadchan</div></div>
-      </div>
-
-      <div class="b-more">
-        <h3>A few more of her</h3>
-        <div class="b-strip">
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-        </div>
-      </div>
-
-      <div class="b-cta">
-        <div class="q">Think this could be a shidduch?</div>
-        <button class="btn primary">Reach Mrs. Cohen</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ -->
-<!-- DIRECTION C -->
-<!-- ============================================================ -->
-<div class="stage" id="s-c" role="tabpanel" aria-labelledby="t-c">
-  <div class="device">
-    <div class="c-wrap">
-      <div class="c-top">
-        <span class="c-sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath · Profile</span>
-        <span class="c-priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
-      </div>
-
-      <div class="c-id">
+      <div class="b-id">
         <div class="pf"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Portrait of Rivka Mandel"><use href="#portrait"/></svg></div>
         <div class="hd">
           <h1>Rivka Mandel</h1>
@@ -387,44 +312,60 @@
         </div>
       </div>
 
-      <div class="c-sec">
-        <h2>The basics</h2>
-        <div class="c-row"><div class="r">Age</div><div class="v">24</div></div>
-        <div class="c-row"><div class="r">Location</div><div class="v">Lakewood, NJ · open to relocating</div></div>
-        <div class="c-row"><div class="r">Occupation</div><div class="v">3rd-grade morah</div></div>
-        <div class="c-row"><div class="r">Learning</div><div class="v">Bais Yaakov, then seminary in Yerushalayim</div></div>
-
-        <h2>Family</h2>
-        <div class="c-row"><div class="r">Father</div><div class="v">Rebbi in Lakewood</div></div>
-        <div class="c-row"><div class="r">Mother</div><div class="v">Speech therapist</div></div>
-        <div class="c-row"><div class="r">Siblings</div><div class="v">Second of six — close, warm family</div></div>
-
-        <h2>In her words</h2>
-        <div class="c-quote">“A home where guests never feel like guests.”</div>
-        <p class="c-note">Steady about the things that matter, light about the ones that don't. Her classroom runs on warmth and humor, and it's the same at home — the door is always open.</p>
-
-        <h2>Looking for</h2>
-        <p class="c-note">Warm and steady, serious about growing — and able to take himself a little less seriously.</p>
-
-        <h2>References</h2>
-        <div class="c-row"><div class="r">Available</div><div class="v">Three, on request — shared privately with the shadchan</div></div>
+      <div class="b-badges badges">
+        <span class="badge soft">24</span>
+        <span class="badge soft"><svg><use href="#i-home"/></svg>Lakewood, NJ</span>
+        <span class="badge soft"><svg><use href="#i-plane"/></svg>Open to relocating</span>
+        <span class="badge soft"><svg><use href="#i-cap"/></svg>3rd-grade morah</span>
+        <span class="badge soft"><svg><use href="#i-book"/></svg>Bais Yaakov + seminary</span>
+        <span class="badge soft"><svg><use href="#i-users"/></svg>Second of six</span>
       </div>
 
-      <div class="c-cta">
-        <button class="btn primary">Reach Mrs. Cohen</button>
-        <span class="foot">Shared privately · not listed</span>
+      <div class="b-sec">
+        <span class="lbl">In her words</span>
+        <p class="q">“A home where guests never feel like guests.”</p>
+        <p>Steady about the things that matter, light about the ones that don't. Her classroom runs on warmth and humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
       </div>
+
+      <div class="b-div"></div>
+      <div class="b-sec">
+        <span class="lbl">Family</span>
+        <p>Father is a rebbi in Lakewood; mother is a speech therapist. Second of six, a close and warm family.</p>
+      </div>
+
+      <div class="b-div"></div>
+      <div class="b-sec">
+        <span class="lbl">Looking for</span>
+        <p>Warm and steady, serious about growing — and able to take himself a little less seriously.</p>
+      </div>
+
+      <div class="b-div"></div>
+      <div class="b-sec">
+        <span class="lbl">References</span>
+        <p class="b-refs" style="margin-top:0;"><svg><use href="#i-star"/></svg><span><b>Three</b> available on request — shared privately with the shadchan.</span></p>
+      </div>
+
+      <div class="b-contact">
+        <div class="sharer">
+          <span class="av" aria-hidden="true">MC</span>
+          <span class="t"><span class="a"><b>Mrs. Cohen</b> sent you this profile</span><span class="s">Shadchan · Lakewood — she's making the introduction</span></span>
+        </div>
+        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> Message Mrs. Cohen</button>
+        <p class="sub">She'll pass your interest to Rivka's family. Your contact isn't shown publicly.</p>
+      </div>
+
     </div>
   </div>
 </div>
 
 <div class="foot-note">
-  <span class="stamp">Lab · profile-redesign · v1 · 2026-07-07</span> — placeholder person. Photo slot uses an illustrated portrait; production shows her real photo.
+  <span class="stamp">Lab · profile-redesign · v2 · 2026-07-07</span><br>
+  v2 changes: dropped the intro-letter · replaced boxes/rows with a badge system + flowing prose · made the shadchan &amp; contact explicit. Placeholder person; photo slot is an illustrated portrait (production shows the real photo).
 </div>
 
 <script>
   (function () {
-    var dirs = ['a', 'b', 'c'];
+    var dirs = ['a', 'b'];
     function select(id) {
       dirs.forEach(function (k) {
         var on = (k === id);

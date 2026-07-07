@@ -58,7 +58,7 @@
   .lab-tab[aria-selected="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
   .bet { max-width: 1080px; margin: 0 auto; padding: 18px clamp(16px, 5vw, 34px) 4px; }
   .bet .k { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); }
-  .bet p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; max-width: 68ch; line-height: 1.55; }
+  .bet p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; max-width: 72ch; line-height: 1.55; }
   .bet b { color: var(--ink); font-weight: 700; }
 
   .stage { display: none; padding: clamp(20px, 4vw, 40px) clamp(12px, 4vw, 30px) 70px; }
@@ -70,23 +70,44 @@
   .badges { display: flex; flex-wrap: wrap; gap: 8px; }
   .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 650; line-height: 1; padding: 8px 13px; border-radius: 999px; background: var(--pom-soft); color: var(--pom-ink); }
   .badge svg { width: 14px; height: 14px; flex: none; opacity: .85; }
+  .badge.gold { background: var(--gold-soft); color: var(--gold); }
   .badge.soft { background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-weight: 600; }
   .badge.soft svg { color: var(--muted); }
 
-  /* section label used across both directions */
   .lbl { display: block; font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); margin: 0 0 12px; }
 
-  /* who-shared strip (fixes the "who is this / why contact her" confusion) */
+  /* pull-quote from the interview (shared) */
+  .said { position: relative; font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.42; color: var(--ink); padding-left: 15px; margin: 14px 0 0; border-left: 2px solid var(--pom); }
+  .said .who { display: block; font-family: var(--sans); font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--faint); margin-top: 6px; }
+
+  /* ============ shared arrival / respond module ============ */
+  .arrival { border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: var(--paper); box-shadow: var(--shadow-xs); }
+  .arr-seg { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
+  .arr-seg button { font-family: var(--sans); font-size: 11.5px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 6px 11px; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+  .arr-seg button:hover { border-color: var(--pom); color: var(--ink); }
+  .arr-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .arr-seg .hint { flex-basis: 100%; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; color: var(--faint); text-transform: uppercase; margin-bottom: 2px; }
   .sharer { display: flex; align-items: center; gap: 11px; }
   .sharer .av { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 15px; }
+  .sharer .av .seal-mark { width: 22px; height: 22px; }
   .sharer .t { min-width: 0; }
   .sharer .t .a, .sharer .t .s { display: block; }
   .sharer .t .a { font-size: 13.5px; line-height: 1.35; }
   .sharer .t .a b { font-weight: 700; }
   .sharer .t .s { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .arr-note { font-family: var(--serif); font-style: italic; font-size: 1.02rem; line-height: 1.45; color: var(--ink); background: var(--pom-soft); border-radius: 12px; padding: 12px 14px; margin: 13px 0 0; }
+  .arrival .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; }
+  .arrival .btn svg { width: 17px; height: 17px; }
+  .arrival .priv { text-align: center; font-size: 12px; color: var(--faint); margin: 9px 0 0; line-height: 1.45; }
 
   .btn { font-family: var(--sans); font-weight: 700; font-size: 14.5px; border-radius: 12px; padding: 13px 18px; cursor: pointer; border: 1px solid var(--line); background: var(--raise); color: var(--ink); }
   .btn.primary { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+
+  /* thin "how it reached you" line at top of each profile */
+  .arr-top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
+  .arr-top .ic { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 11px; }
+  .arr-top .ic .seal-mark { width: 13px; height: 13px; }
+  .arr-top b { color: var(--ink); font-weight: 700; }
 
   /* ============ DIRECTION A — PHOTO-FORWARD, FLOWING ============ */
   .a-hero { position: relative; aspect-ratio: 4 / 5; }
@@ -103,11 +124,10 @@
   .a-hero .cap .facts span { display: inline-flex; align-items: center; gap: 8px; }
   .a-hero .cap .facts span + span::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--pom); }
   .a-body { padding: 20px clamp(18px, 5vw, 24px) 24px; display: flex; flex-direction: column; gap: 22px; }
-  .a-share { padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  .a-body > .arr-top { padding-bottom: 20px; border-bottom: 1px solid var(--line); margin: 0; }
   .a-quote { font-family: var(--serif); font-style: italic; font-size: 1.34rem; line-height: 1.34; text-wrap: balance; margin: 0; }
   .a-quote .mk { color: var(--pom); font-style: normal; }
   .a-prose { font-size: 15px; line-height: 1.64; margin: 0; }
-  .a-prose + .a-prose { margin-top: 11px; }
   .a-fam { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin: 0; }
   .a-fam b { color: var(--faint); font-weight: 700; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
   .a-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -115,11 +135,6 @@
   .a-refs { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
   .a-refs svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
   .a-refs b { color: var(--ink); font-weight: 700; }
-  .contact { border-top: 1px solid var(--line); padding-top: 20px; }
-  .contact .sharer { margin-bottom: 14px; }
-  .contact .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .contact .btn svg { width: 17px; height: 17px; }
-  .contact .sub { text-align: center; font-size: 12px; color: var(--faint); margin: 9px 0 0; }
 
   /* ============ DIRECTION B — REFINED CLASSIC, FLOWING ============ */
   .b-wrap { padding: clamp(18px, 5vw, 26px) clamp(18px, 5vw, 26px) 24px; }
@@ -133,21 +148,18 @@
   .b-id .hd h1 { font-size: 2.05rem; line-height: 1; letter-spacing: -.015em; }
   .b-id .hd .heb { font-family: var(--serif); color: var(--muted); font-size: .98rem; margin-top: 3px; }
   .b-id .hd .one { font-size: 13px; color: var(--muted); margin-top: 9px; line-height: 1.5; }
-  .b-badges { margin: 22px 0 0; }
+  .b-badges { margin: 20px 0 0; }
+  .b-arrtop { margin: 18px 0 0; }
   .b-sec { margin-top: 24px; }
   .b-sec .q { font-family: var(--serif); font-style: italic; font-size: 1.28rem; line-height: 1.36; margin: 0; text-wrap: balance; }
   .b-sec p { font-size: 14.6px; line-height: 1.62; margin: 10px 0 0; }
   .b-sec p:first-of-type { margin-top: 0; }
+  .b-sec .q + p { margin-top: 12px; }
   .b-div { height: 1px; background: var(--line); margin: 24px 0 0; }
   .b-refs { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); margin-top: 10px; }
   .b-refs svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
   .b-refs b { color: var(--ink); font-weight: 700; }
-  .b-contact { margin-top: 26px; padding: 17px; background: var(--pom-soft); border-radius: 18px; }
-  .b-contact .sharer { margin-bottom: 13px; }
-  .b-contact .sharer .av { background: var(--raise); }
-  .b-contact .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .b-contact .btn svg { width: 17px; height: 17px; }
-  .b-contact .sub { text-align: center; font-size: 12px; color: var(--pom-ink); opacity: .8; margin: 9px 0 0; }
+  .b-arrival { margin-top: 26px; }
 
   .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 8px 20px 40px; line-height: 1.6; }
   .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
@@ -158,7 +170,7 @@
   }
 </style>
 
-<!-- ===== shared illustrated portrait (photo-slot placeholder) ===== -->
+<!-- ===== shared illustrated portrait + icons ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="portrait" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
     <defs>
@@ -186,8 +198,6 @@
     <path d="M200 236 L195 262 Q200 268 206 261" fill="none" stroke="#c88f5f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M180 276 Q200 289 220 276" fill="none" stroke="#b5573f" stroke-width="3.2" stroke-linecap="round"/>
   </symbol>
-
-  <!-- badge icons -->
   <symbol id="i-cap" viewBox="0 0 24 24"><path class="lk" d="M22 10L12 5 2 10l10 5 10-5z"/><path class="lk" d="M6 12v5c0 1 3 2.5 6 2.5s6-1.5 6-2.5v-5"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path class="lk" d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path class="lk" d="M19 3v18"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path class="lk" d="M4 11l8-7 8 7"/><path class="lk" d="M6 10v10h12V10"/></symbol>
@@ -201,7 +211,7 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v2</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v3</span></span>
     <div class="lab-tabs" role="tablist" aria-label="Design direction">
       <button class="lab-tab" role="tab" id="t-a" aria-selected="true" aria-controls="s-a">A · Photo-forward</button>
       <button class="lab-tab" role="tab" id="t-b" aria-selected="false" aria-controls="s-b" tabindex="-1">B · Refined classic</button>
@@ -211,11 +221,11 @@
 
 <div class="bet" id="bet-a">
   <span class="k">A · Photo-forward, flowing</span>
-  <p><b>Your notes applied:</b> intro-letter dropped, boxes gone. The portrait leads, the facts you'd skim are now <b>badges</b>, and the rest flows as prose with hairline breaks. Up top and at the bottom it's clear <b>Mrs. Cohen is the shadchan who sent this</b> — so contacting her makes sense.</p>
+  <p><b>v3 from your pins:</b> separate <b>Who she is</b> / <b>What she's looking for</b> sections, her own <b>interview quotes</b> woven in, and the contact block is now a flexible <b>“how this reached you”</b> module — <b>try the Shadchan / AI match / Forwarded / Direct switcher</b>; it adapts the attribution, an optional note about why it's a fit, and the reply. No more "shadchan → family" assumption.</p>
 </div>
 <div class="bet" id="bet-b" hidden>
   <span class="k">B · Refined classic, flowing</span>
-  <p><b>The de-boxed résumé.</b> Same trustworthy, structured read you liked in the old "clean classic," but the stacked rows are gone: vitals become a <b>badge row</b>, everything else flows under hairline dividers. Photo + name lead; the shadchan and the contact are spelled out.</p>
+  <p><b>v3 from your pins:</b> the badge row now has <b>color</b>, the loved “In her words” section stays and gains a real quote, references are shown as <b>optional</b>, and the bottom is the same flexible arrival module (<b>Shadchan / AI / Forwarded / Direct</b>) — no family assumption.</p>
 </div>
 
 <!-- ============================================================ -->
@@ -237,13 +247,7 @@
     </div>
     <div class="a-body">
 
-      <div class="a-share sharer">
-        <span class="av" aria-hidden="true">MC</span>
-        <span class="t">
-          <span class="a"><b>Mrs. Cohen</b> shared Rivka's profile with you</span>
-          <span class="s">Shadchan · Lakewood — she's making this introduction</span>
-        </span>
-      </div>
+      <div class="arr-top" data-arrtop="a"><span class="ic"></span><span class="tx"></span></div>
 
       <p class="a-quote"><span class="mk">“</span>A home where guests never feel like guests.<span class="mk">”</span></p>
 
@@ -251,18 +255,24 @@
         <span class="lbl">At a glance</span>
         <div class="badges">
           <span class="badge"><svg><use href="#i-cap"/></svg>Teaches 3rd grade</span>
-          <span class="badge"><svg><use href="#i-book"/></svg>Seminary in Yerushalayim</span>
+          <span class="badge gold"><svg><use href="#i-book"/></svg>Seminary in Yerushalayim</span>
           <span class="badge"><svg><use href="#i-users"/></svg>Second of six</span>
-          <span class="badge"><svg><use href="#i-plane"/></svg>Open to relocating</span>
+          <span class="badge gold"><svg><use href="#i-plane"/></svg>Open to relocating</span>
           <span class="badge soft"><svg><use href="#i-home"/></svg>Loves hosting</span>
           <span class="badge soft"><svg><use href="#i-heart"/></svg>Baking &amp; long walks</span>
         </div>
       </div>
 
       <div>
-        <span class="lbl">A little more</span>
+        <span class="lbl">Who she is</span>
         <p class="a-prose">Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
-        <p class="a-prose">She's looking for someone warm and steady, serious about growing — and able to take himself a little less seriously.</p>
+        <p class="said">Teaching third grade is honestly the best part of my day — they keep me laughing.<span class="who">Rivka, in her interview</span></p>
+      </div>
+
+      <div>
+        <span class="lbl">What she's looking for</span>
+        <p class="a-prose">Someone warm and steady, serious about growing — and grounded enough not to take himself too seriously.</p>
+        <p class="said">I'd rather build something calm and real than chase something loud.<span class="who">Rivka, in her interview</span></p>
       </div>
 
       <p class="a-fam"><b>Family</b>Father a rebbi in Lakewood, mother a speech therapist. Second of six in a close, warm home.</p>
@@ -277,15 +287,20 @@
         </div>
       </div>
 
-      <p class="a-refs"><svg><use href="#i-star"/></svg><span><b>Three references</b> available on request — shared privately with the shadchan.</span></p>
+      <p class="a-refs"><svg><use href="#i-star"/></svg><span><b>Three references</b> available on request — shared privately, not posted here. <em>(Optional — some profiles won't list any.)</em></span></p>
 
-      <div class="contact">
-        <div class="sharer">
-          <span class="av" aria-hidden="true">MC</span>
-          <span class="t"><span class="a"><b>Mrs. Cohen</b></span><span class="s">Shadchan handling this introduction</span></span>
+      <div class="arrival" data-arrival="a">
+        <div class="arr-seg" role="group" aria-label="How this reached you (prototype)">
+          <span class="hint">Prototype · how this reached you</span>
+          <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
+          <button type="button" data-s="ai" aria-pressed="false">AI match</button>
+          <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
+          <button type="button" data-s="direct" aria-pressed="false">Direct</button>
         </div>
-        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> Message Mrs. Cohen</button>
-        <p class="sub">She'll pass your interest along to Rivka's family. Your contact isn't shown publicly.</p>
+        <div class="sharer"><span class="av"></span><span class="t"><span class="a"></span><span class="s"></span></span></div>
+        <p class="arr-note"></p>
+        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
+        <p class="priv"></p>
       </div>
 
     </div>
@@ -314,17 +329,26 @@
 
       <div class="b-badges badges">
         <span class="badge soft">24</span>
-        <span class="badge soft"><svg><use href="#i-home"/></svg>Lakewood, NJ</span>
-        <span class="badge soft"><svg><use href="#i-plane"/></svg>Open to relocating</span>
-        <span class="badge soft"><svg><use href="#i-cap"/></svg>3rd-grade morah</span>
-        <span class="badge soft"><svg><use href="#i-book"/></svg>Bais Yaakov + seminary</span>
-        <span class="badge soft"><svg><use href="#i-users"/></svg>Second of six</span>
+        <span class="badge"><svg><use href="#i-home"/></svg>Lakewood, NJ</span>
+        <span class="badge gold"><svg><use href="#i-plane"/></svg>Open to relocating</span>
+        <span class="badge"><svg><use href="#i-cap"/></svg>3rd-grade morah</span>
+        <span class="badge gold"><svg><use href="#i-book"/></svg>Bais Yaakov + seminary</span>
+        <span class="badge"><svg><use href="#i-users"/></svg>Second of six</span>
       </div>
+
+      <div class="arr-top b-arrtop" data-arrtop="b"><span class="ic"></span><span class="tx"></span></div>
 
       <div class="b-sec">
         <span class="lbl">In her words</span>
         <p class="q">“A home where guests never feel like guests.”</p>
         <p>Steady about the things that matter, light about the ones that don't. Her classroom runs on warmth and humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
+        <p class="said" style="margin-top:14px;">Teaching third grade is honestly the best part of my day — they keep me laughing.<span class="who">Rivka, in her interview</span></p>
+      </div>
+
+      <div class="b-div"></div>
+      <div class="b-sec">
+        <span class="lbl">What she's looking for</span>
+        <p>Warm and steady, serious about growing — and grounded enough not to take himself too seriously.</p>
       </div>
 
       <div class="b-div"></div>
@@ -335,23 +359,22 @@
 
       <div class="b-div"></div>
       <div class="b-sec">
-        <span class="lbl">Looking for</span>
-        <p>Warm and steady, serious about growing — and able to take himself a little less seriously.</p>
+        <span class="lbl">References <span style="color:var(--faint);font-weight:600;text-transform:none;letter-spacing:0;">· optional</span></span>
+        <p class="b-refs" style="margin-top:0;"><svg><use href="#i-star"/></svg><span><b>Three</b> available on request — shared privately. Not every profile will list references.</span></p>
       </div>
 
-      <div class="b-div"></div>
-      <div class="b-sec">
-        <span class="lbl">References</span>
-        <p class="b-refs" style="margin-top:0;"><svg><use href="#i-star"/></svg><span><b>Three</b> available on request — shared privately with the shadchan.</span></p>
-      </div>
-
-      <div class="b-contact">
-        <div class="sharer">
-          <span class="av" aria-hidden="true">MC</span>
-          <span class="t"><span class="a"><b>Mrs. Cohen</b> sent you this profile</span><span class="s">Shadchan · Lakewood — she's making the introduction</span></span>
+      <div class="arrival b-arrival" data-arrival="b">
+        <div class="arr-seg" role="group" aria-label="How this reached you (prototype)">
+          <span class="hint">Prototype · how this reached you</span>
+          <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
+          <button type="button" data-s="ai" aria-pressed="false">AI match</button>
+          <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
+          <button type="button" data-s="direct" aria-pressed="false">Direct</button>
         </div>
-        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> Message Mrs. Cohen</button>
-        <p class="sub">She'll pass your interest to Rivka's family. Your contact isn't shown publicly.</p>
+        <div class="sharer"><span class="av"></span><span class="t"><span class="a"></span><span class="s"></span></span></div>
+        <p class="arr-note"></p>
+        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
+        <p class="priv"></p>
       </div>
 
     </div>
@@ -359,12 +382,13 @@
 </div>
 
 <div class="foot-note">
-  <span class="stamp">Lab · profile-redesign · v2 · 2026-07-07</span><br>
-  v2 changes: dropped the intro-letter · replaced boxes/rows with a badge system + flowing prose · made the shadchan &amp; contact explicit. Placeholder person; photo slot is an illustrated portrait (production shows the real photo).
+  <span class="stamp">Lab · profile-redesign · v3 · 2026-07-07</span><br>
+  v3 changes: split "who she is" / "looking for" · added interview quotes · colored B's badges · references shown as optional · rebuilt the contact block into a flexible "how this reached you" module (shadchan / AI / forwarded / direct — no family assumption). Placeholder person; illustrated portrait stands in for the real photo.
 </div>
 
 <script>
   (function () {
+    /* ---- direction tabs (hash-routed for per-variant feedback pins) ---- */
     var dirs = ['a', 'b'];
     function norm() { var h = (location.hash || '').replace('#', ''); return dirs.indexOf(h) > -1 ? h : 'a'; }
     function apply(id) {
@@ -377,7 +401,6 @@
       });
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
-    // hash routes each direction so feedback pins are tagged #a / #b
     if (!location.hash) { try { history.replaceState(null, '', '#a'); } catch (e) {} }
     apply(norm());
     window.addEventListener('hashchange', function () { apply(norm()); });
@@ -390,6 +413,47 @@
         if (e.key === 'ArrowLeft') j = (i - 1 + dirs.length) % dirs.length;
         if (j > -1) { e.preventDefault(); location.hash = dirs[j]; document.getElementById('t-' + dirs[j]).focus(); }
       });
+    });
+
+    /* ---- flexible "how this reached you" module ---- */
+    var SEAL = '<span class="seal-mark" aria-hidden="true"></span>';
+    var ARR = {
+      shadchan: { av: 'MC', top: '<b>Mrs. Cohen</b> suggested this for you',
+        who: '<b>Mrs. Cohen</b> suggested this for you', sub: 'Shadchan · Lakewood',
+        note: '“I thought of you two the moment I met Rivka — same warmth, and she\'ll keep up with your humor.”',
+        cta: 'Message Mrs. Cohen', priv: 'She\'ll introduce you both. Your contact stays private until you choose to share it.' },
+      ai: { av: SEAL, top: 'Suggested by <b>ZivugPath</b>',
+        who: '<b>ZivugPath</b> suggested this match', sub: 'From what you\'re both looking for',
+        note: '“You\'re both after a warm, open home and a steady pace — there\'s real overlap in what matters to you.”',
+        cta: 'Message Rivka', priv: 'Your message goes through ZivugPath. Your contact stays private until you choose to share it.' },
+      friend: { av: 'CS', top: '<b>Chaya S.</b> forwarded you this',
+        who: '<b>Chaya S.</b> forwarded you this profile', sub: 'Passed along by a friend',
+        note: '“You came to mind the second I saw it — just take a look 😊”',
+        cta: 'Message Rivka', priv: 'Your reply reaches Rivka\'s side. Your contact stays private until you choose to share it.' },
+      direct: { av: 'R', top: '<b>Rivka</b> shared her profile',
+        who: '<b>Rivka</b> shared her profile', sub: 'Reach out directly',
+        note: '', cta: 'Message Rivka', priv: 'Your contact stays private until you choose to share it.' }
+    };
+    function paintArrival(dir, state) {
+      var d = ARR[state];
+      var top = document.querySelector('[data-arrtop="' + dir + '"]');
+      if (top) { top.querySelector('.ic').innerHTML = (d.av === SEAL ? SEAL : d.av); top.querySelector('.tx').innerHTML = d.top; }
+      var m = document.querySelector('[data-arrival="' + dir + '"]');
+      m.querySelector('.av').innerHTML = (d.av === SEAL ? SEAL : d.av);
+      m.querySelector('.t .a').innerHTML = d.who;
+      m.querySelector('.t .s').textContent = d.sub;
+      var note = m.querySelector('.arr-note');
+      if (d.note) { note.textContent = d.note; note.style.display = ''; } else { note.style.display = 'none'; }
+      m.querySelector('.cta-t').textContent = d.cta;
+      m.querySelector('.priv').textContent = d.priv;
+      m.querySelectorAll('.arr-seg button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.s === state ? 'true' : 'false'); });
+    }
+    dirs.forEach(function (dir) {
+      var m = document.querySelector('[data-arrival="' + dir + '"]');
+      m.querySelectorAll('.arr-seg button').forEach(function (b) {
+        b.addEventListener('click', function () { paintArrival(dir, b.dataset.s); });
+      });
+      paintArrival(dir, 'shadchan');
     });
   })();
 </script>

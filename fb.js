@@ -70,6 +70,24 @@
     return '';
   }
 
+  // Snapshot the page's active UI state at pin time. Any element the page marks
+  // with data-fb-state="Label" contributes "Label: <active option>", where the
+  // active option is its aria-pressed / aria-selected / data-active child. Only
+  // currently-visible groups count, so a hidden variant's controls are ignored.
+  function captureState() {
+    var parts = [];
+    var groups = document.querySelectorAll('[data-fb-state]');
+    for (var i = 0; i < groups.length; i++) {
+      var g = groups[i];
+      if (!g.getClientRects().length) continue;
+      var active = g.querySelector('[aria-pressed="true"],[aria-selected="true"],[data-active="true"]');
+      if (!active) continue;
+      var val = (active.getAttribute('aria-label') || active.textContent || '').trim().replace(/\s+/g, ' ');
+      if (val) parts.push(g.getAttribute('data-fb-state') + ': ' + val);
+    }
+    return parts.join(' · ');
+  }
+
   function render() {
     layer.innerHTML = '';
     pins.forEach(function (p, i) {
@@ -77,7 +95,7 @@
       d.type = 'button';
       d.className = 'zpfb-pin';
       d.textContent = i + 1;
-      d.title = p.note + ' (click to remove)';
+      d.title = p.note + (p.state ? ' — [' + p.state + ']' : '') + ' (click to remove)';
       d.style.left = (p.xr * 100) + '%';
       d.style.top = p.y + 'px';
       d.addEventListener('click', function () {
@@ -104,7 +122,7 @@
       var note = ta.value.trim();
       if (note) {
         syncKey();
-        pins.push({ xr: x / document.documentElement.scrollWidth, y: y, near: nearText(x, y), note: note, w: window.innerWidth });
+        pins.push({ xr: x / document.documentElement.scrollWidth, y: y, near: nearText(x, y), note: note, w: window.innerWidth, state: captureState() });
         save(); render();
       }
       f.remove();
@@ -127,7 +145,7 @@
 
   function fmtPin(p, i) {
     return (i + 1) + '. [' + Math.round(p.xr * 100) + '% across, ' + p.y + 'px down, viewport ' + p.w + 'px' +
-      (p.near ? ', near "' + p.near + '"' : '') + '] ' + p.note;
+      (p.near ? ', near "' + p.near + '"' : '') + ']' + (p.state ? ' {' + p.state + '}' : '') + ' ' + p.note;
   }
   function today() { return new Date().toISOString().slice(0, 10); }
   function writeOut(out, okLabel) {

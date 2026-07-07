@@ -113,7 +113,7 @@
   .arr-top b { color: var(--ink); font-weight: 700; }
 
   /* ============ DIRECTION A — PHOTO-FORWARD, FLOWING ============ */
-  .a-hero { position: relative; aspect-ratio: 4 / 5; }
+  .a-hero { position: relative; aspect-ratio: 4 / 4.4; }
   .a-hero .por { position: absolute; inset: 0; }
   .a-hero .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.8) 0%, rgba(20,12,9,.24) 44%, transparent 64%); }
   .a-hero .chip-top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; align-items: center; justify-content: space-between; }
@@ -173,8 +173,8 @@
   .vp-web .device::after { content: "🔒 zivugpath.com/p/rivka-m"; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font: 600 11px/1.7 var(--sans); color: var(--muted); background: var(--raise); border: 1px solid var(--line); border-radius: 999px; padding: 3px 14px; }
 
   /* A — portrait rail + content */
-  .vp-web #s-a .device { display: grid; grid-template-columns: 380px 1fr; align-items: start; }
-  .vp-web #s-a .a-hero { position: sticky; top: 50px; aspect-ratio: 4 / 5; border-radius: 0 0 0 16px; }
+  .vp-web #s-a .device { display: grid; grid-template-columns: 288px 1fr; align-items: start; }
+  .vp-web #s-a .a-hero { position: sticky; top: 50px; aspect-ratio: 4 / 4.6; border-radius: 0 0 0 16px; }
   .vp-web #s-a .a-body { padding: 30px clamp(22px, 3vw, 40px) 34px; }
 
   /* B — résumé rail + sections */
@@ -241,7 +241,7 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v3</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v4</span></span>
     <div class="lab-vp" role="group" aria-label="Screen size" data-fb-state="Viewport">
       <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
       <button type="button" data-vp="web" aria-pressed="false">Web</button>
@@ -251,15 +251,6 @@
       <button class="lab-tab" role="tab" id="t-b" aria-selected="false" aria-controls="s-b" tabindex="-1">B · Refined classic</button>
     </div>
   </div>
-</div>
-
-<div class="bet" id="bet-a">
-  <span class="k">A · Photo-forward, flowing</span>
-  <p><b>v3 from your pins:</b> separate <b>Who she is</b> / <b>What she's looking for</b> sections, her own <b>interview quotes</b> woven in, and the contact block is now a flexible <b>“how this reached you”</b> module — <b>try the Shadchan / AI match / Forwarded / Direct switcher</b>; it adapts the attribution, an optional note about why it's a fit, and the reply. No more "shadchan → family" assumption.</p>
-</div>
-<div class="bet" id="bet-b" hidden>
-  <span class="k">B · Refined classic, flowing</span>
-  <p><b>v3 from your pins:</b> the badge row now has <b>color</b>, the loved “In her words” section stays and gains a real quote, references are shown as <b>optional</b>, and the bottom is the same flexible arrival module (<b>Shadchan / AI / Forwarded / Direct</b>) — no family assumption.</p>
 </div>
 
 <!-- ============================================================ -->
@@ -300,13 +291,13 @@
       <div>
         <span class="lbl">Who she is</span>
         <p class="a-prose">Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
-        <p class="said">Teaching third grade is honestly the best part of my day — they keep me laughing.<span class="who">Rivka, in her interview</span></p>
+        <p class="said">Teaching third grade is honestly the best part of my day — they keep me laughing.</p>
       </div>
 
       <div>
         <span class="lbl">What she's looking for</span>
         <p class="a-prose">Someone warm and steady, serious about growing — and grounded enough not to take himself too seriously.</p>
-        <p class="said">I'd rather build something calm and real than chase something loud.<span class="who">Rivka, in her interview</span></p>
+        <p class="said">I'd rather build something calm and real than chase something loud.</p>
       </div>
 
       <p class="a-fam"><b>Family</b>Father a rebbi in Lakewood, mother a speech therapist. Second of six in a close, warm home.</p>
@@ -324,8 +315,8 @@
       <p class="a-refs"><svg><use href="#i-star"/></svg><span><b>Three references</b> available on request — shared privately, not posted here. <em>(Optional — some profiles won't list any.)</em></span></p>
 
       <div class="arrival" data-arrival="a">
-        <div class="arr-seg" role="group" aria-label="How this reached you (prototype)" data-fb-state="How this reached you">
-          <span class="hint">Prototype · how this reached you</span>
+        <div class="arr-seg" role="group" aria-label="How this reached you" data-fb-state="How this reached you">
+          <span class="hint">How this reached you</span>
           <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
           <button type="button" data-s="ai" aria-pressed="false">AI match</button>
           <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
@@ -379,7 +370,7 @@
         <span class="lbl">In her words</span>
         <p class="q">“A home where guests never feel like guests.”</p>
         <p>Steady about the things that matter, light about the ones that don't. Her classroom runs on warmth and humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
-        <p class="said" style="margin-top:14px;">Teaching third grade is honestly the best part of my day — they keep me laughing.<span class="who">Rivka, in her interview</span></p>
+        <p class="said" style="margin-top:14px;">Teaching third grade is honestly the best part of my day — they keep me laughing.</p>
       </div>
 
       <div class="b-div"></div>
@@ -402,8 +393,8 @@
       </div><!-- /b-main -->
 
       <div class="arrival b-arrival" data-arrival="b">
-        <div class="arr-seg" role="group" aria-label="How this reached you (prototype)" data-fb-state="How this reached you">
-          <span class="hint">Prototype · how this reached you</span>
+        <div class="arr-seg" role="group" aria-label="How this reached you" data-fb-state="How this reached you">
+          <span class="hint">How this reached you</span>
           <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
           <button type="button" data-s="ai" aria-pressed="false">AI match</button>
           <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
@@ -420,8 +411,11 @@
 </div>
 
 <div class="foot-note">
-  <span class="stamp">Lab · profile-redesign · v3 · 2026-07-07</span><br>
-  v3 changes: split "who she is" / "looking for" · added interview quotes · colored B's badges · references shown as optional · rebuilt the contact block into a flexible "how this reached you" module (shadchan / AI / forwarded / direct — no family assumption). Placeholder person; illustrated portrait stands in for the real photo.
+  <div class="stamp">Lab · profile-redesign · v4 · 2026-07-07</div>
+  <p><b>What this is:</b> two directions for the shared profile — <b>A · Photo-forward</b> and <b>B · Refined classic</b>. Toggle <b>Mobile / Web</b> and the direction up top. The “How this reached you” switcher (shadchan / AI / forwarded / direct) is a demo control to show how the page adapts — it isn't part of the real page.</p>
+  <p><b>v4 notes:</b> removed quote name-tags &amp; the top blurbs (moved here) · smaller hero, especially on web · trimmed extra wording.</p>
+  <p><b>Parked (not now):</b> what actually belongs in the badges / visual elements deserves a dedicated deep-research pass later.</p>
+  <p>Placeholder person; illustrated portrait stands in for the real photo.</p>
 </div>
 
 <script>
@@ -435,7 +429,6 @@
         document.getElementById('t-' + k).setAttribute('aria-selected', on ? 'true' : 'false');
         document.getElementById('t-' + k).tabIndex = on ? 0 : -1;
         document.getElementById('s-' + k).classList.toggle('on', on);
-        document.getElementById('bet-' + k).hidden = !on;
       });
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
@@ -503,6 +496,6 @@
     vpBtns.forEach(function (b) { b.addEventListener('click', function () { setVp(b.dataset.vp); }); });
   })();
 </script>
-<script src="../../fb.js" defer></script>
+<script src="../../fb.js?v=4" defer></script>
 </body>
 </html>

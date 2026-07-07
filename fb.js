@@ -18,8 +18,8 @@
 
   var css = document.createElement('style');
   css.textContent =
-    '.zpfb-bar{position:fixed;right:16px;bottom:16px;z-index:99990;display:flex;gap:8px;align-items:center;' +
-    'background:#221F1B;color:#FCFAF7;border-radius:999px;padding:8px 10px 8px 16px;font:600 13px/1 ui-sans-serif,system-ui,sans-serif;' +
+    '.zpfb-bar{position:fixed;right:16px;bottom:16px;z-index:99990;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;' +
+    'max-width:calc(100vw - 32px);background:#221F1B;color:#FCFAF7;border-radius:22px;padding:8px 10px 8px 16px;font:600 13px/1 ui-sans-serif,system-ui,sans-serif;' +
     'box-shadow:0 12px 40px -12px rgba(0,0,0,.5)}' +
     '.zpfb-bar button{font:700 12px/1 ui-sans-serif,system-ui,sans-serif;border:0;border-radius:999px;padding:8px 12px;cursor:pointer;' +
     'background:#3a352f;color:#FCFAF7}' +
@@ -48,10 +48,12 @@
   bar.innerHTML = '<span class="zpfb-n"></span>' +
     '<button type="button" class="zpfb-add">+ Add note</button>' +
     '<button type="button" class="zpfb-copy">Copy</button>' +
+    '<button type="button" class="zpfb-copyall">Copy all</button>' +
     '<button type="button" class="zpfb-clear">Clear</button>' +
     '<button type="button" class="zpfb-x" aria-label="Hide feedback bar">✕</button>';
   document.body.appendChild(bar);
   var nEl = bar.querySelector('.zpfb-n'), addBtn = bar.querySelector('.zpfb-add');
+  var copyAllBtn = bar.querySelector('.zpfb-copyall');
 
   function save() { localStorage.setItem(KEY, JSON.stringify(pins)); }
 
@@ -81,6 +83,7 @@
       layer.appendChild(d);
     });
     nEl.textContent = pins.length + (pins.length === 1 ? ' note' : ' notes');
+    if (copyAllBtn) copyAllBtn.style.display = allBuckets().length > 1 ? '' : 'none';
   }
 
   function form(x, y) {
@@ -118,16 +121,44 @@
     form(e.pageX, e.pageY);
   }, true);
 
-  bar.querySelector('.zpfb-copy').addEventListener('click', function () {
-    var out = 'Design feedback · ' + location.pathname + location.hash + ' · ' + new Date().toISOString().slice(0, 10) + '\n' +
-      pins.map(function (p, i) {
-        return (i + 1) + '. [' + Math.round(p.xr * 100) + '% across, ' + p.y + 'px down, viewport ' + p.w + 'px' +
-          (p.near ? ', near "' + p.near + '"' : '') + '] ' + p.note;
-      }).join('\n');
+  function fmtPin(p, i) {
+    return (i + 1) + '. [' + Math.round(p.xr * 100) + '% across, ' + p.y + 'px down, viewport ' + p.w + 'px' +
+      (p.near ? ', near "' + p.near + '"' : '') + '] ' + p.note;
+  }
+  function today() { return new Date().toISOString().slice(0, 10); }
+  function writeOut(out, okLabel) {
     (navigator.clipboard ? navigator.clipboard.writeText(out) : Promise.reject()).then(
-      function () { nEl.textContent = 'Copied!'; setTimeout(render, 1200); },
+      function () { nEl.textContent = okLabel; setTimeout(render, 1200); },
       function () { prompt('Copy your feedback:', out); }
     );
+  }
+  // every feedback bucket for this page (base + each variant hash), non-empty only
+  function allBuckets() {
+    var base = 'zp-fb:' + location.pathname, out = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k === base || k.indexOf(base + '#') === 0) {
+        var arr; try { arr = JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { arr = []; }
+        if (arr && arr.length) out.push({ variant: k.slice(base.length) || '(page)', pins: arr });
+      }
+    }
+    out.sort(function (a, b) { return a.variant < b.variant ? -1 : (a.variant > b.variant ? 1 : 0); });
+    return out;
+  }
+
+  bar.querySelector('.zpfb-copy').addEventListener('click', function () {
+    var out = 'Design feedback · ' + location.pathname + location.hash + ' · ' + today() + '\n' +
+      pins.map(fmtPin).join('\n');
+    writeOut(out, 'Copied!');
+  });
+
+  bar.querySelector('.zpfb-copyall').addEventListener('click', function () {
+    var buckets = allBuckets();
+    var total = buckets.reduce(function (n, b) { return n + b.pins.length; }, 0);
+    if (!total) { nEl.textContent = 'No notes yet'; setTimeout(render, 1400); return; }
+    var out = 'Design feedback (all variants) · ' + location.pathname + ' · ' + today() +
+      buckets.map(function (b) { return '\n\n== ' + b.variant + ' ==\n' + b.pins.map(fmtPin).join('\n'); }).join('');
+    writeOut(out, 'Copied all ' + total + '!');
   });
 
   bar.querySelector('.zpfb-clear').addEventListener('click', function () {

@@ -14,6 +14,9 @@
   var pins = [];
   function loadPins() { try { pins = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { pins = []; } }
   loadPins();
+  // hashchange fires async, so re-resolve the key on every read/write — a pin added
+  // right after switching variants must land in the variant that's showing now.
+  function syncKey() { var k = keyFor(); if (k !== KEY) { KEY = k; loadPins(); } }
   var adding = false;
 
   var css = document.createElement('style');
@@ -83,7 +86,7 @@
       layer.appendChild(d);
     });
     nEl.textContent = pins.length + (pins.length === 1 ? ' note' : ' notes');
-    if (copyAllBtn) copyAllBtn.style.display = allBuckets().length > 1 ? '' : 'none';
+    if (copyAllBtn) { var tot = allBuckets().reduce(function (n, b) { return n + b.pins.length; }, 0); copyAllBtn.style.display = tot > 0 ? '' : 'none'; }
   }
 
   function form(x, y) {
@@ -100,6 +103,7 @@
     f.querySelector('.p').addEventListener('click', function () {
       var note = ta.value.trim();
       if (note) {
+        syncKey();
         pins.push({ xr: x / document.documentElement.scrollWidth, y: y, near: nearText(x, y), note: note, w: window.innerWidth });
         save(); render();
       }
@@ -147,6 +151,7 @@
   }
 
   bar.querySelector('.zpfb-copy').addEventListener('click', function () {
+    syncKey();
     var out = 'Design feedback · ' + location.pathname + location.hash + ' · ' + today() + '\n' +
       pins.map(fmtPin).join('\n');
     writeOut(out, 'Copied!');

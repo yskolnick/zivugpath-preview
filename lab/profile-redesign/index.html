@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="pd-version" content="9">
+<meta name="pd-version" content="10">
 <title>Lab · Profile redesign · ZivugPath</title>
 </head>
 <body data-ctheme="pomegranate">
@@ -68,6 +68,13 @@
   .lab-tab { font-family: var(--sans); font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; }
   .lab-tab:hover { border-color: var(--pom); color: var(--ink); }
   .lab-tab[aria-selected="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+
+  .lab-opts-tog { font-family: var(--sans); font-size: 12px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 6px 12px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+  .lab-opts-tog svg { width: 13px; height: 13px; flex: none; }
+  .lab-opts-tog:hover { border-color: var(--pom); color: var(--ink); }
+  .lab-opts-tog[aria-expanded="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .lab-opts { display: none; flex-wrap: wrap; padding-top: 9px; margin-top: 1px; border-top: 1px solid var(--line-soft); }
+  .lab-opts.open { display: flex; }
 
   .stage { display: none; padding: clamp(20px, 4vw, 40px) clamp(12px, 4vw, 30px) 96px; }
   .stage.on { display: block; }
@@ -353,13 +360,34 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v9</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v10</span></span>
     <div class="lab-tabs" role="tablist" aria-label="Layout">
       <span class="sk">Layout</span>
       <button class="lab-tab" role="tab" id="t-b" aria-selected="true" aria-controls="s-b">Classic</button>
       <button class="lab-tab" role="tab" id="t-a" aria-selected="false" aria-controls="s-a" tabindex="-1">Photo-forward</button>
       <button class="lab-tab" role="tab" id="t-c" aria-selected="false" aria-controls="s-c" tabindex="-1">Prompted</button>
     </div>
+    <div class="lab-seg push" role="group" aria-label="Example profile" data-pd-state="Example">
+      <span class="sk">Example</span>
+      <button type="button" data-person="rivka" aria-pressed="true">Rivka</button>
+      <button type="button" data-person="dovid" aria-pressed="false">Dovid</button>
+      <button type="button" data-person="miriam" aria-pressed="false">Miriam</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Photo" data-pd-state="Photo">
+      <span class="sk">Photo</span>
+      <button type="button" data-photo="on" aria-pressed="true">With</button>
+      <button type="button" data-photo="off" aria-pressed="false">None</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Screen size" data-pd-state="Viewport">
+      <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
+      <button type="button" data-vp="web" aria-pressed="false">Web</button>
+    </div>
+    <button type="button" class="lab-opts-tog" id="opts-tog" aria-expanded="false" aria-controls="lab-opts">
+      <svg class="lk" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <span class="ot">Display options</span>
+    </button>
+  </div>
+  <div class="lab-in lab-opts" id="lab-opts">
     <div class="lab-seg" role="group" aria-label="Colour theme" data-pd-state="Theme">
       <span class="sk">Theme</span>
       <button type="button" class="swatch" data-ctheme="pomegranate" aria-pressed="true" aria-label="Pomegranate" style="--sw:#A82D46"></button>
@@ -383,21 +411,6 @@
       <span class="sk">Status</span>
       <button type="button" data-status="badge" aria-pressed="true">Badge</button>
       <button type="button" data-status="prose" aria-pressed="false">In prose</button>
-    </div>
-    <div class="lab-seg push" role="group" aria-label="Example profile" data-pd-state="Example">
-      <span class="sk">Example</span>
-      <button type="button" data-person="rivka" aria-pressed="true">Rivka</button>
-      <button type="button" data-person="dovid" aria-pressed="false">Dovid</button>
-      <button type="button" data-person="miriam" aria-pressed="false">Miriam</button>
-    </div>
-    <div class="lab-seg" role="group" aria-label="Photo" data-pd-state="Photo">
-      <span class="sk">Photo</span>
-      <button type="button" data-photo="on" aria-pressed="true">With</button>
-      <button type="button" data-photo="off" aria-pressed="false">None</button>
-    </div>
-    <div class="lab-seg" role="group" aria-label="Screen size" data-pd-state="Viewport">
-      <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
-      <button type="button" data-vp="web" aria-pressed="false">Web</button>
     </div>
   </div>
 </div>
@@ -586,8 +599,9 @@
 </div>
 
 <div class="foot-note">
-  <div class="stamp">Lab · profile-redesign · v9 · 2026-07-08</div>
-  <p><b>What this is:</b> the shared profile — <b>Classic (B)</b> base, owner-themable. Controls: <b>Layout</b> (Classic · Photo-forward · Prompted — all one dataset), <b>Theme</b> (5 curated colours), <b>Observance</b> (Hybrid · Meter · Off), <b>Family</b> (Full · On request), <b>Status</b> (Badge · In prose — try Miriam), plus <b>Example</b> / <b>Photo</b> / <b>Mobile-Web</b>. The “How this reached you” switcher is a demo control.</p>
+  <div class="stamp">Lab · profile-redesign · v10 · 2026-07-08</div>
+  <p><b>What this is:</b> the shared profile — <b>Classic (B)</b> base, owner-themable. Primary controls in the bar: <b>Layout</b> (Classic · Photo-forward · Prompted — all one dataset), <b>Example</b> / <b>Photo</b> / <b>Mobile-Web</b>. Click <b>Display options</b> for the less-frequently-changed set: <b>Theme</b> (5 curated colours), <b>Observance</b> (Hybrid · Meter · Off), <b>Family</b> (Full · On request), <b>Status</b> (Badge · In prose — try Miriam). The “How this reached you” switcher is a demo control.</p>
+  <p><b>New in v10:</b> <b>lab-bar decluttered</b> — split into an always-visible primary row (Layout / Example / Photo / Viewport) and a collapsible <b>Display options</b> panel for the styling controls (Theme / Observance / Family / Status), which were crowding the topbar.</p>
   <p><b>New in v9:</b> <b>prompts joined Classic (B)</b> · a <b>Family &amp; community</b> block — parents, siblings, shul, named schools — with an <b>on-request</b> gated state · warmer <b>AI-introduction</b> copy · forwarded links keep the <b>original shadchan’s attribution</b> · owner choice for sensitive <b>status</b> display · own-voice quote attributions &amp; more specific chips · photo requests folded into the respond captions · the <b>chat-preview mock</b> above this note.</p>
   <p>Placeholder people; illustrated portraits/avatars stand in for real photos.</p>
 </div>
@@ -882,6 +896,14 @@
         });
       });
     }
+    var optsTog = document.getElementById('opts-tog'), optsRow = document.getElementById('lab-opts');
+    optsTog.addEventListener('click', function () {
+      var open = !optsRow.classList.contains('open');
+      optsRow.classList.toggle('open', open);
+      optsTog.setAttribute('aria-expanded', open ? 'true' : 'false');
+      $('.ot', optsTog).textContent = open ? 'Hide options' : 'Display options';
+    });
+
     bindSeg('person', 'person', render);
     bindSeg('photo', 'photo', render);
     bindSeg('obs', 'obsMode', render);

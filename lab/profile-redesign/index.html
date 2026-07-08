@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="pd-version" content="4">
+<meta name="pd-version" content="6">
 <title>Lab · Profile redesign · ZivugPath</title>
 </head>
 <body>
@@ -49,28 +49,30 @@
 
   /* ============ LAB CHROME ============ */
   .lab-bar { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-  .lab-in { max-width: 1080px; margin: 0 auto; padding: 12px clamp(16px, 5vw, 34px); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .lab-in { max-width: 1080px; margin: 0 auto; padding: 11px clamp(16px, 5vw, 34px); display: flex; align-items: center; gap: 12px 14px; flex-wrap: wrap; }
   .lab-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 1.05rem; }
   .lab-brand .seal-mark { width: 18px; height: 18px; }
   .lab-brand .tag { font-family: var(--sans); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); background: var(--gold-soft); padding: 3px 8px; border-radius: 999px; }
-  .lab-vp { margin-left: auto; display: flex; gap: 3px; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--raise); }
-  .lab-vp button { font-family: var(--sans); font-size: 12px; font-weight: 700; border: 0; background: transparent; color: var(--muted); border-radius: 999px; padding: 6px 13px; cursor: pointer; }
-  .lab-vp button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-  .lab-tabs { display: flex; gap: 7px; margin-left: 12px; flex-wrap: wrap; }
+  .lab-seg { display: flex; gap: 3px; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--raise); }
+  .lab-seg.push { margin-left: auto; }
+  .lab-seg button { font-family: var(--sans); font-size: 12px; font-weight: 700; border: 0; background: transparent; color: var(--muted); border-radius: 999px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+  .lab-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .lab-seg .sk { align-self: center; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 0 4px 0 6px; }
+  .lab-tabs { display: flex; gap: 7px; flex-wrap: wrap; }
   .lab-tab { font-family: var(--sans); font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; }
   .lab-tab:hover { border-color: var(--pom); color: var(--ink); }
   .lab-tab[aria-selected="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
-  .bet { max-width: 1080px; margin: 0 auto; padding: 18px clamp(16px, 5vw, 34px) 4px; }
-  .bet .k { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); }
-  .bet p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; max-width: 72ch; line-height: 1.55; }
-  .bet b { color: var(--ink); font-weight: 700; }
 
-  .stage { display: none; padding: clamp(20px, 4vw, 40px) clamp(12px, 4vw, 30px) 70px; }
+  .stage { display: none; padding: clamp(20px, 4vw, 40px) clamp(12px, 4vw, 30px) 96px; }
   .stage.on { display: block; }
   .device { width: 100%; max-width: 470px; margin: 0 auto; background: var(--raise); border: 1px solid var(--line); border-radius: 30px; box-shadow: var(--shadow); overflow: hidden; }
   .por { display: block; width: 100%; height: 100%; }
 
-  /* ============ shared badge system ============ */
+  /* ============ shared badge system ============
+     gold  = distinguishing / status-identity (life-stage, relocating, convert/BT, kohen, sephardi)
+     pom   = core life facts (occupation, learning, family position, community)
+     soft  = interests / lifestyle
+  */
   .badges { display: flex; flex-wrap: wrap; gap: 8px; }
   .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 650; line-height: 1; padding: 8px 13px; border-radius: 999px; background: var(--pom-soft); color: var(--pom-ink); }
   .badge svg { width: 14px; height: 14px; flex: none; opacity: .85; }
@@ -79,10 +81,29 @@
   .badge.soft svg { color: var(--muted); }
 
   .lbl { display: block; font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); margin: 0 0 12px; }
+  .lbl .opt { color: var(--faint); font-weight: 600; text-transform: none; letter-spacing: 0; }
 
   /* pull-quote from the interview (shared) */
   .said { position: relative; font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.42; color: var(--ink); padding-left: 15px; margin: 14px 0 0; border-left: 2px solid var(--pom); }
-  .said .who { display: block; font-family: var(--sans); font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--faint); margin-top: 6px; }
+
+  /* freshness — the always-current living-link cue */
+  .fresh { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .fresh svg { width: 13px; height: 13px; color: var(--pom); flex: none; }
+  .fresh b { color: var(--ink); font-weight: 700; }
+
+  /* observance spectrum — one clean control (hashkafa-meter), never a grid */
+  .obs .obs-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .obs .obs-v { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .obs .obs-k { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  .obs .track { position: relative; height: 6px; border-radius: 999px; margin: 9px 0 5px; background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 30%, var(--line)), color-mix(in srgb, var(--pom) 42%, var(--line))); }
+  .obs .mk { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--pom); border: 2.5px solid var(--raise); box-shadow: var(--shadow-xs); transform: translate(-50%, -50%); }
+  .obs .ends { display: flex; justify-content: space-between; font-size: 10px; color: var(--faint); font-weight: 600; }
+
+  /* vitals key/value stack (fills the A-web rail; compact elsewhere) */
+  .vitals { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+  .vitals .vi .k { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .vitals .vi .v { font-size: 14.5px; font-weight: 650; color: var(--ink); margin-top: 2px; }
+  .vitals .vi.wide { grid-column: 1 / -1; }
 
   /* ============ shared arrival / respond module ============ */
   .arrival { border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: var(--paper); box-shadow: var(--shadow-xs); }
@@ -107,17 +128,28 @@
   .btn { font-family: var(--sans); font-weight: 700; font-size: 14.5px; border-radius: 12px; padding: 13px 18px; cursor: pointer; border: 1px solid var(--line); background: var(--raise); color: var(--ink); }
   .btn.primary { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
 
+  /* trust / report strip — for a profile that circulates */
+  .trust { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 14px; margin-top: 16px; font-size: 11.5px; color: var(--faint); }
+  .trust .v { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+  .trust .v svg { width: 12px; height: 12px; color: var(--pom); }
+  .trust a { color: var(--faint); text-decoration: underline; text-underline-offset: 2px; }
+  .trust a:hover { color: var(--pom-ink); }
+
   /* thin "how it reached you" line at top of each profile */
   .arr-top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
   .arr-top .ic { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 11px; }
   .arr-top .ic .seal-mark { width: 13px; height: 13px; }
   .arr-top b { color: var(--ink); font-weight: 700; }
 
+  /* photos-shared-privately note (no-photo / after-approval) */
+  .photonote { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--muted); line-height: 1.5; background: var(--paper); border: 1px dashed var(--line); border-radius: 12px; padding: 13px 15px; }
+  .photonote svg { width: 17px; height: 17px; color: var(--pom); flex: none; margin-top: 1px; }
+
   /* ============ DIRECTION A — PHOTO-FORWARD, FLOWING ============ */
-  .a-hero { position: relative; aspect-ratio: 4 / 4.4; }
+  .a-hero { position: relative; aspect-ratio: 4 / 4.4; background: linear-gradient(158deg, #c3b2a2 0%, #8d7a6b 46%, #574a40 100%); }
   .a-hero .por { position: absolute; inset: 0; }
   .a-hero .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.8) 0%, rgba(20,12,9,.24) 44%, transparent 64%); }
-  .a-hero .chip-top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; align-items: center; justify-content: space-between; }
+  .a-hero .chip-top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .a-hero .sl { display: inline-flex; align-items: center; gap: 6px; color: #fff; font-family: var(--serif); font-size: 13px; text-shadow: 0 1px 8px rgba(20,12,9,.7); }
   .a-hero .sl .seal-mark { width: 15px; height: 15px; }
   .a-hero .priv { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; color: #fff; background: rgba(20,12,9,.42); border: 1px solid rgba(255,255,255,.22); padding: 4px 9px; border-radius: 999px; }
@@ -127,33 +159,41 @@
   .a-hero .cap .facts { margin-top: 9px; font-size: 13.5px; color: rgba(255,255,255,.94); display: flex; flex-wrap: wrap; gap: 5px 9px; }
   .a-hero .cap .facts span { display: inline-flex; align-items: center; gap: 8px; }
   .a-hero .cap .facts span + span::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--pom); }
+  /* no-photo hero: warm panel + centered avatar silhouette */
+  .a-hero.nophoto .avatar { position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%); width: 46%; opacity: .9; }
+  .a-hero.nophoto .scrim { background: linear-gradient(to top, rgba(20,12,9,.82) 0%, rgba(20,12,9,.3) 50%, rgba(20,12,9,.08) 100%); }
+
   .a-body { padding: 20px clamp(18px, 5vw, 24px) 24px; display: flex; flex-direction: column; gap: 22px; }
-  .a-body > .arr-top { padding-bottom: 20px; border-bottom: 1px solid var(--line); margin: 0; }
   .a-quote { font-family: var(--serif); font-style: italic; font-size: 1.34rem; line-height: 1.34; text-wrap: balance; margin: 0; }
   .a-quote .mk { color: var(--pom); font-style: normal; }
   .a-prose { font-size: 15px; line-height: 1.64; margin: 0; }
   .a-fam { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin: 0; }
   .a-fam b { color: var(--faint); font-weight: 700; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
   .a-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .a-photos .th { aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+  .a-photos .th { aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(158deg, #c3b2a2, #574a40); }
   .a-refs { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
   .a-refs svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
   .a-refs b { color: var(--ink); font-weight: 700; }
+  .a-block > .lbl { margin-bottom: 10px; }
 
   /* ============ DIRECTION B — REFINED CLASSIC, FLOWING ============ */
   .b-wrap { padding: clamp(18px, 5vw, 26px) clamp(18px, 5vw, 26px) 24px; }
-  .b-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .b-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
   .b-sl { display: inline-flex; align-items: center; gap: 7px; font-family: var(--serif); font-size: 1rem; }
   .b-sl .seal-mark { width: 15px; height: 15px; }
-  .b-priv { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 5px; }
+  .b-priv { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
   .b-priv svg { width: 11px; height: 11px; }
   .b-id { display: flex; gap: 17px; align-items: center; }
-  .b-id .pf { flex: none; width: 104px; height: 128px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+  .b-id .pf { flex: none; width: 104px; height: 128px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); background: linear-gradient(158deg, #c3b2a2, #574a40); }
+  .b-id .pf.nophoto { display: grid; place-items: center; background: linear-gradient(158deg, #efe6da, #d9cbbb); }
+  .b-id .pf.nophoto .avatar { width: 78%; opacity: .92; }
   .b-id .hd h1 { font-size: 2.05rem; line-height: 1; letter-spacing: -.015em; }
   .b-id .hd .heb { font-family: var(--serif); color: var(--muted); font-size: .98rem; margin-top: 3px; }
   .b-id .hd .one { font-size: 13px; color: var(--muted); margin-top: 9px; line-height: 1.5; }
   .b-badges { margin: 20px 0 0; }
-  .b-arrtop { margin: 18px 0 0; }
+  .b-obs { margin: 18px 0 0; }
+  .b-fresh { margin: 16px 0 0; }
+  .b-arrtop { margin: 16px 0 0; }
   .b-sec { margin-top: 24px; }
   .b-sec .q { font-family: var(--serif); font-style: italic; font-size: 1.28rem; line-height: 1.36; margin: 0; text-wrap: balance; }
   .b-sec p { font-size: 14.6px; line-height: 1.62; margin: 10px 0 0; }
@@ -165,35 +205,49 @@
   .b-refs b { color: var(--ink); font-weight: 700; }
   .b-arrival { margin-top: 26px; }
 
-  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 8px 20px 40px; line-height: 1.6; }
+  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 10px 20px 40px; line-height: 1.6; max-width: 760px; margin: 0 auto; }
   .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+  .foot-note b { color: var(--muted); }
+
+  /* sticky mobile respond bar */
+  .mact { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; padding: 11px 16px calc(11px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); transform: translateY(120%); transition: transform .32s cubic-bezier(.2,.7,.2,1); }
+  .mact.show { transform: none; }
+  .mact .btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .mact .btn svg { width: 16px; height: 16px; }
+  .vp-web .mact { display: none; }
 
   /* ============ WEB (desktop) VIEW ============ */
   .vp-web .device { max-width: 1040px; border-radius: 16px; overflow: visible; position: relative; padding-top: 34px; }
   .vp-web .device::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 34px; background: var(--paper); border-bottom: 1px solid var(--line); border-radius: 16px 16px 0 0; }
-  .vp-web .device::after { content: "🔒 zivugpath.com/p/rivka-m"; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font: 600 11px/1.7 var(--sans); color: var(--muted); background: var(--raise); border: 1px solid var(--line); border-radius: 999px; padding: 3px 14px; }
+  .vp-web .device::after { content: "🔒 zivugpath.com/p/" attr(data-slug); position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font: 600 11px/1.7 var(--sans); color: var(--muted); background: var(--raise); border: 1px solid var(--line); border-radius: 999px; padding: 3px 14px; }
 
-  /* A — portrait rail + content */
-  .vp-web #s-a .device { display: grid; grid-template-columns: 288px 1fr; align-items: start; }
-  .vp-web #s-a .a-hero { position: sticky; top: 50px; aspect-ratio: 4 / 4.6; border-radius: 0 0 0 16px; }
-  .vp-web #s-a .a-body { padding: 30px clamp(22px, 3vw, 40px) 34px; }
+  /* A — portrait rail (now filled: portrait + vitals + obs + badges) + prose main */
+  .vp-web #s-a .device { display: grid; grid-template-columns: 320px 1fr; align-items: start; column-gap: clamp(26px, 3vw, 44px); padding: 34px clamp(22px, 3vw, 40px) 34px; }
+  .vp-web #s-a .a-rail { grid-column: 1; }
+  .vp-web #s-a .a-main { grid-column: 2; }
+  .vp-web #s-a .a-hero { aspect-ratio: 4 / 4.7; border-radius: 18px; overflow: hidden; }
+  .vp-web #s-a .a-hero .cap h1 { font-size: 2.1rem; }
+  .vp-web #s-a .a-rail > * + * { margin-top: 20px; }
+  .vp-web #s-a .a-body { padding: 0; gap: 22px; }
+  .vp-web #s-a .a-arrival { grid-column: 1 / -1; max-width: 560px; margin-top: 30px; }
+  .vp-web #s-a .a-trust { grid-column: 1 / -1; }
 
   /* B — résumé rail + sections */
-  .vp-web #s-b .b-wrap { display: grid; grid-template-columns: 296px 1fr; column-gap: clamp(28px, 4vw, 48px); align-items: start; padding: clamp(24px, 3vw, 38px); }
+  .vp-web #s-b .b-wrap { display: grid; grid-template-columns: 300px 1fr; column-gap: clamp(28px, 4vw, 48px); align-items: start; padding: clamp(24px, 3vw, 38px); }
   .vp-web #s-b .b-top { grid-column: 1 / -1; }
   .vp-web #s-b .b-rail { grid-column: 1; align-self: start; }
   .vp-web #s-b .b-main { grid-column: 2; }
   .vp-web #s-b .b-badges { margin-top: 18px; }
-  .vp-web #s-b .b-arrtop { margin-top: 16px; }
   .vp-web #s-b .b-main > .b-sec:first-child { margin-top: 0; }
   .vp-web #s-b .b-arrival { grid-column: 1 / -1; max-width: 560px; margin-top: 30px; }
+  .vp-web #s-b .b-trust { grid-column: 1 / -1; }
   .vp-web #s-b .b-div { display: none; }
   .vp-web #s-b .b-main > .b-sec { margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--line-soft); }
   .vp-web #s-b .b-main > .b-sec:first-child { padding-top: 0; border-top: 0; }
 
   /* on mobile the rail/main wrappers are transparent pass-throughs */
-  .b-rail, .b-main { display: contents; }
-  .vp-web .b-rail, .vp-web .b-main { display: block; }
+  .a-rail, .a-main, .b-rail, .b-main { display: contents; }
+  .vp-web .a-rail, .vp-web .a-main, .vp-web .b-rail, .vp-web .b-main { display: block; }
 
   @media (prefers-reduced-motion: no-preference) {
     .stage.on .device { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
@@ -201,9 +255,10 @@
   }
 </style>
 
-<!-- ===== shared illustrated portrait + icons ===== -->
+<!-- ===== shared illustrated portraits + avatar + icons ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <symbol id="portrait" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+  <!-- female portrait -->
+  <symbol id="portrait-f" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
     <defs>
       <linearGradient id="pbg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#efe1d0"/><stop offset="1" stop-color="#d9c2a9"/></linearGradient>
       <linearGradient id="pcloth" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0" stop-color="#9a3350"/><stop offset="1" stop-color="#71243a"/></linearGradient>
@@ -229,27 +284,75 @@
     <path d="M200 236 L195 262 Q200 268 206 261" fill="none" stroke="#c88f5f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M180 276 Q200 289 220 276" fill="none" stroke="#b5573f" stroke-width="3.2" stroke-linecap="round"/>
   </symbol>
+  <!-- male portrait -->
+  <symbol id="portrait-m" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="mbg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#e4e0d5"/><stop offset="1" stop-color="#c7c1b2"/></linearGradient>
+      <linearGradient id="msuit" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0" stop-color="#33383f"/><stop offset="1" stop-color="#20242a"/></linearGradient>
+      <radialGradient id="mglow" cx="0.5" cy="0.3" r="0.6"><stop offset="0" stop-color="#f4efe4" stop-opacity=".65"/><stop offset="1" stop-color="#f4efe4" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="400" height="500" fill="url(#mbg)"/>
+    <rect width="400" height="500" fill="url(#mglow)"/>
+    <rect x="180" y="292" width="40" height="70" rx="18" fill="#dca877"/>
+    <path d="M44 500 C56 402 116 360 200 360 C284 360 344 402 356 500 Z" fill="url(#msuit)"/>
+    <path d="M200 360 L168 500 L232 500 Z" fill="#eae6dd"/>
+    <path d="M200 360 L200 470 L214 420 Z" fill="#8e2439" opacity=".9"/>
+    <path d="M200 360 L186 388 L200 402 L214 388 Z" fill="#eae6dd"/>
+    <ellipse cx="200" cy="228" rx="72" ry="86" fill="#eec092"/>
+    <ellipse cx="226" cy="240" rx="46" ry="72" fill="#e0ac79" opacity=".38"/>
+    <path d="M132 214 C132 156 160 126 200 126 C240 126 268 156 268 214 C268 196 250 176 200 176 C150 176 132 196 132 214 Z" fill="#4a3627"/>
+    <path d="M150 150 C168 128 232 128 250 150 C250 150 236 142 200 142 C164 142 150 150 150 150 Z" fill="#3c2c1f"/>
+    <ellipse cx="200" cy="140" rx="46" ry="22" fill="#211b16"/>
+    <ellipse cx="200" cy="136" rx="46" ry="18" fill="#2c241d"/>
+    <path d="M162 218 Q176 210 190 217" fill="none" stroke="#5a4230" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M210 217 Q224 210 238 218" fill="none" stroke="#5a4230" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M198 236 L193 262 Q198 268 205 261" fill="none" stroke="#c08a55" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M178 284 Q200 296 222 284" fill="none" stroke="#a85238" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M150 300 C150 340 176 360 200 360 C224 360 250 340 250 300 C250 300 238 322 200 322 C162 322 150 300 150 300 Z" fill="#5a4230" opacity=".28"/>
+  </symbol>
+  <!-- no-photo avatar silhouette -->
+  <symbol id="avatar" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet">
+    <circle cx="200" cy="176" r="86" fill="currentColor" opacity=".82"/>
+    <path d="M54 470 C54 356 130 300 200 300 C270 300 346 356 346 470 Z" fill="currentColor" opacity=".82"/>
+  </symbol>
   <symbol id="i-cap" viewBox="0 0 24 24"><path class="lk" d="M22 10L12 5 2 10l10 5 10-5z"/><path class="lk" d="M6 12v5c0 1 3 2.5 6 2.5s6-1.5 6-2.5v-5"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path class="lk" d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path class="lk" d="M19 3v18"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path class="lk" d="M4 11l8-7 8 7"/><path class="lk" d="M6 10v10h12V10"/></symbol>
   <symbol id="i-plane" viewBox="0 0 24 24"><path class="lk" d="M14 3l7 4-9 3-3 6-2-1 1-5-6-2 2-2 6 1z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path class="lk" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle class="lk" cx="12" cy="10" r="2.4"/></symbol>
   <symbol id="i-heart" viewBox="0 0 24 24"><path class="lk" d="M12 20s-7-4.6-7-9.7A3.7 3.7 0 0 1 12 7a3.7 3.7 0 0 1 7 3.3C19 15.4 12 20 12 20z"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24"><circle class="lk" cx="9" cy="8" r="3.2"/><path class="lk" d="M3.5 20c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><path class="lk" d="M16 5.2A3.2 3.2 0 0 1 19 11"/><path class="lk" d="M17 15c2 .5 3.5 2.3 4 5"/></symbol>
+  <symbol id="i-child" viewBox="0 0 24 24"><circle class="lk" cx="12" cy="6" r="2.6"/><path class="lk" d="M12 10v6"/><path class="lk" d="M8 13h8"/><path class="lk" d="M9 21l3-5 3 5"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path class="lk" d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><rect class="lk" x="3" y="7" width="18" height="13" rx="2"/><path class="lk" d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path class="lk" d="M12 3v18"/><path class="lk" d="M9 6h3M9 12h3M9 18h3M12 9h3M12 15h3"/></symbol>
   <symbol id="i-msg" viewBox="0 0 24 24"><path class="lk" d="M21 11.5a8.4 8.4 0 0 1-11.9 7.6L3 21l1.9-6.1A8.4 8.4 0 1 1 21 11.5z"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path class="lk" d="M20 11a8 8 0 0 0-14-4l-2 2"/><path class="lk" d="M4 5v4h4"/><path class="lk" d="M4 13a8 8 0 0 0 14 4l2-2"/><path class="lk" d="M20 19v-4h-4"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path class="lk" d="M5 21V4"/><path class="lk" d="M5 5h11l-2 4 2 4H5"/></symbol>
 </svg>
 
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v5</span></span>
-    <div class="lab-vp" role="group" aria-label="Screen size" data-pd-state="Viewport">
-      <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
-      <button type="button" data-vp="web" aria-pressed="false">Web</button>
-    </div>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v6</span></span>
     <div class="lab-tabs" role="tablist" aria-label="Design direction">
       <button class="lab-tab" role="tab" id="t-a" aria-selected="true" aria-controls="s-a">A · Photo-forward</button>
       <button class="lab-tab" role="tab" id="t-b" aria-selected="false" aria-controls="s-b" tabindex="-1">B · Refined classic</button>
+    </div>
+    <div class="lab-seg push" role="group" aria-label="Example profile" data-pd-state="Example">
+      <span class="sk">Example</span>
+      <button type="button" data-person="rivka" aria-pressed="true">Rivka · 24</button>
+      <button type="button" data-person="dovid" aria-pressed="false">Dovid · 27</button>
+      <button type="button" data-person="miriam" aria-pressed="false">Miriam · 34</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Photo" data-pd-state="Photo">
+      <span class="sk">Photo</span>
+      <button type="button" data-photo="on" aria-pressed="true">With</button>
+      <button type="button" data-photo="off" aria-pressed="false">None</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Screen size" data-pd-state="Viewport">
+      <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
+      <button type="button" data-vp="web" aria-pressed="false">Web</button>
     </div>
   </div>
 </div>
@@ -258,77 +361,94 @@
 <!-- DIRECTION A -->
 <!-- ============================================================ -->
 <div class="stage on" id="s-a" role="tabpanel" aria-labelledby="t-a">
-  <div class="device">
-    <div class="a-hero">
-      <svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Portrait of Rivka Mandel"><use href="#portrait"/></svg>
-      <div class="scrim"></div>
-      <div class="chip-top">
-        <span class="sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
-        <span class="priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
+  <div class="device" data-slug="">
+    <div class="a-rail">
+      <div class="a-hero">
+        <svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label=""><use class="por-use" href="#portrait-f"/></svg>
+        <svg class="avatar" viewBox="0 0 400 500" aria-hidden="true" style="color:rgba(255,255,255,.86)"><use href="#avatar"/></svg>
+        <div class="scrim"></div>
+        <div class="chip-top">
+          <span class="sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
+          <span class="priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
+        </div>
+        <div class="cap">
+          <h1 class="a-name"></h1>
+          <div class="facts a-facts"></div>
+        </div>
       </div>
-      <div class="cap">
-        <h1>Rivka Mandel</h1>
-        <div class="facts"><span>24</span><span>Lakewood, NJ</span><span>Open to relocating</span></div>
+
+      <div class="fresh a-fresh"></div>
+
+      <div class="obs a-obs">
+        <div class="obs-h"><span class="obs-k">Observance</span><span class="obs-v"></span></div>
+        <div class="track"><span class="mk"></span></div>
+        <div class="ends"><span>Secular</span><span>Chassidish</span></div>
+      </div>
+
+      <div class="vitals a-vitals"></div>
+
+      <div class="a-block">
+        <span class="lbl">At a glance</span>
+        <div class="badges a-badges"></div>
+      </div>
+
+      <div class="arr-top a-arrtop" data-arrtop="a"><span class="ic"></span><span class="tx"></span></div>
+    </div>
+
+    <div class="a-main">
+      <div class="a-body">
+        <p class="a-quote"><span class="mk">“</span><span class="a-quote-t"></span><span class="mk">”</span></p>
+
+        <div class="a-block">
+          <span class="lbl a-who-lbl"></span>
+          <p class="a-prose a-who"></p>
+          <p class="said a-who-said"></p>
+        </div>
+
+        <div class="a-block">
+          <span class="lbl">What <span class="a-look-lbl"></span></span>
+          <p class="a-prose a-look"></p>
+        </div>
+
+        <p class="a-fam"><b>Family</b><span class="a-fam-t"></span></p>
+
+        <div class="a-block a-photos-block">
+          <span class="lbl">Photos</span>
+          <div class="a-photos">
+            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+          </div>
+        </div>
+
+        <div class="a-block a-nophoto-block" hidden>
+          <span class="lbl">Photos</span>
+          <div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="a-nophoto-t"></span></div>
+        </div>
+
+        <p class="a-refs"><svg><use href="#i-star"/></svg><span class="a-refs-t"></span></p>
       </div>
     </div>
-    <div class="a-body">
 
-      <div class="arr-top" data-arrtop="a"><span class="ic"></span><span class="tx"></span></div>
-
-      <p class="a-quote"><span class="mk">“</span>A home where guests never feel like guests.<span class="mk">”</span></p>
-
-      <div>
-        <span class="lbl">At a glance</span>
-        <div class="badges">
-          <span class="badge"><svg><use href="#i-cap"/></svg>Teaches 3rd grade</span>
-          <span class="badge gold"><svg><use href="#i-book"/></svg>Seminary in Yerushalayim</span>
-          <span class="badge"><svg><use href="#i-users"/></svg>Second of six</span>
-          <span class="badge gold"><svg><use href="#i-plane"/></svg>Open to relocating</span>
-          <span class="badge soft"><svg><use href="#i-home"/></svg>Loves hosting</span>
-          <span class="badge soft"><svg><use href="#i-heart"/></svg>Baking &amp; long walks</span>
-        </div>
+    <div class="arrival a-arrival" data-arrival="a">
+      <div class="arr-seg" role="group" aria-label="How this reached you" data-pd-state="How this reached you">
+        <span class="hint">How this reached you</span>
+        <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
+        <button type="button" data-s="ai" aria-pressed="false">AI match</button>
+        <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
+        <button type="button" data-s="direct" aria-pressed="false">Direct</button>
       </div>
+      <div class="sharer"><span class="av"></span><span class="t"><span class="a"></span><span class="s"></span></span></div>
+      <p class="arr-note"></p>
+      <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
+      <p class="priv"></p>
+    </div>
 
-      <div>
-        <span class="lbl">Who she is</span>
-        <p class="a-prose">Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
-        <p class="said">Teaching third grade is honestly the best part of my day — they keep me laughing.</p>
-      </div>
-
-      <div>
-        <span class="lbl">What she's looking for</span>
-        <p class="a-prose">Someone warm and steady, serious about growing — and grounded enough not to take himself too seriously.</p>
-        <p class="said">I'd rather build something calm and real than chase something loud.</p>
-      </div>
-
-      <p class="a-fam"><b>Family</b>Father a rebbi in Lakewood, mother a speech therapist. Second of six in a close, warm home.</p>
-
-      <div>
-        <span class="lbl">Photos</span>
-        <div class="a-photos">
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait"/></svg></div>
-        </div>
-      </div>
-
-      <p class="a-refs"><svg><use href="#i-star"/></svg><span><b>Three references</b> available on request — shared privately, not posted here. <em>(Optional — some profiles won't list any.)</em></span></p>
-
-      <div class="arrival" data-arrival="a">
-        <div class="arr-seg" role="group" aria-label="How this reached you" data-pd-state="How this reached you">
-          <span class="hint">How this reached you</span>
-          <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
-          <button type="button" data-s="ai" aria-pressed="false">AI match</button>
-          <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
-          <button type="button" data-s="direct" aria-pressed="false">Direct</button>
-        </div>
-        <div class="sharer"><span class="av"></span><span class="t"><span class="a"></span><span class="s"></span></span></div>
-        <p class="arr-note"></p>
-        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
-        <p class="priv"></p>
-      </div>
-
+    <div class="trust a-trust">
+      <span class="v"><svg class="lk" viewBox="0 0 24 24"><use href="#i-star"/></svg> Shared via ZivugPath</span>
+      <span class="v"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · never indexed</span>
+      <a href="#report" class="report"><svg class="lk" viewBox="0 0 24 24" style="width:12px;height:12px;vertical-align:-2px"><use href="#i-flag"/></svg> Report this profile</a>
     </div>
   </div>
 </div>
@@ -337,7 +457,7 @@
 <!-- DIRECTION B -->
 <!-- ============================================================ -->
 <div class="stage" id="s-b" role="tabpanel" aria-labelledby="t-b">
-  <div class="device">
+  <div class="device" data-slug="">
     <div class="b-wrap">
       <div class="b-top">
         <span class="b-sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath · Profile</span>
@@ -345,53 +465,60 @@
       </div>
 
       <div class="b-rail">
-      <div class="b-id">
-        <div class="pf"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Portrait of Rivka Mandel"><use href="#portrait"/></svg></div>
-        <div class="hd">
-          <h1>Rivka Mandel</h1>
-          <div class="heb">רבקה מנדל</div>
-          <div class="one">A morah who's steady on the big things and light about the rest.</div>
+        <div class="b-id">
+          <div class="pf"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label=""><use class="por-use" href="#portrait-f"/></svg><svg class="avatar" viewBox="0 0 400 500" aria-hidden="true" style="color:var(--faint)"><use href="#avatar"/></svg></div>
+          <div class="hd">
+            <h1 class="b-name"></h1>
+            <div class="heb b-heb"></div>
+            <div class="one b-one"></div>
+          </div>
         </div>
-      </div>
 
-      <div class="b-badges badges">
-        <span class="badge soft">24</span>
-        <span class="badge"><svg><use href="#i-home"/></svg>Lakewood, NJ</span>
-        <span class="badge gold"><svg><use href="#i-plane"/></svg>Open to relocating</span>
-        <span class="badge"><svg><use href="#i-cap"/></svg>3rd-grade morah</span>
-        <span class="badge gold"><svg><use href="#i-book"/></svg>Bais Yaakov + seminary</span>
-        <span class="badge"><svg><use href="#i-users"/></svg>Second of six</span>
-      </div>
+        <div class="b-badges badges"></div>
 
-      <div class="arr-top b-arrtop" data-arrtop="b"><span class="ic"></span><span class="tx"></span></div>
-      </div><!-- /b-rail -->
+        <div class="obs b-obs">
+          <div class="obs-h"><span class="obs-k">Observance</span><span class="obs-v"></span></div>
+          <div class="track"><span class="mk"></span></div>
+          <div class="ends"><span>Secular</span><span>Chassidish</span></div>
+        </div>
+
+        <div class="fresh b-fresh"></div>
+
+        <div class="arr-top b-arrtop" data-arrtop="b"><span class="ic"></span><span class="tx"></span></div>
+      </div>
 
       <div class="b-main">
-      <div class="b-sec">
-        <span class="lbl">In her words</span>
-        <p class="q">“A home where guests never feel like guests.”</p>
-        <p>Steady about the things that matter, light about the ones that don't. Her classroom runs on warmth and humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
-        <p class="said" style="margin-top:14px;">Teaching third grade is honestly the best part of my day — they keep me laughing.</p>
-      </div>
+        <div class="b-sec">
+          <span class="lbl"><span class="b-words-lbl">In her words</span></span>
+          <p class="q b-quote"></p>
+          <p class="b-who"></p>
+          <p class="said b-who-said" style="margin-top:14px;"></p>
+        </div>
 
-      <div class="b-div"></div>
-      <div class="b-sec">
-        <span class="lbl">What she's looking for</span>
-        <p>Warm and steady, serious about growing — and grounded enough not to take himself too seriously.</p>
-      </div>
+        <div class="b-div"></div>
+        <div class="b-sec">
+          <span class="lbl">What <span class="b-look-lbl"></span></span>
+          <p class="b-look"></p>
+        </div>
 
-      <div class="b-div"></div>
-      <div class="b-sec">
-        <span class="lbl">Family</span>
-        <p>Father is a rebbi in Lakewood; mother is a speech therapist. Second of six, a close and warm family.</p>
-      </div>
+        <div class="b-div"></div>
+        <div class="b-sec">
+          <span class="lbl">Family</span>
+          <p class="b-fam"></p>
+        </div>
 
-      <div class="b-div"></div>
-      <div class="b-sec">
-        <span class="lbl">References <span style="color:var(--faint);font-weight:600;text-transform:none;letter-spacing:0;">· optional</span></span>
-        <p class="b-refs" style="margin-top:0;"><svg><use href="#i-star"/></svg><span><b>Three</b> available on request — shared privately. Not every profile will list references.</span></p>
+        <div class="b-div"></div>
+        <div class="b-sec b-photos-sec" hidden>
+          <span class="lbl">Photos</span>
+          <div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="b-nophoto-t"></span></div>
+        </div>
+
+        <div class="b-div"></div>
+        <div class="b-sec">
+          <span class="lbl">References <span class="opt">· optional</span></span>
+          <p class="b-refs" style="margin-top:0;"><svg><use href="#i-star"/></svg><span class="b-refs-t"></span></p>
+        </div>
       </div>
-      </div><!-- /b-main -->
 
       <div class="arrival b-arrival" data-arrival="b">
         <div class="arr-seg" role="group" aria-label="How this reached you" data-pd-state="How this reached you">
@@ -407,37 +534,277 @@
         <p class="priv"></p>
       </div>
 
+      <div class="trust b-trust">
+        <span class="v"><svg class="lk" viewBox="0 0 24 24"><use href="#i-star"/></svg> Shared via ZivugPath</span>
+        <span class="v"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · never indexed</span>
+        <a href="#report" class="report"><svg class="lk" viewBox="0 0 24 24" style="width:12px;height:12px;vertical-align:-2px"><use href="#i-flag"/></svg> Report this profile</a>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- sticky mobile respond bar -->
+<div class="mact" id="mact"><button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="mact-t">Respond</span></button></div>
+
 <div class="foot-note">
-  <div class="stamp">Lab · profile-redesign · v5 · 2026-07-07</div>
-  <p><b>What this is:</b> two directions for the shared profile — <b>A · Photo-forward</b> and <b>B · Refined classic</b>. Toggle <b>Mobile / Web</b> and the direction up top. The “How this reached you” switcher (shadchan / AI / forwarded / direct) is a demo control to show how the page adapts — it isn't part of the real page.</p>
-  <p><b>v4 notes:</b> removed quote name-tags &amp; the top blurbs (moved here) · smaller hero, especially on web · trimmed extra wording.</p>
-  <p><b>Parked (not now):</b> what actually belongs in the badges / visual elements deserves a dedicated deep-research pass later.</p>
-  <p><b>Open question:</b> A vs B as the base direction (still deciding — keeping both for now).</p>
-  <p><b>Decided:</b> keep the top “suggested by …” line · non-shadchan contact now routes through an intermediary (the app or the person who shared), never a direct “Message Rivka”.</p>
-  <p>Placeholder person; illustrated portrait stands in for the real photo.</p>
+  <div class="stamp">Lab · profile-redesign · v6 · 2026-07-08</div>
+  <p><b>What this is:</b> two directions for the shared profile — <b>A · Photo-forward</b> and <b>B · Refined classic</b>. Use the top controls: <b>direction</b> (A/B), <b>Example</b> profile (Rivka / Dovid / Miriam — tests a man and a divorced parent), <b>Photo</b> (With / None — the no-photo fallback), and <b>Mobile / Web</b>. The “How this reached you” switcher inside the card is a demo control, not part of the real page.</p>
+  <p><b>New in v6:</b> observance meter · height · life-stage &amp; children · community · “always current” freshness line · no-photo state (illustrated avatar) · male + divorced-with-child examples · A-web rail now filled (portrait + vitals + badges) · badge colours now mean something (gold = distinguishing/status · pink = core facts · outline = interests) · trimmed A to one pull-quote · trust/report strip · sticky mobile respond.</p>
+  <p><b>Parked (not now):</b> exactly what belongs in the badges / visual layer still deserves a dedicated research pass.</p>
+  <p><b>Open question:</b> A vs B as the base direction (still deciding — keeping both).</p>
+  <p>Placeholder people; illustrated portraits/avatars stand in for real photos.</p>
 </div>
 
 <script>
   (function () {
-    /* ---- direction tabs (hash-routed for per-variant feedback pins) ---- */
+    /* ============ data model ============ */
+    var PEOPLE = {
+      rivka: {
+        slug: 'rivka-m', name: 'Rivka Mandel', heb: 'רבקה מנדל', por: 'portrait-f', they: 'she', their: 'her',
+        age: 24, height: "5′4″", city: 'Lakewood, NJ', relocate: { label: 'Open to relocating', gold: true },
+        obs: { label: 'Bais Yaakov · Yeshivish', pos: .74 },
+        status: null,
+        community: 'Lakewood',
+        one: "A morah who's steady on the big things and light about the rest.",
+        quote: 'A home where guests never feel like guests.',
+        whoLbl: 'Who she is', lookLbl: "she's looking for",
+        who: "Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.",
+        whoSaid: 'Teaching third grade is honestly the best part of my day — they keep me laughing.',
+        look: "Someone warm and steady, serious about growing — and grounded enough not to take himself too seriously.",
+        fam: "Father a rebbi in Lakewood, mother a speech therapist. Second of six in a close, warm home.",
+        famB: "Father is a rebbi in Lakewood; mother is a speech therapist. Second of six, a close and warm family.",
+        refs: "Three references available on request — shared privately, not posted here. (Optional — some profiles won't list any.)",
+        refsB: "<b>Three</b> available on request — shared privately. Not every profile will list references.",
+        updated: '2 weeks ago',
+        badges: [
+          { t: '3rd-grade morah', i: 'i-cap', c: '' },
+          { t: 'Bais Yaakov + seminary', i: 'i-book', c: '' },
+          { t: 'Second of six', i: 'i-users', c: '' },
+          { t: 'Loves hosting', i: 'i-home', c: 'soft' },
+          { t: 'Baking & long walks', i: 'i-heart', c: 'soft' }
+        ],
+        nophoto: "Rivka hasn't posted photos publicly. She'll share them privately once she's open to an introduction."
+      },
+      dovid: {
+        slug: 'dovid-w', name: 'Dovid Weiss', heb: 'דוד ווייס', por: 'portrait-m', they: 'he', their: 'his',
+        age: 27, height: "5′11″", city: 'Teaneck, NJ', relocate: { label: 'Open to relocating', gold: true },
+        obs: { label: 'Modern Orthodox', pos: .5 },
+        status: null,
+        community: 'Teaneck',
+        one: "An engineer who learns daf yomi on the train and coaches Little League on Sundays.",
+        quote: "I want a home where Shabbos is the best part of the week — every week.",
+        whoLbl: 'Who he is', lookLbl: "he's looking for",
+        who: "Dovid is easy to be around and hard to rattle. He builds software by day, keeps a daily seder before work, and is the uncle every niece and nephew fights to sit next to. Ambitious about his work, unhurried about people.",
+        whoSaid: "I'd rather be the guy who shows up than the guy who talks about showing up.",
+        look: "Someone kind and genuine who wants to build a warm, growth-minded home — and will laugh with him when the plan falls apart.",
+        fam: "Oldest of four. Father runs a family business, mother teaches. Close with his siblings, home most Shabbosos.",
+        famB: "Oldest of four. Father runs a family business; mother teaches. He's close with his siblings and home most Shabbosos.",
+        refs: "Two references available on request — shared privately, not posted here.",
+        refsB: "<b>Two</b> available on request — shared privately. Not every profile will list references.",
+        updated: '5 days ago',
+        badges: [
+          { t: 'Software engineer', i: 'i-brief', c: '' },
+          { t: 'Learned in Israel + YU', i: 'i-book', c: '' },
+          { t: 'Oldest of four', i: 'i-users', c: '' },
+          { t: 'Coaches Little League', i: 'i-heart', c: 'soft' },
+          { t: 'Daf yomi', i: 'i-book', c: 'soft' }
+        ],
+        nophoto: "Dovid hasn't posted photos publicly. He'll share them privately once he's open to an introduction."
+      },
+      miriam: {
+        slug: 'miriam-a', name: 'Miriam Adler', heb: 'מרים אדלר', por: 'portrait-f', they: 'she', their: 'her',
+        age: 34, height: "5′6″", city: 'Monsey, NY', relocate: { label: 'Prefers to stay local', gold: false },
+        obs: { label: 'Modern Orthodox', pos: .46 },
+        status: { label: 'Divorced', badge: 'Divorced', i: 'i-star', child: 'Mother of one' },
+        community: 'Monsey',
+        one: "A nurse and a mother who's rebuilt with a lot of grace and a good sense of humor.",
+        quote: "I'm not looking to start over — I'm looking to build forward.",
+        whoLbl: 'Who she is', lookLbl: "she's looking for",
+        who: "Miriam is warm, direct, and unflappable — the friend everyone calls in a crisis. She's a pediatric nurse, a devoted mother to her daughter, and someone who has done the work to know exactly what she wants the second time around.",
+        whoSaid: "I've learned what actually matters, and I don't rattle easily anymore.",
+        look: "A kind, settled man who's ready to build a calm, honest home — someone good with children and comfortable with a woman who knows her own mind.",
+        fam: "One of three, parents in Monsey nearby and involved. A daughter in early elementary who is the center of her world.",
+        famB: "One of three; her parents are in Monsey, nearby and involved. She has a daughter in early elementary who is the center of her world.",
+        refs: "Three references available on request — shared privately, not posted here.",
+        refsB: "<b>Three</b> available on request — shared privately. Not every profile will list references.",
+        updated: 'yesterday',
+        badges: [
+          { t: 'Pediatric nurse', i: 'i-brief', c: '' },
+          { t: 'Mother of one', i: 'i-child', c: 'gold' },
+          { t: 'One of three', i: 'i-users', c: '' },
+          { t: 'Loves the outdoors', i: 'i-heart', c: 'soft' },
+          { t: 'Reads everything', i: 'i-book', c: 'soft' }
+        ],
+        nophoto: "Miriam hasn't posted photos publicly. She'll share them privately once she's open to an introduction."
+      }
+    };
+
+    var SEAL = '<span class="seal-mark" aria-hidden="true"></span>';
+    function arrData(p) {
+      var Name = p.name.split(' ')[0], they = p.they, their = p.their;
+      return {
+        shadchan: { av: 'MC', top: '<b>Mrs. Cohen</b> suggested this for you', who: '<b>Mrs. Cohen</b> suggested this for you', sub: 'Shadchan · ' + p.community,
+          note: '“I thought of you two the moment I met ' + Name + ' — I really think it could be a fit.”',
+          cta: 'Message Mrs. Cohen', priv: they === 'she' ? "She'll introduce you both. Your contact stays private until you choose to share it." : "She'll introduce you both. Your contact stays private until you choose to share it." },
+        ai: { av: SEAL, top: 'Suggested by <b>ZivugPath</b>', who: '<b>ZivugPath</b> suggested this match', sub: "From what you're both looking for",
+          note: "“There's real overlap in the kind of home you each described wanting — worth a look.”",
+          cta: 'Request an introduction', priv: 'ZivugPath passes your interest to ' + Name + ' — no contact details are shared until you both say yes.' },
+        friend: { av: 'CS', top: '<b>Chaya S.</b> forwarded you this', who: '<b>Chaya S.</b> forwarded you this profile', sub: 'Passed along by a friend',
+          note: '“You came to mind the second I saw it — just take a look 😊”',
+          cta: 'Ask Chaya to introduce you', priv: "Your interest goes to Chaya, who'll make the introduction. Contact stays private until you both agree." },
+        direct: { av: Name[0], top: '<b>' + Name + '</b> shared ' + their + ' profile', who: '<b>' + Name + '</b> shared ' + their + ' profile', sub: 'Reach out through ZivugPath',
+          note: '', cta: 'Request an introduction', priv: 'ZivugPath passes your interest to ' + Name + '. Contact stays private until you both agree.' }
+      };
+    }
+
+    /* ============ state ============ */
+    var state = { person: 'rivka', photo: 'on', sharer: 'shadchan' };
     var dirs = ['a', 'b'];
-    function norm() { var h = (location.hash || '').replace('#', ''); return dirs.indexOf(h) > -1 ? h : 'a'; }
-    function apply(id) {
+
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+    function factsHtml(p) {
+      var out = ['<span>' + p.age + '</span>', '<span>' + esc(p.height) + '</span>', '<span>' + esc(p.city) + '</span>'];
+      if (p.status) out.push('<span>' + esc(p.status.label) + '</span>');
+      return out.join('');
+    }
+
+    function badgesHtml(p) {
+      var list = [];
+      // status-identity first (gold)
+      if (p.status) list.push({ t: p.status.label, i: p.status.i || 'i-star', c: 'gold' });
+      // core location + relocating
+      list.push({ t: p.city.split(',')[0], i: 'i-pin', c: '' });
+      list.push({ t: p.relocate.label, i: 'i-plane', c: p.relocate.gold ? 'gold' : 'soft' });
+      list = list.concat(p.badges);
+      return list.map(function (b) {
+        return '<span class="badge ' + (b.c || '') + '"><svg><use href="#' + b.i + '"/></svg>' + esc(b.t) + '</span>';
+      }).join('');
+    }
+
+    function badgesHtmlB(p) {
+      // B leads with age as a bare pill, then the same set
+      var head = '<span class="badge soft">' + p.age + '</span>';
+      return head + badgesHtml(p);
+    }
+
+    function setObs(root, p) {
+      $('.obs-v', root).textContent = p.obs.label;
+      $('.mk', root).style.left = (p.obs.pos * 100) + '%';
+      root.setAttribute('aria-label', 'Observance: ' + p.obs.label);
+    }
+
+    function setPortrait(p) {
+      $all('.por-use').forEach(function (u) { u.setAttribute('href', '#' + p.por); });
+      $all('.a-hero .por').forEach(function (s) { s.setAttribute('aria-label', 'Portrait of ' + p.name); });
+      $('#s-a .a-hero .por').setAttribute('aria-label', 'Portrait of ' + p.name);
+    }
+
+    function applyPhoto() {
+      var on = state.photo === 'on';
+      // A hero
+      var heroSvg = $('#s-a .a-hero .por'), heroA = $('#s-a .a-hero');
+      heroA.classList.toggle('nophoto', !on);
+      heroSvg.style.display = on ? '' : 'none';
+      $('#s-a .a-hero .avatar').style.display = on ? 'none' : '';
+      // A photos block vs note
+      $('#s-a .a-photos-block').hidden = !on;
+      $('#s-a .a-nophoto-block').hidden = on;
+      // B portrait
+      var pf = $('#s-b .b-id .pf');
+      pf.classList.toggle('nophoto', !on);
+      $('#s-b .b-id .pf .por').style.display = on ? '' : 'none';
+      $('#s-b .b-id .pf .avatar').style.display = on ? 'none' : '';
+      $('#s-b .b-photos-sec').hidden = on; // only show the "photos private" note when there are no public photos
+      // hide the divider that precedes the (hidden) photos section on B
+      var sec = $('#s-b .b-photos-sec');
+      if (sec && sec.previousElementSibling && sec.previousElementSibling.classList.contains('b-div')) {
+        sec.previousElementSibling.style.display = on ? 'none' : '';
+      }
+    }
+
+    function render() {
+      var p = PEOPLE[state.person];
+      setPortrait(p);
+      $all('.device').forEach(function (d) { d.setAttribute('data-slug', p.slug); });
+
+      /* ---- A ---- */
+      $('#s-a .a-name').textContent = p.name;
+      $('#s-a .a-facts').innerHTML = factsHtml(p);
+      $('#s-a .a-fresh').innerHTML = '<svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Updated <b>' + esc(p.updated) + '</b> · always the current version';
+      setObs($('#s-a .a-obs'), p);
+      $('#s-a .a-vitals').innerHTML =
+        '<div class="vi"><div class="k">Age</div><div class="v">' + p.age + '</div></div>' +
+        '<div class="vi"><div class="k">Height</div><div class="v">' + esc(p.height) + '</div></div>' +
+        '<div class="vi"><div class="k">Community</div><div class="v">' + esc(p.community) + '</div></div>' +
+        '<div class="vi"><div class="k">Status</div><div class="v">' + esc(p.status ? p.status.label + (p.status.child ? ' · ' + p.status.child : '') : 'Single') + '</div></div>';
+      $('#s-a .a-badges').innerHTML = badgesHtml(p);
+      $('#s-a .a-quote-t').textContent = p.quote;
+      $('#s-a .a-who-lbl').textContent = p.whoLbl;
+      $('#s-a .a-who').textContent = p.who;
+      $('#s-a .a-who-said').textContent = p.whoSaid;
+      $('#s-a .a-look-lbl').textContent = p.lookLbl;
+      $('#s-a .a-look').textContent = p.look;
+      $('#s-a .a-fam-t').textContent = p.fam;
+      $('#s-a .a-refs-t').innerHTML = esc(p.refs).replace(/^(Two|Three) references/, '<b>$1 references</b>');
+      $('#s-a .a-nophoto-t').textContent = p.nophoto;
+
+      /* ---- B ---- */
+      $('#s-b .b-name').textContent = p.name;
+      $('#s-b .b-heb').textContent = p.heb;
+      $('#s-b .b-one').textContent = p.one;
+      $('#s-b .b-words-lbl').textContent = 'In ' + p.their + ' words';
+      $('#s-b .b-badges').innerHTML = badgesHtmlB(p);
+      setObs($('#s-b .b-obs'), p);
+      $('#s-b .b-fresh').innerHTML = '<svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Updated <b>' + esc(p.updated) + '</b> · always current';
+      $('#s-b .b-quote').textContent = '“' + p.quote + '”';
+      $('#s-b .b-who').textContent = p.who;
+      $('#s-b .b-who-said').textContent = p.whoSaid;
+      $('#s-b .b-look-lbl').textContent = p.lookLbl;
+      $('#s-b .b-look').textContent = p.look;
+      $('#s-b .b-fam').textContent = p.famB;
+      $('#s-b .b-refs-t').innerHTML = p.refsB;
+      $('#s-b .b-nophoto-t').textContent = p.nophoto;
+
+      applyPhoto();
+      dirs.forEach(function (d) { paintArrival(d, state.sharer); });
+    }
+
+    /* ---- arrival module ---- */
+    function paintArrival(dir, sharer) {
+      var p = PEOPLE[state.person];
+      var d = arrData(p)[sharer];
+      var top = $('[data-arrtop="' + dir + '"]');
+      if (top) { $('.ic', top).innerHTML = (d.av === SEAL ? SEAL : d.av); $('.tx', top).innerHTML = d.top; }
+      var m = $('[data-arrival="' + dir + '"]');
+      $('.av', m).innerHTML = (d.av === SEAL ? SEAL : d.av);
+      $('.t .a', m).innerHTML = d.who;
+      $('.t .s', m).textContent = d.sub;
+      var note = $('.arr-note', m);
+      if (d.note) { note.textContent = d.note; note.style.display = ''; } else { note.style.display = 'none'; }
+      $('.cta-t', m).textContent = d.cta;
+      $('.priv', m).textContent = d.priv;
+      $all('.arr-seg button', m).forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.s === sharer ? 'true' : 'false'); });
+      // sticky respond mirrors the active direction's CTA
+      $('.mact-t').textContent = d.cta;
+    }
+
+    /* ---- direction tabs (hash-routed) ---- */
+    function normHash() { var h = (location.hash || '').replace('#', ''); return dirs.indexOf(h) > -1 ? h : 'a'; }
+    function applyDir(id) {
       dirs.forEach(function (k) {
         var on = (k === id);
-        document.getElementById('t-' + k).setAttribute('aria-selected', on ? 'true' : 'false');
-        document.getElementById('t-' + k).tabIndex = on ? 0 : -1;
+        var t = document.getElementById('t-' + k);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
         document.getElementById('s-' + k).classList.toggle('on', on);
       });
       window.scrollTo({ top: 0, behavior: 'auto' });
+      updateMact();
     }
     if (!location.hash) { try { history.replaceState(null, '', '#a'); } catch (e) {} }
-    apply(norm());
-    window.addEventListener('hashchange', function () { apply(norm()); });
     dirs.forEach(function (k, i) {
       var tab = document.getElementById('t-' + k);
       tab.addEventListener('click', function () { location.hash = k; });
@@ -448,55 +815,67 @@
         if (j > -1) { e.preventDefault(); location.hash = dirs[j]; document.getElementById('t-' + dirs[j]).focus(); }
       });
     });
+    window.addEventListener('hashchange', function () { applyDir(normHash()); });
 
-    /* ---- flexible "how this reached you" module ---- */
-    var SEAL = '<span class="seal-mark" aria-hidden="true"></span>';
-    var ARR = {
-      shadchan: { av: 'MC', top: '<b>Mrs. Cohen</b> suggested this for you',
-        who: '<b>Mrs. Cohen</b> suggested this for you', sub: 'Shadchan · Lakewood',
-        note: '“I thought of you two the moment I met Rivka — same warmth, and she\'ll keep up with your humor.”',
-        cta: 'Message Mrs. Cohen', priv: 'She\'ll introduce you both. Your contact stays private until you choose to share it.' },
-      ai: { av: SEAL, top: 'Suggested by <b>ZivugPath</b>',
-        who: '<b>ZivugPath</b> suggested this match', sub: 'From what you\'re both looking for',
-        note: '“You\'re both after a warm, open home and a steady pace — there\'s real overlap in what matters to you.”',
-        cta: 'Request an introduction', priv: 'ZivugPath passes your interest to Rivka — no contact details are shared until you both say yes.' },
-      friend: { av: 'CS', top: '<b>Chaya S.</b> forwarded you this',
-        who: '<b>Chaya S.</b> forwarded you this profile', sub: 'Passed along by a friend',
-        note: '“You came to mind the second I saw it — just take a look 😊”',
-        cta: 'Ask Chaya to introduce you', priv: 'Your interest goes to Chaya, who\'ll make the introduction. Contact stays private until you both agree.' },
-      direct: { av: 'R', top: '<b>Rivka</b> shared her profile',
-        who: '<b>Rivka</b> shared her profile', sub: 'Reach out through ZivugPath',
-        note: '', cta: 'Request an introduction', priv: 'ZivugPath passes your interest to Rivka. Contact stays private until you both agree.' }
-    };
-    function paintArrival(dir, state) {
-      var d = ARR[state];
-      var top = document.querySelector('[data-arrtop="' + dir + '"]');
-      if (top) { top.querySelector('.ic').innerHTML = (d.av === SEAL ? SEAL : d.av); top.querySelector('.tx').innerHTML = d.top; }
-      var m = document.querySelector('[data-arrival="' + dir + '"]');
-      m.querySelector('.av').innerHTML = (d.av === SEAL ? SEAL : d.av);
-      m.querySelector('.t .a').innerHTML = d.who;
-      m.querySelector('.t .s').textContent = d.sub;
-      var note = m.querySelector('.arr-note');
-      if (d.note) { note.textContent = d.note; note.style.display = ''; } else { note.style.display = 'none'; }
-      m.querySelector('.cta-t').textContent = d.cta;
-      m.querySelector('.priv').textContent = d.priv;
-      m.querySelectorAll('.arr-seg button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.s === state ? 'true' : 'false'); });
-    }
-    dirs.forEach(function (dir) {
-      var m = document.querySelector('[data-arrival="' + dir + '"]');
-      m.querySelectorAll('.arr-seg button').forEach(function (b) {
-        b.addEventListener('click', function () { paintArrival(dir, b.dataset.s); });
+    /* ---- segmented controls ---- */
+    function bindSeg(attr, key, after) {
+      $all('.lab-seg button[data-' + attr + ']').forEach(function (b) {
+        b.addEventListener('click', function () {
+          state[key] = b.dataset[attr];
+          $all('.lab-seg button[data-' + attr + ']').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+          if (after) after();
+        });
       });
-      paintArrival(dir, 'shadchan');
+    }
+    bindSeg('person', 'person', render);
+    bindSeg('photo', 'photo', applyPhoto);
+
+    // viewport toggle
+    $all('.lab-seg button[data-vp]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.body.classList.toggle('vp-web', b.dataset.vp === 'web');
+        $all('.lab-seg button[data-vp]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        updateMact();
+      });
     });
 
-    /* ---- viewport toggle (mobile / web) ---- */
-    var vpBtns = document.querySelectorAll('.lab-vp button');
-    function setVp(vp) {
-      document.body.classList.toggle('vp-web', vp === 'web');
-      vpBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.vp === vp ? 'true' : 'false'); });
+    // arrival sharer switchers (per direction)
+    dirs.forEach(function (dir) {
+      var m = $('[data-arrival="' + dir + '"]');
+      $all('.arr-seg button', m).forEach(function (b) {
+        b.addEventListener('click', function () { state.sharer = b.dataset.s; paintArrival(dir, state.sharer); });
+      });
+    });
+
+    // report link (demo)
+    $all('.trust .report').forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); alert('Demo — in the real app this opens a short “something’s off” report form.'); });
+    });
+
+    /* ---- sticky mobile respond bar ---- */
+    var mact = document.getElementById('mact');
+    function updateMact() {
+      if (document.body.classList.contains('vp-web')) { mact.classList.remove('show'); return; }
+      var stage = document.querySelector('.stage.on');
+      var arr = stage ? stage.querySelector('.arrival') : null;
+      if (!arr) { mact.classList.remove('show'); return; }
+      var r = arr.getBoundingClientRect();
+      var past = window.scrollY > 320;
+      var arrVisible = r.top < window.innerHeight && r.bottom > 0;
+      mact.classList.toggle('show', past && !arrVisible);
     }
-    vpBtns.forEach(function (b) { b.addEventListener('click', function () { setVp(b.dataset.vp); }); });
+    window.addEventListener('scroll', updateMact, { passive: true });
+    window.addEventListener('resize', updateMact, { passive: true });
+    mact.querySelector('button').addEventListener('click', function () {
+      var stage = document.querySelector('.stage.on');
+      var arr = stage ? stage.querySelector('.arrival') : null;
+      if (arr) arr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    /* ---- go ---- */
+    render();
+    applyDir(normHash());
+    updateMact();
   })();
 </script>
 <script src="/pindrop/pindrop.js?v=1" defer></script>

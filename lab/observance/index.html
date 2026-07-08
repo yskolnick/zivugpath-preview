@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="pd-version" content="1">
+<title>Lab · Observance display · ZivugPath</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
+    --line: #E7E0D6; --line-soft: #F1EBE2;
+    --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --warn: #9a5b12; --warn-soft: #F7ECD8;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5);
+    --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+    --shadow-xs: 8px 14px 26px -20px rgba(58,34,22,.3);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+      --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+      --gold: #DBB161; --gold-soft: #2A2114; --on-accent: #17130F; --warn: #E0A85A; --warn-soft: #2E2413;
+      --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
+      --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5); }
+  }
+  :root[data-theme="light"] { --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
+    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff; --warn: #9a5b12; --warn-soft: #F7ECD8; }
+  :root[data-theme="dark"] { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+    --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
+    --gold: #DBB161; --gold-soft: #2A2114; --on-accent: #17130F; --warn: #E0A85A; --warn-soft: #2E2413; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; margin: 0; }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 6px; }
+  .seal-mark { border-radius: 50%; background: radial-gradient(circle at 35% 30%, #d76277, #7e2447 72%); position: relative; display: inline-block; }
+  .seal-mark::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; border: 1.3px solid rgba(255,255,255,.6); }
+  .lk { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* lab chrome */
+  .lab-bar { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .lab-in { max-width: 900px; margin: 0 auto; padding: 11px clamp(16px, 5vw, 34px); display: flex; align-items: center; gap: 12px 14px; flex-wrap: wrap; }
+  .lab-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 1.05rem; }
+  .lab-brand .seal-mark { width: 18px; height: 18px; }
+  .lab-brand .tag { font-family: var(--sans); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); background: var(--gold-soft); padding: 3px 8px; border-radius: 999px; }
+  .lab-seg { margin-left: auto; display: flex; gap: 3px; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--raise); flex-wrap: wrap; }
+  .lab-seg .sk { align-self: center; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 0 4px 0 6px; }
+  .lab-seg button { font-family: var(--sans); font-size: 12px; font-weight: 700; border: 0; background: transparent; color: var(--muted); border-radius: 999px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+  .lab-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: clamp(22px, 4vw, 40px) clamp(16px, 5vw, 34px) 90px; }
+  .intro .k { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); }
+  .intro h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); letter-spacing: -.015em; margin: 8px 0 0; line-height: 1.08; }
+  .intro p { color: var(--muted); font-size: 15px; max-width: 66ch; margin: 12px 0 0; line-height: 1.6; }
+  .ctx { margin-top: 18px; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); background: var(--raise); border: 1px solid var(--line); border-radius: 12px; padding: 9px 14px; box-shadow: var(--shadow-xs); }
+  .ctx b { color: var(--ink); font-weight: 700; }
+  .ctx .who { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); }
+
+  /* approach cards */
+  .grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 26px; }
+  @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .approach { border: 1px solid var(--line); border-radius: 18px; background: var(--raise); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; }
+  .approach.rec { border-color: color-mix(in srgb, var(--pom) 45%, var(--line)); }
+  .approach.ref { background: color-mix(in srgb, var(--paper) 60%, var(--raise)); }
+  .ah { padding: 15px 18px 13px; border-bottom: 1px solid var(--line-soft); }
+  .ah .row { display: flex; align-items: center; gap: 9px; }
+  .ah .an { flex: none; width: 24px; height: 24px; border-radius: 7px; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 13px; }
+  .approach.rec .an { background: var(--pom); color: var(--on-accent); }
+  .approach.ref .an { background: var(--warn-soft); color: var(--warn); }
+  .ah h3 { font-size: 1.12rem; letter-spacing: -.01em; }
+  .ah .rectag { margin-left: auto; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--on-accent); background: var(--pom); padding: 3px 8px; border-radius: 999px; }
+  .ah .reftag { margin-left: auto; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--warn); background: var(--warn-soft); padding: 3px 8px; border-radius: 999px; }
+  .ah .bet { font-size: 12.5px; color: var(--muted); margin: 7px 0 0; line-height: 1.45; }
+  .ah .bet b { color: var(--ink); font-weight: 700; }
+  .demo { padding: 18px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  /* the observance modules */
+  .obs-k { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 8px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 650; line-height: 1; padding: 8px 14px; border-radius: 999px; background: var(--pom-soft); color: var(--pom-ink); }
+  .badge svg { width: 14px; height: 14px; flex: none; opacity: .85; }
+  .badge.gold { background: var(--gold-soft); color: var(--gold); }
+  .lbl-community { margin-top: 9px; font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+  .lbl-community svg { width: 14px; height: 14px; color: var(--pom); flex: none; }
+
+  .words { font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.42; color: var(--ink); border-left: 2px solid var(--pom); padding-left: 14px; margin: 13px 0 0; }
+
+  .facets { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; }
+  .chip svg { width: 12px; height: 12px; color: var(--pom); flex: none; }
+
+  /* linear meter (reference) */
+  .meter .obs-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .meter .obs-v { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .meter .track { position: relative; height: 6px; border-radius: 999px; margin: 10px 0 5px; background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 30%, var(--line)), color-mix(in srgb, var(--pom) 42%, var(--line))); }
+  .meter .mk { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--pom); border: 2.5px solid var(--raise); box-shadow: var(--shadow-xs); transform: translate(-50%, -50%); transition: left .3s cubic-bezier(.2,.7,.2,1); }
+  .meter .ends { display: flex; justify-content: space-between; font-size: 10px; color: var(--faint); font-weight: 600; }
+  .meter .warn { margin-top: 12px; display: flex; gap: 8px; font-size: 12px; line-height: 1.45; color: var(--warn); background: var(--warn-soft); border-radius: 10px; padding: 9px 11px; }
+  .meter .warn[hidden] { display: none; }
+  .meter .warn svg { width: 15px; height: 15px; flex: none; margin-top: 1px; }
+
+  /* multi-axis mini scales */
+  .axes .ax { margin-top: 12px; }
+  .axes .ax:first-child { margin-top: 4px; }
+  .axes .ax .h { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-weight: 600; margin-bottom: 5px; }
+  .axes .ax .h .r { color: var(--faint); }
+  .axes .ax .bar { position: relative; height: 5px; border-radius: 999px; background: var(--line); }
+  .axes .ax .fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: linear-gradient(90deg, color-mix(in srgb,var(--gold) 55%, var(--pom)), var(--pom)); transition: width .3s cubic-bezier(.2,.7,.2,1); }
+
+  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 26px 20px 40px; line-height: 1.6; max-width: 760px; margin: 0 auto; }
+  .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+  .foot-note b { color: var(--muted); }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-home" viewBox="0 0 24 24"><path class="lk" d="M4 11l8-7 8 7"/><path class="lk" d="M6 10v10h12V10"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path class="lk" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle class="lk" cx="12" cy="10" r="2.4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path class="lk" d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path class="lk" d="M19 3v18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path class="lk" d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path class="lk" d="M12 3l9 16H3z"/><path class="lk" d="M12 10v4"/><path class="lk" d="M12 17.5v.5"/></symbol>
+</svg>
+
+<div class="lab-bar">
+  <div class="lab-in">
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · observance</span></span>
+    <div class="lab-seg" role="group" aria-label="Example person" data-pd-state="Example">
+      <span class="sk">Example</span>
+      <button type="button" data-person="rivka" aria-pressed="true">Rivka · Yeshivish</button>
+      <button type="button" data-person="dovid" aria-pressed="false">Dovid · MO machmir</button>
+      <button type="button" data-person="miriam" aria-pressed="false">Miriam · MO</button>
+      <button type="button" data-person="menachem" aria-pressed="false">Menachem · Chabad</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <span class="k">Design study · how we show observance</span>
+    <h1>Six ways to show hashkafa — which oversimplifies least?</h1>
+    <p>The current profile uses a single left-to-right “observance meter.” The concern: hashkafa isn’t one axis. Below, the <b>same person’s</b> observance is rendered six ways. Switch the example person up top — watch what happens to the meter for <b>Menachem (Chabad)</b>, who is “chassidish” yet outward-facing and doesn’t sit anywhere honest on the line.</p>
+    <div class="ctx">Showing: <span class="who" id="ctxName">Rivka Mandel</span> · <b id="ctxLabel">Yeshivish</b></div>
+  </div>
+
+  <div class="grid">
+    <!-- REFERENCE: linear meter -->
+    <div class="approach ref">
+      <div class="ah">
+        <div class="row"><span class="an">0</span><h3>The linear meter</h3><span class="reftag">Current · v6</span></div>
+        <p class="bet"><b>One axis, one marker.</b> Simple, but forces a false order — and can’t place Chabad, Sephardi, or a convert.</p>
+      </div>
+      <div class="demo"><div class="meter" data-ap="meter">
+        <span class="obs-k">Observance</span>
+        <div class="obs-h"><span></span><span class="obs-v"></span></div>
+        <div class="track"><span class="mk"></span></div>
+        <div class="ends"><span>Secular</span><span>Chassidish</span></div>
+        <div class="warn" hidden><svg class="lk" viewBox="0 0 24 24"><use href="#i-warn"/></svg><span></span></div>
+      </div></div>
+    </div>
+
+    <!-- A: label + community -->
+    <div class="approach">
+      <div class="ah">
+        <div class="row"><span class="an">A</span><h3>Label + community</h3></div>
+        <p class="bet"><b>Categorical, non-ordinal.</b> A named group + where they daven. Honest and minimal; no fake scale.</p>
+      </div>
+      <div class="demo"><div data-ap="label">
+        <span class="obs-k">Observance</span>
+        <span class="badge lbl-badge gold"></span>
+        <div class="lbl-community"><svg class="lk" viewBox="0 0 24 24"><use href="#i-home"/></svg><span></span></div>
+      </div></div>
+    </div>
+
+    <!-- B: label + in their words -->
+    <div class="approach">
+      <div class="ah">
+        <div class="row"><span class="an">B</span><h3>Label + “in their words”</h3></div>
+        <p class="bet"><b>Label, then nuance.</b> One line in their own voice carries what a category can’t.</p>
+      </div>
+      <div class="demo"><div data-ap="words">
+        <span class="obs-k">Observance</span>
+        <span class="badge lbl-badge gold"></span>
+        <p class="words"></p>
+      </div></div>
+    </div>
+
+    <!-- C: label + facet chips -->
+    <div class="approach">
+      <div class="ah">
+        <div class="row"><span class="an">C</span><h3>Label + facet chips</h3></div>
+        <p class="bet"><b>Scannable specifics.</b> A few concrete practices — only what they volunteer, never a full grid.</p>
+      </div>
+      <div class="demo"><div data-ap="facets">
+        <span class="obs-k">Observance</span>
+        <span class="badge lbl-badge gold"></span>
+        <div class="facets"></div>
+      </div></div>
+    </div>
+
+    <!-- D: full hybrid (recommended) -->
+    <div class="approach rec">
+      <div class="ah">
+        <div class="row"><span class="an">D</span><h3>Full hybrid</h3><span class="rectag">Recommended</span></div>
+        <p class="bet"><b>Structured + narrative.</b> Label + a few facets + their own words. Rich to store, warm to read.</p>
+      </div>
+      <div class="demo"><div data-ap="hybrid">
+        <span class="obs-k">Observance</span>
+        <span class="badge lbl-badge gold"></span>
+        <div class="facets"></div>
+        <p class="words"></p>
+      </div></div>
+    </div>
+
+    <!-- E: multi-axis mini scales -->
+    <div class="approach">
+      <div class="ah">
+        <div class="row"><span class="an">E</span><h3>Multi-axis mini-scales</h3></div>
+        <p class="bet"><b>A visual, but multidimensional.</b> Keeps a meter feel across a few axes — still risks feeling clinical.</p>
+      </div>
+      <div class="demo"><div class="axes" data-ap="axes">
+        <span class="obs-k">Observance</span>
+        <div class="ax"><div class="h"><span>Halachic observance</span><span class="r">high</span></div><div class="bar"><span class="fill" data-k="obs"></span></div></div>
+        <div class="ax"><div class="h"><span>Engagement w/ secular world</span><span class="r"></span></div><div class="bar"><span class="fill" data-k="sec"></span></div></div>
+        <div class="ax"><div class="h"><span>Learning orientation</span><span class="r"></span></div><div class="bar"><span class="fill" data-k="learn"></span></div></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<div class="foot-note">
+  <div class="stamp">Lab · observance-display · v1 · 2026-07-08</div>
+  <p><b>What this is:</b> six ways to render the observance/hashkafa field on the shared profile, the same person each time. Switch the <b>Example person</b> up top. Approach <b>0</b> is the current linear meter (the one we’re questioning); <b>D</b> is the recommended replacement.</p>
+  <p><b>Why this exists:</b> research (2026-07-08) found hashkafa is multidimensional and its categories aren’t linearly ordered; real frum products (JWed, SawYouAtSinai) use categorical labels + specifics, not sliders. See the observance memo.</p>
+  <p><b>To weigh in:</b> drop pins on the approaches you like / dislike, or just tell me “D, but drop the chips” etc. Placeholder people.</p>
+</div>
+
+<script>
+  (function () {
+    var PEOPLE = {
+      rivka: { name: 'Rivka Mandel', label: 'Yeshivish', community: 'Lakewood · Bais Yaakov background',
+        pos: .74, meterNote: '',
+        words: 'Bais Yaakov through and through — though I’m always halfway through a secular novel too.',
+        facets: ['Kosher phone', 'Shomer negiah', 'No TV at home', 'Seminary in Israel'],
+        axes: { obs: .82, sec: .3, learn: .58 } },
+      dovid: { name: 'Dovid Weiss', label: 'Modern Orthodox · machmir', community: 'Teaneck',
+        pos: .5, meterNote: '',
+        words: 'MO machmir — a daily daf and a kipa seruga, and I’ll still argue with you about a film afterward.',
+        facets: ['Daf yomi', 'Shomer Shabbos', 'Kipa seruga', 'College + career'],
+        axes: { obs: .7, sec: .82, learn: .68 } },
+      miriam: { name: 'Miriam Adler', label: 'Modern Orthodox', community: 'Monsey',
+        pos: .44, meterNote: '',
+        words: 'Shomer Shabbos with a kosher home; easygoing about the rest and at home in the wider world.',
+        facets: ['Shomer Shabbos', 'Kosher home', 'Covers hair at shul', 'Works in healthcare'],
+        axes: { obs: .55, sec: .86, learn: .34 } },
+      menachem: { name: 'Menachem Katz', label: 'Lubavitch · Chabad', community: 'Crown Heights',
+        pos: .9,
+        meterNote: 'Here’s where one axis breaks: Chabad reads “chassidish,” yet is far more outward-facing than yeshivish. No single point on this line is true.',
+        words: 'Chabad — chassidus before shacharis, shlichus at heart, and happy to talk to anyone.',
+        facets: ['Chassidus daily', 'Learns Tanya', 'Shliach mindset', 'Beard'],
+        axes: { obs: .85, sec: .55, learn: .76 } }
+    };
+    function rung(v) { return v >= .8 ? 'high' : v >= .55 ? 'notable' : v >= .35 ? 'moderate' : 'light'; }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    var state = { person: 'rivka' };
+
+    function render() {
+      var p = PEOPLE[state.person];
+      document.getElementById('ctxName').textContent = p.name;
+      document.getElementById('ctxLabel').textContent = p.label;
+
+      // all label badges
+      Array.prototype.forEach.call(document.querySelectorAll('.lbl-badge'), function (b) { b.textContent = p.label; });
+
+      // meter
+      var meter = document.querySelector('[data-ap="meter"]');
+      meter.querySelector('.obs-v').textContent = p.label;
+      meter.querySelector('.mk').style.left = (p.pos * 100) + '%';
+      var warn = meter.querySelector('.warn');
+      if (p.meterNote) { warn.hidden = false; warn.querySelector('span').textContent = p.meterNote; }
+      else { warn.hidden = true; }
+
+      // community
+      document.querySelector('[data-ap="label"] .lbl-community span').textContent = p.community;
+
+      // words (B + hybrid)
+      Array.prototype.forEach.call(document.querySelectorAll('[data-ap="words"] .words, [data-ap="hybrid"] .words'), function (w) { w.textContent = '“' + p.words + '”'; });
+
+      // facets (C + hybrid)
+      var chips = p.facets.map(function (f) { return '<span class="chip"><svg class="lk" viewBox="0 0 24 24"><use href="#i-check"/></svg>' + esc(f) + '</span>'; }).join('');
+      Array.prototype.forEach.call(document.querySelectorAll('[data-ap="facets"] .facets, [data-ap="hybrid"] .facets'), function (c) { c.innerHTML = chips; });
+
+      // axes
+      var ax = document.querySelector('[data-ap="axes"]');
+      Array.prototype.forEach.call(ax.querySelectorAll('.fill'), function (f) {
+        var k = f.dataset.k, v = p.axes[k];
+        f.style.width = (v * 100) + '%';
+        f.closest('.ax').querySelector('.r').textContent = rung(v);
+      });
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll('.lab-seg button[data-person]'), function (b) {
+      b.addEventListener('click', function () {
+        state.person = b.dataset.person;
+        Array.prototype.forEach.call(document.querySelectorAll('.lab-seg button[data-person]'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        render();
+      });
+    });
+    render();
+  })();
+</script>
+<script src="/pindrop/pindrop.js?v=1" defer></script>
+</body>
+</html>

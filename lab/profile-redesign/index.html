@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="pd-version" content="8">
+<meta name="pd-version" content="9">
 <title>Lab · Profile redesign · ZivugPath</title>
 </head>
 <body data-ctheme="pomegranate">
@@ -104,6 +104,11 @@
   .obs-meter .track { position: relative; height: 6px; border-radius: 999px; margin: 10px 0 5px; background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 30%, var(--line)), color-mix(in srgb, var(--pom) 42%, var(--line))); }
   .obs-meter .mk { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--pom); border: 2.5px solid var(--raise); box-shadow: var(--shadow-xs); transform: translate(-50%, -50%); }
   .obs-meter .ends { display: flex; justify-content: space-between; font-size: 10px; color: var(--faint); font-weight: 600; }
+
+  /* own-voice attribution under pull quotes */
+  .q-by { display: block; font-family: var(--sans); font-style: normal; font-size: 12px; font-weight: 650; color: var(--muted); margin-top: 7px; }
+  .b-sec .q .mk { color: var(--pom); font-style: normal; }
+  .b-sec .pcards { margin-top: 12px; }
 
   /* Background block */
   .bg-line { font-size: 14px; line-height: 1.55; margin: 0 0 9px; }
@@ -212,6 +217,21 @@
   .pcard { border: 1px solid var(--line); border-radius: 16px; padding: 15px 17px; background: var(--paper); box-shadow: var(--shadow-xs); }
   .pcard .pq { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--pom); }
   .pcard .pa { font-family: var(--serif); font-size: 1.18rem; line-height: 1.32; margin-top: 8px; text-wrap: balance; }
+
+  /* chat-preview mock (lab chrome, not part of the profile page) */
+  .wa-demo { max-width: 470px; margin: 0 auto; padding: 0 16px 26px; }
+  .wa-demo .lbl { text-align: center; }
+  .wa-bubble { position: relative; background: var(--raise); border: 1px solid var(--line); border-radius: 4px 16px 16px 16px; padding: 8px 10px 22px; box-shadow: var(--shadow-xs); }
+  .wa-card { display: flex; gap: 11px; align-items: center; background: var(--paper); border: 1px solid var(--line-soft); border-radius: 10px; padding: 10px; }
+  .wa-thumb { flex: none; width: 54px; height: 54px; border-radius: 9px; overflow: hidden; background: linear-gradient(158deg, #c3b2a2, #574a40); display: grid; place-items: center; }
+  .wa-thumb .seal-mark { width: 30px; height: 30px; }
+  .wa-meta { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .wa-meta .wa-title { font-size: 13.5px; font-weight: 700; }
+  .wa-meta .wa-desc { font-size: 12px; color: var(--muted); }
+  .wa-meta .wa-dom { font-size: 11px; color: var(--faint); }
+  .wa-link { font-size: 13px; margin-top: 7px; color: #4e7fd0; text-decoration: underline; text-underline-offset: 2px; word-break: break-all; }
+  .wa-time { position: absolute; right: 10px; bottom: 5px; font-size: 10.5px; color: var(--faint); }
+  .wa-cap { font-size: 12px; color: var(--faint); line-height: 1.55; margin: 10px 0 0; text-align: center; }
 
   .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 10px 20px 40px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
   .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
@@ -333,7 +353,7 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v8</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v9</span></span>
     <div class="lab-tabs" role="tablist" aria-label="Layout">
       <span class="sk">Layout</span>
       <button class="lab-tab" role="tab" id="t-b" aria-selected="true" aria-controls="s-b">Classic</button>
@@ -353,6 +373,16 @@
       <button type="button" data-obs="hybrid" aria-pressed="true">Hybrid</button>
       <button type="button" data-obs="meter" aria-pressed="false">Meter</button>
       <button type="button" data-obs="off" aria-pressed="false">Off</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Family details" data-pd-state="Family">
+      <span class="sk">Family</span>
+      <button type="button" data-fam="full" aria-pressed="true">Full</button>
+      <button type="button" data-fam="req" aria-pressed="false">On request</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Status display" data-pd-state="Status">
+      <span class="sk">Status</span>
+      <button type="button" data-status="badge" aria-pressed="true">Badge</button>
+      <button type="button" data-status="prose" aria-pressed="false">In prose</button>
     </div>
     <div class="lab-seg push" role="group" aria-label="Example profile" data-pd-state="Example">
       <span class="sk">Example</span>
@@ -393,10 +423,11 @@
     </div>
     <div class="a-main">
       <div class="a-body">
-        <p class="a-quote"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span></p>
+        <p class="a-quote"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span><span class="q-by">— in <span class="r-their"></span> own words</span></p>
         <div><span class="lbl r-who-lbl"></span><p class="a-prose r-who"></p><p class="said r-said"></p></div>
         <div><span class="lbl">What <span class="r-look-lbl"></span></span><p class="a-prose r-look"></p></div>
         <div class="r-bg"></div>
+        <div class="r-fam"></div>
         <div class="r-photos-block"><span class="lbl">Photos</span><div class="photos-grid">
           <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
           <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
@@ -447,11 +478,15 @@
         <div class="arr-top" data-arrtop="b"><span class="ic"></span><span class="tx"></span></div>
       </div>
       <div class="b-main">
-        <div class="b-sec"><span class="lbl">In <span class="r-their">her</span> words</span><p class="q r-quote"></p><p class="r-who"></p><p class="said r-said" style="margin-top:14px;"></p></div>
+        <div class="b-sec"><span class="lbl r-who-lbl"></span><p class="q"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span></p><span class="q-by">— in <span class="r-their"></span> own words</span><p class="r-who"></p><p class="said r-said" style="margin-top:14px;"></p></div>
         <div class="b-div"></div>
         <div class="b-sec"><span class="lbl">What <span class="r-look-lbl"></span></span><p class="r-look"></p></div>
         <div class="b-div"></div>
+        <div class="b-sec"><span class="lbl">Prompts</span><div class="pcards r-prompts"></div></div>
+        <div class="b-div"></div>
         <div class="b-sec"><div class="r-bg"></div></div>
+        <div class="b-div"></div>
+        <div class="b-sec"><div class="r-fam"></div></div>
         <div class="b-div"></div>
         <div class="b-sec r-photos-block"><span class="lbl">Photos</span><div class="photos-grid">
           <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
@@ -499,11 +534,12 @@
         <div><h1 class="r-name"></h1><div class="heb r-heb"></div><div class="facts r-facts-c"></div></div>
       </div>
       <div class="arr-top" data-arrtop="c"><span class="ic"></span><span class="tx"></span></div>
-      <p class="c-tagline"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span></p>
+      <p class="c-tagline"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span><span class="q-by">— in <span class="r-their"></span> own words</span></p>
       <div class="badges r-badges"></div>
       <div class="obs r-obs"></div>
       <div class="pcards r-prompts"></div>
       <div class="r-bg"></div>
+      <div class="r-fam"></div>
       <div class="r-photos-block"><span class="lbl">Photos</span><div class="photos-grid">
         <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
         <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
@@ -536,10 +572,23 @@
 
 <div class="mact" id="mact"><button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="mact-t">Respond</span></button></div>
 
+<div class="wa-demo">
+  <span class="lbl">How the link lands in a chat</span>
+  <div class="wa-bubble">
+    <div class="wa-card">
+      <div class="wa-thumb"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg><span class="seal-mark" aria-hidden="true" style="display:none"></span></div>
+      <div class="wa-meta"><span class="wa-title"></span><span class="wa-desc">A private profile, shared with you · ZivugPath</span><span class="wa-dom">zivugpath.com</span></div>
+    </div>
+    <div class="wa-link">zivugpath.com/p/<span class="wa-slug"></span></div>
+    <span class="wa-time">12:47 ✓✓</span>
+  </div>
+  <p class="wa-cap">Chat-preview mock: the card keeps it to a first name and an initial, so a shared link reads as a proper introduction — not a bare URL. The owner approves the preview before anything is shared.</p>
+</div>
+
 <div class="foot-note">
-  <div class="stamp">Lab · profile-redesign · v8 · 2026-07-08</div>
-  <p><b>What this is:</b> the shared profile settled on <b>Classic (B)</b> as the base, now <b>owner-themable</b>. Controls: <b>Layout</b> (Classic · Photo-forward · Prompted — all one dataset), <b>Theme</b> (5 curated colours), <b>Observance</b> (Hybrid · Meter · Off), plus <b>Example</b> / <b>Photo</b> / <b>Mobile-Web</b>. The “How this reached you” switcher is a demo control.</p>
-  <p><b>New in v8:</b> five curated <b>colour themes</b> (accent + soft, light &amp; dark) — a small set, not a free picker, so it stays warm-editorial · a <b>layout</b> option that lets an owner switch Classic ⇄ Photo-forward ⇄ Prompted off the same profile · an <b>observance display</b> option (hybrid default, or a simple meter, or hidden entirely). Recorded in SPEC §8.3 / §12 / §22.</p>
+  <div class="stamp">Lab · profile-redesign · v9 · 2026-07-08</div>
+  <p><b>What this is:</b> the shared profile — <b>Classic (B)</b> base, owner-themable. Controls: <b>Layout</b> (Classic · Photo-forward · Prompted — all one dataset), <b>Theme</b> (5 curated colours), <b>Observance</b> (Hybrid · Meter · Off), <b>Family</b> (Full · On request), <b>Status</b> (Badge · In prose — try Miriam), plus <b>Example</b> / <b>Photo</b> / <b>Mobile-Web</b>. The “How this reached you” switcher is a demo control.</p>
+  <p><b>New in v9:</b> <b>prompts joined Classic (B)</b> · a <b>Family &amp; community</b> block — parents, siblings, shul, named schools — with an <b>on-request</b> gated state · warmer <b>AI-introduction</b> copy · forwarded links keep the <b>original shadchan’s attribution</b> · owner choice for sensitive <b>status</b> display · own-voice quote attributions &amp; more specific chips · photo requests folded into the respond captions · the <b>chat-preview mock</b> above this note.</p>
   <p>Placeholder people; illustrated portraits/avatars stand in for real photos.</p>
 </div>
 
@@ -553,15 +602,17 @@
         obs: { label: 'Yeshivish · Bais Yaakov', community: 'Lakewood', pos: .74,
           facets: ['Kosher phone', 'Shomer negiah', 'No TV at home', 'Skirts only'],
           words: 'Bais Yaakov through and through — though I’m always halfway through a secular novel too.' },
-        one: "A morah who's steady on the big things and light about the rest.",
-        quote: 'A home where guests never feel like guests.',
+        one: '“Steady about the big things, light about everything else.”',
+        quote: 'I want a home where guests never feel like guests.',
         whoLbl: 'Who she is', lookLbl: "she's looking for",
         who: "Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.",
         said: 'Teaching third grade is honestly the best part of my day — they keep me laughing.',
         look: "Someone warm and steady, serious about growing — and grounded enough not to take himself too seriously.",
-        education: 'Bais Yaakov of Lakewood, then seminary in Yerushalayim.',
+        education: 'Bnos Bracha High School (Lakewood), then Seminar Meor (Yerushalayim).',
         work: "Teaches third grade at a local girls' school — and loves it.",
-        family: 'Second of six. Father is a rebbi in Lakewood; mother is a speech therapist. A close, warm home.',
+        fam: { parents: 'Father is a rebbi at a yeshiva ketana in Lakewood; mother is a speech therapist.',
+          siblings: 'Second of six — an older brother learning in BMG, a married sister in Toms River, three younger at home.',
+          shul: 'Rav Gruen — Khal Zichron Shlomo, Lakewood' },
         prompts: [
           { q: 'My ideal Shabbos table', a: 'Too much food, a niggun that runs long, and no one checking the time.' },
           { q: "What I'm looking for", a: 'Someone warm and steady — serious about growing, and grounded enough not to take himself too seriously.' },
@@ -570,8 +621,8 @@
         ],
         badges: [
           { t: '3rd-grade morah', i: 'i-cap' }, { t: 'Bais Yaakov + seminary', i: 'i-book' },
-          { t: 'Second of six', i: 'i-users' }, { t: 'Loves hosting', i: 'i-home', c: 'soft' },
-          { t: 'Baking & long walks', i: 'i-heart', c: 'soft' }
+          { t: 'Second of six', i: 'i-users' }, { t: 'Hosts every Shabbos', i: 'i-home', c: 'soft' },
+          { t: 'Bakes challah Thursday nights', i: 'i-heart', c: 'soft' }
         ],
         refs: 'Three', updated: '2 weeks ago',
         nophoto: "Rivka hasn't posted photos publicly. She'll share them privately once she's open to an introduction."
@@ -583,15 +634,17 @@
         obs: { label: 'Modern Orthodox · machmir', community: 'Teaneck', pos: .5,
           facets: ['Daf yomi', 'Shomer Shabbos', 'Kipa seruga', 'College + career'],
           words: 'MO machmir — a daily daf and a kipa seruga, and I’ll still argue with you about a film afterward.' },
-        one: "An engineer who learns daf yomi on the train and coaches Little League on Sundays.",
+        one: '“A daf on the train in the morning, Little League on Sundays.”',
         quote: "I want a home where Shabbos is the best part of the week — every week.",
         whoLbl: 'Who he is', lookLbl: "he's looking for",
         who: "Dovid is easy to be around and hard to rattle. He builds software by day, keeps a daily seder before work, and is the uncle every niece and nephew fights to sit next to. Ambitious about his work, unhurried about people.",
         said: "I'd rather be the guy who shows up than the guy who talks about showing up.",
         look: "Someone kind and genuine who wants to build a warm, growth-minded home — and will laugh with him when the plan falls apart.",
-        education: 'Learned in Israel, then Yeshiva University (computer science).',
+        education: 'Yeshivat Sha’arei Mevaseret (Israel), then Yeshiva University — computer science.',
         work: 'Software engineer at a fintech; keeps a daily seder before work.',
-        family: 'Oldest of four. Father runs a family business; mother teaches. Close with his siblings, home most Shabbosos.',
+        fam: { parents: 'Father runs a family business; mother teaches middle school. Home most Shabbosos.',
+          siblings: 'Oldest of four — two brothers at YU, a sister in high school.',
+          shul: 'Rav Feld — Congregation Bnei Torah, Teaneck' },
         prompts: [
           { q: 'My ideal Shabbos', a: "A packed table, a good vort, and a nap I pretend I don't need." },
           { q: "What I'm looking for", a: 'Someone kind and genuine who wants a warm, growth-minded home — and will laugh when the plan falls apart.' },
@@ -612,15 +665,17 @@
         obs: { label: 'Modern Orthodox', community: 'Monsey', pos: .46,
           facets: ['Shomer Shabbos', 'Kosher home', 'Covers hair at shul', 'Works in healthcare'],
           words: 'Shomer Shabbos with a kosher home; easygoing about the rest and at home in the wider world.' },
-        one: "A nurse and a mother who's rebuilt with a lot of grace and a good sense of humor.",
+        one: '“The one people call in a crisis — I don’t rattle easily.”',
         quote: "I'm not looking to start over — I'm looking to build forward.",
         whoLbl: 'Who she is', lookLbl: "she's looking for",
         who: "Miriam is warm, direct, and unflappable — the friend everyone calls in a crisis. She's a pediatric nurse, a devoted mother to her daughter, and someone who has done the work to know exactly what she wants the second time around.",
         said: "I've learned what actually matters, and I don't rattle easily anymore.",
         look: "A kind, settled man who's ready to build a calm, honest home — someone good with children and comfortable with a woman who knows her own mind.",
-        education: 'Grew up Modern Orthodox in Monsey; nursing degree.',
+        education: 'Grew up Modern Orthodox in Monsey; BSN in nursing.',
         work: "Pediatric nurse at a children's hospital.",
-        family: 'One of three; parents nearby in Monsey and involved. A daughter in early elementary who is the center of her world.',
+        fam: { parents: 'Parents are nearby in Monsey and very involved — father an accountant, mother a school secretary.',
+          siblings: 'One of three — a brother in Baltimore, a sister in Yerushalayim. A daughter in early elementary who is the center of her world.',
+          shul: 'Rabbi Stein — Congregation Ohr Moshe, Monsey' },
         prompts: [
           { q: "What I'm looking for", a: 'A kind, settled man ready to build a calm, honest home — good with children and comfortable with a woman who knows her own mind.' },
           { q: 'What matters most to me now', a: "Steadiness, honesty, and someone who's genuinely good with my daughter." },
@@ -629,7 +684,7 @@
         ],
         badges: [
           { t: 'Pediatric nurse', i: 'i-brief' }, { t: 'One of three', i: 'i-users' },
-          { t: 'Loves the outdoors', i: 'i-heart', c: 'soft' }, { t: 'Reads everything', i: 'i-book', c: 'soft' }
+          { t: 'Sunday trails with her daughter', i: 'i-heart', c: 'soft' }, { t: 'A stack of library books going', i: 'i-book', c: 'soft' }
         ],
         refs: 'Three', updated: 'yesterday',
         nophoto: "Miriam hasn't posted photos publicly. She'll share them privately once she's open to an introduction."
@@ -638,7 +693,7 @@
 
     var SEAL = '<span class="seal-mark" aria-hidden="true"></span>';
     var dirs = ['b', 'a', 'c']; // tab/display order — Classic (B) first / default
-    var state = { person: 'rivka', photo: 'on', sharer: 'shadchan', ctheme: 'pomegranate', obsMode: 'hybrid' };
+    var state = { person: 'rivka', photo: 'on', sharer: 'shadchan', ctheme: 'pomegranate', obsMode: 'hybrid', famMode: 'full', statusMode: 'badge' };
     function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     function $(s, r) { return (r || document).querySelector(s); }
     function $all(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -646,7 +701,7 @@
     function factsHtml(p) { return ['<span>' + p.age + '</span>', '<span>' + esc(p.height) + '</span>', '<span>' + esc(p.city) + '</span>'].join(''); }
     function badgesHtml(p) {
       var L = [];
-      if (p.status) L.push('<span class="badge gold"><svg><use href="#' + (p.status.i || 'i-star') + '"/></svg>' + esc(p.status.badge) + '</span>');
+      if (p.status && state.statusMode !== 'prose') L.push('<span class="badge gold"><svg><use href="#' + (p.status.i || 'i-star') + '"/></svg>' + esc(p.status.badge) + '</span>');
       L.push('<span class="badge ' + (p.relocate.gold ? 'gold' : 'soft') + '"><svg><use href="#i-plane"/></svg>' + esc(p.relocate.label) + '</span>');
       p.badges.forEach(function (b) { L.push('<span class="badge ' + (b.c || '') + '"><svg><use href="#' + b.i + '"/></svg>' + esc(b.t) + '</span>'); });
       return L.join('');
@@ -669,8 +724,19 @@
     function bgHtml(p) {
       return '<span class="lbl">Background</span>'
         + '<p class="bg-line"><b>Learning</b>' + esc(p.education) + '</p>'
-        + '<p class="bg-line"><b>Work</b>' + esc(p.work) + '</p>'
-        + '<p class="bg-line"><b>Family</b>' + esc(p.family) + '</p>';
+        + '<p class="bg-line"><b>Work</b>' + esc(p.work) + '</p>';
+    }
+    function famHtml(p, mode) {
+      var lbl = '<span class="lbl">Family &amp; community</span>';
+      if (mode === 'req') {
+        return lbl + '<div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'
+          + '<span>Family, schooling detail, and references are on file — shared privately through whoever makes the introduction, not posted here.</span></div>';
+      }
+      var L = lbl
+        + '<p class="bg-line"><b>Parents</b>' + esc(p.fam.parents) + '</p>'
+        + '<p class="bg-line"><b>Siblings</b>' + esc(p.fam.siblings) + '</p>';
+      if (p.fam.shul) L += '<p class="bg-line"><b>Shul</b>' + esc(p.fam.shul) + '</p>';
+      return L;
     }
     function promptsHtml(p) {
       return p.prompts.map(function (pr) { return '<div class="pcard"><div class="pq">' + esc(pr.q) + '</div><div class="pa">' + esc(pr.a) + '</div></div>'; }).join('');
@@ -697,6 +763,7 @@
         var obsEl = $('.r-obs', root);
         if (obsEl) { if (state.obsMode === 'off') { obsEl.style.display = 'none'; obsEl.innerHTML = ''; } else { obsEl.style.display = ''; obsEl.innerHTML = obsHtml(p, state.obsMode); } }
         setHtml(root, '.r-bg', bgHtml(p));
+        setHtml(root, '.r-fam', famHtml(p, state.famMode));
         setHtml(root, '.r-fresh', freshHtml(p));
         setText(root, '.r-quote', p.quote);
         setText(root, '.r-who-lbl', p.whoLbl);
@@ -712,6 +779,10 @@
         var mainPor = $('.a-hero .por, .b-id .pf .por, .c-head .pf .por', root);
         if (mainPor) mainPor.setAttribute('aria-label', 'Portrait of ' + p.name);
       });
+
+      var nm = p.name.split(' ');
+      var waT = $('.wa-title'); if (waT) waT.textContent = nm[0] + ' ' + nm[1].charAt(0) + '. — ' + p.age + ' · ' + p.city;
+      var waSl = $('.wa-slug'); if (waSl) waSl.textContent = p.slug;
 
       applyPhoto();
       dirs.forEach(function (d) { paintArrival(d, state.sharer); });
@@ -736,6 +807,8 @@
         if (d === 'b' && np && np.previousElementSibling && np.previousElementSibling.classList.contains('b-div'))
           np.previousElementSibling.style.display = on ? 'none' : '';
       });
+      var waP = $('.wa-thumb .por'), waSeal = $('.wa-thumb .seal-mark');
+      if (waP) { waP.style.display = on ? '' : 'none'; waSeal.style.display = on ? 'none' : ''; }
     }
 
     function arrData(p) {
@@ -744,12 +817,12 @@
         shadchan: { av: 'MC', top: '<b>Mrs. Cohen</b> suggested this for you', who: '<b>Mrs. Cohen</b> suggested this for you', sub: 'Shadchan · ' + p.obs.community,
           note: '“I thought of you two the moment I met ' + Name + ' — I really think it could be a fit.”',
           cta: 'Message Mrs. Cohen', priv: "She'll introduce you both. Your contact stays private until you choose to share it." },
-        ai: { av: SEAL, top: 'Suggested by <b>ZivugPath</b>', who: '<b>ZivugPath</b> suggested this match', sub: "From what you're both looking for",
-          note: "“There's real overlap in the kind of home you each described wanting — worth a look.”",
-          cta: 'Request an introduction', priv: 'ZivugPath passes your interest to ' + Name + ' — no contact details are shared until you both say yes.' },
-        friend: { av: 'CS', top: '<b>Chaya S.</b> forwarded you this', who: '<b>Chaya S.</b> forwarded you this profile', sub: 'Passed along by a friend',
+        ai: { av: SEAL, top: 'An introduction from <b>ZivugPath</b>', who: '<b>ZivugPath</b> would like to introduce you', sub: 'Based on what you each said matters',
+          note: '“You both described the same kind of home — warm, open, and growing. When what two people are looking for lines up this closely, we suggest the introduction.”',
+          cta: 'Request an introduction', priv: 'Your interest goes to ' + Name + ' quietly — no contact details are shared until you both say yes.' },
+        friend: { av: 'CS', top: '<b>Chaya S.</b> forwarded this · via Mrs. Cohen', who: '<b>Chaya S.</b> forwarded you this profile', sub: 'Originally suggested by Mrs. Cohen · Shadchan',
           note: '“You came to mind the second I saw it — just take a look 😊”',
-          cta: 'Ask Chaya to introduce you', priv: "Your interest goes to Chaya, who'll make the introduction. Contact stays private until you both agree." },
+          cta: 'Message Mrs. Cohen', priv: 'Replies route to Mrs. Cohen, who made the original suggestion. Contact stays private until you both agree.' },
         direct: { av: Name[0], top: '<b>' + Name + '</b> shared ' + their + ' profile', who: '<b>' + Name + '</b> shared ' + their + ' profile', sub: 'Reach out through ZivugPath',
           note: '', cta: 'Request an introduction', priv: 'ZivugPath passes your interest to ' + Name + '. Contact stays private until you both agree.' }
       };
@@ -765,7 +838,14 @@
       var note = $('.arr-note', m);
       if (d.note) { note.textContent = d.note; note.style.display = ''; } else { note.style.display = 'none'; }
       $('.cta-t', m).textContent = d.cta;
-      $('.priv', m).textContent = d.priv;
+      var privTxt = d.priv;
+      if (state.photo !== 'on') {
+        privTxt += ' ' + ({ shadchan: 'Photos are shared privately — just ask Mrs. Cohen.',
+          ai: 'Photos are shared privately once you both say yes.',
+          friend: 'Photos are shared privately — Mrs. Cohen can pass them along.',
+          direct: 'Photos are shared privately on request.' })[sharer];
+      }
+      $('.priv', m).textContent = privTxt;
       $all('.arr-seg button', m).forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.s === sharer ? 'true' : 'false'); });
       $('.mact-t').textContent = d.cta;
     }
@@ -803,8 +883,10 @@
       });
     }
     bindSeg('person', 'person', render);
-    bindSeg('photo', 'photo', applyPhoto);
+    bindSeg('photo', 'photo', render);
     bindSeg('obs', 'obsMode', render);
+    bindSeg('fam', 'famMode', render);
+    bindSeg('status', 'statusMode', render);
     $all('.swatch[data-ctheme]').forEach(function (b) {
       b.addEventListener('click', function () {
         state.ctheme = b.dataset.ctheme;

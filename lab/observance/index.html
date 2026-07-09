@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="pd-version" content="1">
+<meta name="pd-version" content="2">
 <title>Lab · Observance display · ZivugPath</title>
 </head>
 <body>
@@ -67,15 +67,12 @@
   .grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 26px; }
   @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
   .approach { border: 1px solid var(--line); border-radius: 18px; background: var(--raise); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; }
-  .approach.rec { border-color: color-mix(in srgb, var(--pom) 45%, var(--line)); }
   .approach.ref { background: color-mix(in srgb, var(--paper) 60%, var(--raise)); }
   .ah { padding: 15px 18px 13px; border-bottom: 1px solid var(--line-soft); }
   .ah .row { display: flex; align-items: center; gap: 9px; }
   .ah .an { flex: none; width: 24px; height: 24px; border-radius: 7px; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 13px; }
-  .approach.rec .an { background: var(--pom); color: var(--on-accent); }
   .approach.ref .an { background: var(--warn-soft); color: var(--warn); }
   .ah h3 { font-size: 1.12rem; letter-spacing: -.01em; }
-  .ah .rectag { margin-left: auto; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--on-accent); background: var(--pom); padding: 3px 8px; border-radius: 999px; }
   .ah .reftag { margin-left: auto; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--warn); background: var(--warn-soft); padding: 3px 8px; border-radius: 999px; }
   .ah .bet { font-size: 12.5px; color: var(--muted); margin: 7px 0 0; line-height: 1.45; }
   .ah .bet b { color: var(--ink); font-weight: 700; }
@@ -203,10 +200,10 @@
       </div></div>
     </div>
 
-    <!-- D: full hybrid (recommended) -->
-    <div class="approach rec">
+    <!-- D: full hybrid -->
+    <div class="approach">
       <div class="ah">
-        <div class="row"><span class="an">D</span><h3>Full hybrid</h3><span class="rectag">Recommended</span></div>
+        <div class="row"><span class="an">D</span><h3>Full hybrid</h3></div>
         <p class="bet"><b>Structured + narrative.</b> Label + a few facets + their own words. Rich to store, warm to read.</p>
       </div>
       <div class="demo"><div data-ap="hybrid">
@@ -234,8 +231,8 @@
 </div>
 
 <div class="foot-note">
-  <div class="stamp">Lab · observance-display · v1 · 2026-07-08</div>
-  <p><b>What this is:</b> six ways to render the observance/hashkafa field on the shared profile, the same person each time. Switch the <b>Example person</b> up top. Approach <b>0</b> is the current linear meter (the one we’re questioning); <b>D</b> is the recommended replacement.</p>
+  <div class="stamp">Lab · observance-display · v2 · 2026-07-08</div>
+  <p><b>What this is:</b> six ways to render the observance/hashkafa field on the shared profile, the same person each time. Switch the <b>Example person</b> up top. Approach <b>0</b> is the current linear meter (the one we’re questioning); the rest are alternatives to weigh against it.</p>
   <p><b>Why this exists:</b> research (2026-07-08) found hashkafa is multidimensional and its categories aren’t linearly ordered; real frum products (JWed, SawYouAtSinai) use categorical labels + specifics, not sliders. See the observance memo.</p>
   <p><b>To weigh in:</b> drop pins on the approaches you like / dislike, or just tell me “D, but drop the chips” etc. Placeholder people.</p>
 </div>

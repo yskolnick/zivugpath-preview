@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="pd-version" content="10">
+<meta name="pd-version" content="11">
 <title>Lab · Profile redesign · ZivugPath</title>
 </head>
 <body data-ctheme="pomegranate">
@@ -360,7 +360,7 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v10</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v11</span></span>
     <div class="lab-tabs" role="tablist" aria-label="Layout">
       <span class="sk">Layout</span>
       <button class="lab-tab" role="tab" id="t-b" aria-selected="true" aria-controls="s-b">Classic</button>
@@ -373,21 +373,22 @@
       <button type="button" data-person="dovid" aria-pressed="false">Dovid</button>
       <button type="button" data-person="miriam" aria-pressed="false">Miriam</button>
     </div>
-    <div class="lab-seg" role="group" aria-label="Photo" data-pd-state="Photo">
-      <span class="sk">Photo</span>
-      <button type="button" data-photo="on" aria-pressed="true">With</button>
-      <button type="button" data-photo="off" aria-pressed="false">None</button>
-    </div>
-    <div class="lab-seg" role="group" aria-label="Screen size" data-pd-state="Viewport">
-      <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
-      <button type="button" data-vp="web" aria-pressed="false">Web</button>
-    </div>
     <button type="button" class="lab-opts-tog" id="opts-tog" aria-expanded="false" aria-controls="lab-opts">
       <svg class="lk" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       <span class="ot">Display options</span>
     </button>
   </div>
   <div class="lab-in lab-opts" id="lab-opts">
+    <div class="lab-seg" role="group" aria-label="Screen size" data-pd-state="Viewport">
+      <span class="sk">View</span>
+      <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
+      <button type="button" data-vp="web" aria-pressed="false">Web</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Photo" data-pd-state="Photo">
+      <span class="sk">Photo</span>
+      <button type="button" data-photo="on" aria-pressed="true">With</button>
+      <button type="button" data-photo="off" aria-pressed="false">None</button>
+    </div>
     <div class="lab-seg" role="group" aria-label="Colour theme" data-pd-state="Theme">
       <span class="sk">Theme</span>
       <button type="button" class="swatch" data-ctheme="pomegranate" aria-pressed="true" aria-label="Pomegranate" style="--sw:#A82D46"></button>
@@ -599,9 +600,9 @@
 </div>
 
 <div class="foot-note">
-  <div class="stamp">Lab · profile-redesign · v10 · 2026-07-08</div>
-  <p><b>What this is:</b> the shared profile — <b>Classic (B)</b> base, owner-themable. Primary controls in the bar: <b>Layout</b> (Classic · Photo-forward · Prompted — all one dataset), <b>Example</b> / <b>Photo</b> / <b>Mobile-Web</b>. Click <b>Display options</b> for the less-frequently-changed set: <b>Theme</b> (5 curated colours), <b>Observance</b> (Hybrid · Meter · Off), <b>Family</b> (Full · On request), <b>Status</b> (Badge · In prose — try Miriam). The “How this reached you” switcher is a demo control.</p>
-  <p><b>New in v10:</b> <b>lab-bar decluttered</b> — split into an always-visible primary row (Layout / Example / Photo / Viewport) and a collapsible <b>Display options</b> panel for the styling controls (Theme / Observance / Family / Status), which were crowding the topbar.</p>
+  <div class="stamp">Lab · profile-redesign · v11 · 2026-07-08</div>
+  <p><b>What this is:</b> the shared profile — <b>Classic (B)</b> base, owner-themable. The bar keeps only <b>Layout</b> (Classic · Photo-forward · Prompted — all one dataset) and <b>Example</b> always visible; click <b>Display options</b> for the rest: <b>View</b> (Mobile · Web), <b>Photo</b> (With · None), <b>Theme</b> (5 curated colours), <b>Observance</b> (Hybrid · Meter · Off), <b>Family</b> (Full · On request), <b>Status</b> (Badge · In prose — try Miriam). The “How this reached you” switcher is a demo control.</p>
+  <p><b>New in v11:</b> moved <b>View</b> and <b>Photo</b> into the <b>Display options</b> panel too — the always-visible bar is now just Layout + Example (the “what am I looking at” controls); everything else is behind the toggle.</p>
   <p><b>New in v9:</b> <b>prompts joined Classic (B)</b> · a <b>Family &amp; community</b> block — parents, siblings, shul, named schools — with an <b>on-request</b> gated state · warmer <b>AI-introduction</b> copy · forwarded links keep the <b>original shadchan’s attribution</b> · owner choice for sensitive <b>status</b> display · own-voice quote attributions &amp; more specific chips · photo requests folded into the respond captions · the <b>chat-preview mock</b> above this note.</p>
   <p>Placeholder people; illustrated portraits/avatars stand in for real photos.</p>
 </div>

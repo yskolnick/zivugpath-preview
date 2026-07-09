@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="pd-version" content="1">
+<title>Lab · Prototype walkthrough · ZivugPath</title>
+</head>
+<body data-ctheme="pomegranate">
+<style>
+  :root {
+    --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --on-accent: #ffffff;
+    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5);
+    --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
+    --shadow-xs: 8px 14px 26px -20px rgba(58,34,22,.3);
+    --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6; --gold: #876214; --gold-soft: #F3EAD4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+      --line: #322A23; --line-soft: #291F19; --on-accent: #17130F;
+      --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
+      --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5);
+      --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --gold-soft: #2A2114;
+    }
+  }
+  :root[data-theme="light"] { color-scheme: light; }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+    --line: #322A23; --line-soft: #291F19; --on-accent: #17130F;
+    --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
+    --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5);
+    --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --gold-soft: #2A2114;
+  }
+  /* ===== curated colour themes (accent tokens only; neutrals stay shared) ===== */
+  body[data-ctheme="olive"]  { --pom: #4F6B34; --pom-ink: #3E5427; --pom-soft: #E7EEDB; --gold: #8A6A1C; --gold-soft: #F0E9D2; }
+  body[data-ctheme="indigo"] { --pom: #3E4E8C; --pom-ink: #313F72; --pom-soft: #E5E8F5; --gold: #7A6A3A; --gold-soft: #EDE9DA; }
+  body[data-ctheme="plum"]   { --pom: #7C3A6C; --pom-ink: #632E56; --pom-soft: #F2E4EF; --gold: #876214; --gold-soft: #F3EAD4; }
+  body[data-ctheme="sand"]   { --pom: #9A6B1E; --pom-ink: #7E561A; --pom-soft: #F3E9D6; --gold: #5B7548; --gold-soft: #E7EEDB; }
+  @media (prefers-color-scheme: dark) {
+    body[data-ctheme="olive"]  { --pom: #9CC178; --pom-ink: #AECF8C; --pom-soft: #212B18; --gold: #D8B86A; --gold-soft: #262012; }
+    body[data-ctheme="indigo"] { --pom: #8FA0E0; --pom-ink: #A6B4EC; --pom-soft: #1E2440; --gold: #CFC08A; --gold-soft: #22200F; }
+    body[data-ctheme="plum"]   { --pom: #D585C0; --pom-ink: #E29BD0; --pom-soft: #331F2E; --gold: #DBB161; --gold-soft: #2A2114; }
+    body[data-ctheme="sand"]   { --pom: #D6A24E; --pom-ink: #E4B667; --pom-soft: #2E2413; --gold: #9CC178; --gold-soft: #212B18; }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 6px; }
+  .seal-mark { border-radius: 50%; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--pom) 78%, #fff), var(--pom-ink) 74%); position: relative; display: inline-block; }
+  .seal-mark::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; border: 1.3px solid rgba(255,255,255,.6); }
+  .lk { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .vh { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  /* ============ LAB CHROME ============ */
+  .lab-bar { position: sticky; top: 0; z-index: 60; background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .lab-in { max-width: 1200px; margin: 0 auto; padding: 10px clamp(14px, 4vw, 30px); display: flex; align-items: center; gap: 9px 12px; flex-wrap: wrap; }
+  .lab-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 1.05rem; }
+  .lab-brand .seal-mark { width: 18px; height: 18px; }
+  .lab-brand .tag { font-family: var(--sans); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); background: var(--gold-soft); padding: 3px 8px; border-radius: 999px; }
+  .sk { align-self: center; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 0 3px 0 5px; }
+  .lab-seg { display: flex; gap: 3px; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--raise); align-items: center; }
+  .lab-seg.push { margin-left: auto; }
+  .lab-seg button { font-family: var(--sans); font-size: 12px; font-weight: 700; border: 0; background: transparent; color: var(--muted); border-radius: 999px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+  .lab-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .lab-seg .swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--raise); outline: 1px solid var(--line); outline-offset: 0; padding: 0; background: var(--sw); cursor: pointer; }
+  .lab-seg .swatch[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+  /* ============ PROTOTYPE SHELL ============ */
+  .proto { max-width: 1200px; margin: 0 auto; padding: 0 clamp(10px, 3vw, 24px); }
+  .main { padding: clamp(14px, 3vw, 24px) 0 40px; }
+
+  /* part navigator */
+  .pnav { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 12px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .pnav::-webkit-scrollbar { display: none; }
+  .pstep { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 9px; font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--muted); background: var(--raise); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 8px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; white-space: nowrap; }
+  .pstep .n { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; background: var(--paper); color: var(--faint); border: 1px solid var(--line); }
+  .pstep:hover { border-color: var(--pom); color: var(--ink); }
+  .pstep[aria-current="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+  .pstep[aria-current="true"] .n { background: rgba(255,255,255,.22); color: #fff; border-color: transparent; }
+  .pstep .done { display: none; }
+
+  .stagewrap { position: relative; }
+  .stage { display: none; }
+  .stage.on { display: block; animation: fade .32s ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) { .stage.on { animation: none; } }
+
+  /* device frame */
+  .device { width: 100%; max-width: 440px; margin: 0 auto; background: var(--raise); border: 1px solid var(--line); border-radius: 30px; box-shadow: var(--shadow); overflow: hidden; }
+  .device .scr { padding: 26px clamp(18px, 5vw, 26px) 30px; }
+  .por { display: block; width: 100%; height: 100%; }
+
+  /* pager */
+  .pager { display: flex; align-items: center; gap: 12px; max-width: 440px; margin: 18px auto 0; }
+  .pager .pgbtn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--sans); font-size: 14px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--ink); border-radius: 12px; padding: 12px 14px; cursor: pointer; }
+  .pager .pgbtn:hover { border-color: var(--pom); color: var(--pom-ink); }
+  .pager .pgbtn.primary { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+  .pager .pgbtn[disabled] { opacity: .4; cursor: default; pointer-events: none; }
+  .pager .pgbtn svg { width: 16px; height: 16px; }
+
+  /* ============ WEB (desktop) LAYOUT via toggle ============ */
+  .vp-web .main { display: grid; grid-template-columns: 216px 1fr; gap: clamp(20px, 3vw, 40px); align-items: start; }
+  .vp-web .pnav { flex-direction: column; overflow: visible; padding: 6px 0; gap: 6px; position: sticky; top: 74px; }
+  .vp-web .pstep { width: 100%; }
+  .vp-web .device { max-width: 1040px; border-radius: 16px; overflow: visible; position: relative; padding-top: 34px; }
+  .vp-web .device::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 34px; background: var(--paper); border-bottom: 1px solid var(--line); border-radius: 16px 16px 0 0; }
+  .vp-web .device::after { content: "🔒 zivugpath.com" attr(data-url); position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font: 600 11px/1.7 var(--sans); color: var(--muted); background: var(--raise); border: 1px solid var(--line); border-radius: 999px; padding: 3px 16px; max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .vp-web .device .scr { padding: clamp(26px, 3vw, 42px) clamp(24px, 4vw, 48px) clamp(30px, 4vw, 46px); }
+  .vp-web .pager { max-width: 1040px; }
+
+  /* ============ shared bits ============ */
+  .eyebrow { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--pom); font-weight: 800; }
+  .lbl { display: block; font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); margin: 0 0 12px; }
+  .lbl .opt { color: var(--faint); font-weight: 600; text-transform: none; letter-spacing: 0; }
+  .said { position: relative; font-family: var(--serif); font-style: italic; font-size: 1.06rem; line-height: 1.42; color: var(--ink); padding-left: 15px; margin: 14px 0 0; border-left: 2px solid var(--pom); }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 650; line-height: 1; padding: 8px 13px; border-radius: 999px; background: var(--pom-soft); color: var(--pom-ink); }
+  .badge svg { width: 14px; height: 14px; flex: none; opacity: .85; }
+  .badge.gold { background: var(--gold-soft); color: var(--gold); }
+  .badge.soft { background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-weight: 600; }
+  .badge.soft svg { color: var(--muted); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; }
+  .chip svg { width: 12px; height: 12px; color: var(--pom); flex: none; }
+  .btn { font-family: var(--sans); font-weight: 700; font-size: 14.5px; border-radius: 12px; padding: 13px 18px; cursor: pointer; border: 1px solid var(--line); background: var(--raise); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn.primary { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+  .btn svg { width: 17px; height: 17px; }
+  .fresh { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .fresh svg { width: 13px; height: 13px; color: var(--pom); flex: none; }
+  .fresh b { color: var(--ink); font-weight: 700; }
+
+  /* ============ PART 1 · THE IDEA ============ */
+  .idea { text-align: center; }
+  .idea .brandrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--serif); font-size: 1.15rem; }
+  .idea .brandrow .seal-mark { width: 20px; height: 20px; }
+  .idea .kicker { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-top: 6px; }
+  .idea h1 { font-size: clamp(2rem, 7vw, 2.7rem); line-height: 1.03; letter-spacing: -.02em; margin: 22px auto 0; max-width: 16ch; text-wrap: balance; }
+  .idea h1 em { font-style: italic; color: var(--pom); }
+  .vp-web .idea h1 { font-size: clamp(2.4rem, 4vw, 3.4rem); max-width: 20ch; }
+  .idea .lede { color: var(--muted); font-size: 1.05rem; line-height: 1.6; max-width: 46ch; margin: 18px auto 0; text-wrap: pretty; }
+  .vp-web .idea .lede { max-width: 62ch; font-size: 1.14rem; }
+  .idea .beats { display: flex; flex-direction: column; gap: 10px; margin: 26px auto 0; max-width: 340px; text-align: left; }
+  .vp-web .idea .beats { flex-direction: row; max-width: 820px; gap: 14px; }
+  .idea .beat { display: flex; align-items: flex-start; gap: 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; flex: 1; }
+  .idea .beat .bic { flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; }
+  .idea .beat .bic svg { width: 18px; height: 18px; }
+  .idea .beat b { display: block; font-size: 14px; }
+  .idea .beat span { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+  .idea .start { margin-top: 28px; }
+  .idea .jump { display: block; margin-top: 12px; font-size: 12.5px; color: var(--faint); }
+
+  /* ============ PART 2 · THE CONVERSATION ============ */
+  .cv-head h2 { font-size: clamp(1.5rem, 5vw, 1.9rem); letter-spacing: -.015em; line-height: 1.08; text-wrap: balance; }
+  .cv-head .sub { color: var(--muted); font-size: .98rem; margin: 10px 0 0; line-height: 1.55; }
+  .cv-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .cv-chip { font-family: var(--sans); font-size: 12.5px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 7px 13px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; }
+  .cv-chip:hover { border-color: var(--pom); color: var(--ink); }
+  .cv-chip[aria-pressed="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
+  .cv-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 20px; align-items: stretch; }
+  .vp-web .cv-grid { grid-template-columns: 1.2fr 1fr; gap: 26px; }
+  .cv-chat { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 300px; }
+  .cv-chat .cv-top { display: flex; align-items: center; gap: 9px; padding-bottom: 12px; border-bottom: 1px solid var(--line-soft); margin-bottom: 2px; }
+  .cv-chat .cv-top .seal-mark { width: 18px; height: 18px; }
+  .cv-chat .cv-top .t { font-family: var(--serif); font-size: 1rem; }
+  .cv-chat .cv-top .s { margin-left: auto; font-size: 11px; color: var(--faint); }
+  .cv-m { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+  .cv-m.ai { align-self: flex-start; background: var(--raise); border: 1px solid var(--line-soft); border-top-left-radius: 4px; }
+  .cv-m.me { align-self: flex-end; background: var(--pom-soft); color: var(--ink); border-top-right-radius: 4px; }
+  .js .cv-m.anim { animation: cvIn .4s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes cvIn { from { opacity: 0; transform: translateY(10px); } }
+  .cv-typing { align-self: flex-start; display: inline-flex; gap: 5px; padding: 12px 15px; background: var(--raise); border: 1px solid var(--line-soft); border-radius: 14px; border-top-left-radius: 4px; }
+  .cv-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); animation: cvDot 1s ease-in-out infinite; }
+  .cv-typing i:nth-child(2) { animation-delay: .15s; }
+  .cv-typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes cvDot { 0%, 60%, 100% { opacity: .35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  .cv-card { background: var(--raise); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-xs); overflow: hidden; display: flex; flex-direction: column; }
+  .cv-card .ph { position: relative; height: 92px; background: radial-gradient(120% 90% at 80% 12%, rgba(168,45,70,.16), transparent 55%), linear-gradient(150deg, #c3b2a2, #6f5e52); overflow: hidden; }
+  .cv-card .ph .por { position: absolute; inset: 0; }
+  .cv-card .ph .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.72), transparent 62%); }
+  .cv-card .ph .nm { position: absolute; left: 16px; bottom: 9px; font-family: var(--serif); color: #fff; font-size: 1.2rem; text-shadow: 0 1px 8px rgba(20,12,9,.5); }
+  .cv-card .ph .lab { position: absolute; right: 12px; top: 10px; font-size: 9.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(20,12,9,.42); padding: 3px 8px; border-radius: 999px; }
+  .cv-card .bd { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+  .cv-slot .h { font-size: 10px; letter-spacing: .13em; text-transform: uppercase; color: var(--faint); font-weight: 700; margin-bottom: 4px; }
+  .cv-slot .v { font-size: 13.5px; line-height: 1.45; border-radius: 8px; }
+  .cv-slot .v.q { font-family: var(--serif); font-size: 1.02rem; line-height: 1.35; }
+  .cv-slot .v.empty { color: var(--faint); }
+  .cv-slot .v.fill { animation: cvFill 1.6s ease both; padding: 2px 6px; margin: -2px -6px; }
+  @keyframes cvFill { 0% { background: var(--pom-soft); } 100% { background: transparent; } }
+  @media (prefers-reduced-motion: reduce) { .js .cv-m.anim, .cv-slot .v.fill, .cv-typing i { animation: none !important; } }
+
+  /* ============ PART 3 · THE PROFILE (Classic B) ============ */
+  .b-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
+  .b-sl { display: inline-flex; align-items: center; gap: 7px; font-family: var(--serif); font-size: 1rem; }
+  .b-sl .seal-mark { width: 15px; height: 15px; }
+  .b-priv { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .b-priv svg { width: 11px; height: 11px; }
+  .b-id { display: flex; gap: 17px; align-items: center; }
+  .b-id .pf { flex: none; width: 104px; height: 128px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); background: linear-gradient(158deg, #c3b2a2, #574a40); }
+  .b-id .pf.nophoto { display: grid; place-items: center; background: linear-gradient(158deg, #efe6da, #d9cbbb); }
+  .b-id .pf.nophoto .avatar { width: 78%; opacity: .92; }
+  .b-id .hd h1 { font-size: 2.05rem; line-height: 1; letter-spacing: -.015em; }
+  .b-id .hd .heb { font-family: var(--serif); color: var(--muted); font-size: .98rem; margin-top: 3px; }
+  .b-id .hd .one { font-size: 13px; color: var(--muted); margin-top: 9px; line-height: 1.5; }
+  .b-rail > * + * { margin-top: 18px; }
+  .obs .obs-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+  .obs .obs-comm { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+  .obs .obs-comm svg { width: 13px; height: 13px; color: var(--faint); flex: none; }
+  .obs .facets { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+  .obs .obs-words { font-size: 1.02rem; margin-top: 12px; }
+  .b-sec { margin-top: 24px; }
+  .b-sec .q { font-family: var(--serif); font-style: italic; font-size: 1.28rem; line-height: 1.36; margin: 0; text-wrap: balance; }
+  .b-sec .q .mk { color: var(--pom); font-style: normal; }
+  .b-sec .q-by { display: block; font-family: var(--sans); font-style: normal; font-size: 12px; font-weight: 650; color: var(--muted); margin-top: 7px; }
+  .b-sec p:not(.said):not(.bg-line) { font-size: 14.6px; line-height: 1.62; margin: 10px 0 0; }
+  .b-div { height: 1px; background: var(--line); margin: 24px 0 0; }
+  .pcards { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+  .pcard { border: 1px solid var(--line); border-radius: 16px; padding: 15px 17px; background: var(--paper); box-shadow: var(--shadow-xs); }
+  .pcard .pq { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--pom); }
+  .pcard .pa { font-family: var(--serif); font-size: 1.16rem; line-height: 1.32; margin-top: 8px; text-wrap: balance; }
+  .bg-line { font-size: 14px; line-height: 1.55; margin: 0 0 9px; }
+  .bg-line:last-child { margin-bottom: 0; }
+  .bg-line b { display: block; color: var(--faint); font-weight: 700; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px; }
+  .photos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .photos-grid .th { aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(158deg, #c3b2a2, #574a40); }
+  .photonote { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--muted); line-height: 1.5; background: var(--paper); border: 1px dashed var(--line); border-radius: 12px; padding: 13px 15px; }
+  .photonote svg { width: 17px; height: 17px; color: var(--pom); flex: none; margin-top: 1px; }
+  .refs-line { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); margin-top: 0; }
+  .refs-line svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
+  .refs-line b { color: var(--ink); font-weight: 700; }
+  .vp-web #stage-profile .b-wrap { display: grid; grid-template-columns: 300px 1fr; column-gap: clamp(28px, 4vw, 48px); align-items: start; }
+  .vp-web #stage-profile .b-top { grid-column: 1 / -1; }
+  .vp-web #stage-profile .b-rail { grid-column: 1; }
+  .vp-web #stage-profile .b-main { grid-column: 2; }
+  .vp-web #stage-profile .b-main > .b-sec:first-child { margin-top: 0; }
+  .vp-web #stage-profile .b-div { display: none; }
+  .vp-web #stage-profile .b-main > .b-sec { margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--line-soft); }
+  .vp-web #stage-profile .b-main > .b-sec:first-child { padding-top: 0; border-top: 0; }
+  .vp-web #stage-profile .b-arrival { grid-column: 1 / -1; max-width: 620px; margin: 30px auto 0; width: 100%; }
+  .vp-web #stage-profile .b-trust { grid-column: 1 / -1; }
+
+  /* profile inline controls (theming showcase) */
+  .themebar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 11px 14px; margin-bottom: 20px; }
+  .themebar .tl { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+  .themebar .swrow { display: flex; gap: 7px; }
+  .themebar .sw { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--raise); outline: 1px solid var(--line); padding: 0; background: var(--sw); cursor: pointer; }
+  .themebar .sw[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .themebar .ptog { margin-left: auto; }
+  .themebar .ptog button { font-size: 11.5px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+  .themebar .ptog button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ============ shared arrival module ============ */
+  .arrival { border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: var(--paper); box-shadow: var(--shadow-xs); margin-top: 24px; }
+  .arr-seg { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
+  .arr-seg button { font-family: var(--sans); font-size: 11.5px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 6px 11px; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+  .arr-seg button:hover { border-color: var(--pom); color: var(--ink); }
+  .arr-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .arr-seg .hint { flex-basis: 100%; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; color: var(--faint); text-transform: uppercase; margin-bottom: 2px; }
+  .sharer { display: flex; align-items: center; gap: 11px; }
+  .sharer .av { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 15px; }
+  .sharer .av .seal-mark { width: 22px; height: 22px; }
+  .sharer .t { min-width: 0; }
+  .sharer .t .a, .sharer .t .s { display: block; }
+  .sharer .t .a { font-size: 13.5px; line-height: 1.35; }
+  .sharer .t .a b { font-weight: 700; }
+  .sharer .t .s { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .arr-note { font-family: var(--serif); font-style: italic; font-size: 1.02rem; line-height: 1.45; color: var(--ink); background: var(--pom-soft); border-radius: 12px; padding: 12px 14px; margin: 13px 0 0; }
+  .arrival .btn { width: 100%; margin-top: 14px; }
+  .arrival .priv { text-align: center; font-size: 12px; color: var(--faint); margin: 9px 0 0; line-height: 1.45; }
+  .arr-top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
+  .arr-top .ic { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 11px; }
+  .arr-top .ic .seal-mark { width: 13px; height: 13px; }
+  .arr-top b { color: var(--ink); font-weight: 700; }
+  .trust { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 14px; margin-top: 16px; font-size: 11.5px; color: var(--faint); }
+  .trust .v { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+  .trust .v svg { width: 12px; height: 12px; color: var(--pom); }
+  .trust a { color: var(--faint); text-decoration: underline; text-underline-offset: 2px; }
+  .trust a:hover { color: var(--pom-ink); }
+
+  /* ============ PART 4 · SHARING & RECEIVING ============ */
+  .sh-head h2 { font-size: clamp(1.5rem, 5vw, 1.9rem); letter-spacing: -.015em; line-height: 1.08; text-wrap: balance; }
+  .sh-head .sub { color: var(--muted); font-size: .98rem; margin: 10px 0 0; line-height: 1.55; }
+  .subseg { display: inline-flex; gap: 4px; border: 1px solid var(--line); border-radius: 999px; padding: 4px; background: var(--paper); margin: 18px 0 4px; }
+  .subseg button { font-family: var(--sans); font-size: 13px; font-weight: 700; border: 0; background: transparent; color: var(--muted); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+  .subseg button[aria-pressed="true"] { background: var(--pom); color: var(--on-accent); }
+  .sh-view { display: none; }
+  .sh-view.on { display: block; animation: fade .28s ease both; }
+  @media (prefers-reduced-motion: reduce) { .sh-view.on { animation: none; } }
+
+  /* travels */
+  .travels { margin-top: 18px; display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .vp-web .travels { grid-template-columns: 1fr 1fr; }
+  .sh-card { border: 1px solid var(--line); border-radius: 16px; padding: 16px 17px; background: var(--paper); }
+  .sh-card .hd { display: flex; align-items: center; gap: 9px; }
+  .sh-card .hd .ci { flex: none; width: 30px; height: 30px; border-radius: 9px; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; }
+  .sh-card .hd .ci svg { width: 17px; height: 17px; }
+  .sh-card .hd b { font-size: 14.5px; }
+  .sh-card > p { font-size: 13px; color: var(--muted); line-height: 1.5; margin: 10px 0 0; }
+  /* whatsapp unfurl */
+  .wa-bubble { position: relative; background: var(--raise); border: 1px solid var(--line); border-radius: 4px 14px 14px 14px; padding: 7px 9px 20px; box-shadow: var(--shadow-xs); margin-top: 12px; }
+  .wa-card { display: flex; gap: 11px; align-items: center; background: var(--paper); border: 1px solid var(--line-soft); border-radius: 10px; padding: 9px; }
+  .wa-thumb { flex: none; width: 52px; height: 52px; border-radius: 9px; overflow: hidden; background: linear-gradient(158deg, #c3b2a2, #574a40); }
+  .wa-meta { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .wa-meta .wa-title { font-size: 13px; font-weight: 700; }
+  .wa-meta .wa-desc { font-size: 11.5px; color: var(--muted); }
+  .wa-meta .wa-dom { font-size: 10.5px; color: var(--faint); }
+  .wa-link { font-size: 12.5px; margin-top: 6px; color: #4e7fd0; text-decoration: underline; text-underline-offset: 2px; word-break: break-all; }
+  .wa-time { position: absolute; right: 10px; bottom: 5px; font-size: 10px; color: var(--faint); }
+  /* one-pager mini */
+  .op { margin: 12px auto 0; width: 150px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); background: var(--raise); }
+  .op .op-ph { height: 92px; position: relative; background: radial-gradient(120% 80% at 74% 14%, rgba(168,45,70,.34), transparent 55%), linear-gradient(158deg, #c3b2a2, #574a40); }
+  .op .op-ph .por { position: absolute; inset: 0; }
+  .op .op-bd { padding: 8px 9px 10px; }
+  .op .op-bd .nm { font-family: var(--serif); font-size: 13px; }
+  .op .op-bd .li { height: 4px; border-radius: 3px; background: var(--line); margin-top: 5px; }
+  .op .op-bd .li.s { width: 66%; }
+  .op .op-bd .li.p { background: var(--pom-soft); width: 46%; }
+  /* export menu */
+  .exports { display: flex; flex-direction: column; gap: 9px; margin-top: 12px; }
+  .exrow { display: flex; align-items: center; gap: 11px; border: 1px solid var(--line); border-radius: 11px; padding: 11px 13px; background: var(--raise); }
+  .exrow .ei { flex: none; width: 30px; height: 30px; border-radius: 8px; background: var(--gold-soft); color: var(--gold); display: grid; place-items: center; }
+  .exrow .ei svg { width: 16px; height: 16px; }
+  .exrow .et b { display: block; font-size: 13.5px; }
+  .exrow .et span { display: block; font-size: 11.5px; color: var(--muted); }
+  .exrow .go { margin-left: auto; font-size: 11.5px; font-weight: 700; color: var(--pom-ink); }
+  .livelink { display: flex; align-items: center; gap: 11px; background: var(--pom-soft); border-radius: 12px; padding: 13px 15px; margin-top: 4px; }
+  .livelink svg { width: 20px; height: 20px; color: var(--pom-ink); flex: none; }
+  .livelink b { color: var(--ink); }
+  .livelink span { font-size: 13px; color: var(--pom-ink); line-height: 1.45; }
+  /* arrives intro */
+  .arrives-intro { display: flex; align-items: flex-start; gap: 11px; font-size: 13.5px; color: var(--muted); line-height: 1.55; margin: 18px 0 4px; }
+  .arrives-intro svg { width: 18px; height: 18px; color: var(--pom); flex: none; margin-top: 2px; }
+  .recipient { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--raise); margin-top: 14px; box-shadow: var(--shadow-xs); }
+  .recipient .r-mini { display: flex; align-items: center; gap: 13px; padding: 14px 16px; border-bottom: 1px solid var(--line-soft); }
+  .recipient .r-mini .pf { flex: none; width: 54px; height: 66px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(158deg, #c3b2a2, #574a40); }
+  .recipient .r-mini .hd h3 { font-size: 1.2rem; line-height: 1; }
+  .recipient .r-mini .hd .f { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .recipient .arrival { margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+
+  .closer { text-align: center; margin-top: 26px; padding: 22px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; }
+  .closer .seal-mark { width: 22px; height: 22px; }
+  .closer h3 { font-size: 1.35rem; margin-top: 10px; }
+  .closer p { font-size: 13.5px; color: var(--muted); max-width: 42ch; margin: 8px auto 16px; line-height: 1.55; }
+
+  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 22px 20px 44px; line-height: 1.6; max-width: 820px; margin: 0 auto; }
+  .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+  .foot-note b { color: var(--muted); }
+</style>
+
+<!-- ===== illustrated portrait + avatar + icons ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="portrait-f" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="pbg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#efe1d0"/><stop offset="1" stop-color="#d9c2a9"/></linearGradient>
+      <linearGradient id="pcloth" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0" stop-color="#9a3350"/><stop offset="1" stop-color="#71243a"/></linearGradient>
+      <linearGradient id="pscarf" x1="0.1" y1="0" x2="0.9" y2="1"><stop offset="0" stop-color="#c39457"/><stop offset="1" stop-color="#9c6f39"/></linearGradient>
+      <radialGradient id="pglow" cx="0.5" cy="0.32" r="0.6"><stop offset="0" stop-color="#f6ecdd" stop-opacity=".7"/><stop offset="1" stop-color="#f6ecdd" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="400" height="500" fill="url(#pbg)"/>
+    <rect width="400" height="500" fill="url(#pglow)"/>
+    <rect x="177" y="286" width="46" height="76" rx="23" fill="#e3b184"/>
+    <path d="M52 500 C64 404 118 366 200 366 C282 366 336 404 348 500 Z" fill="url(#pcloth)"/>
+    <path d="M200 366 C168 366 150 404 150 500 L250 500 C250 404 232 366 200 366 Z" fill="#000" opacity=".07"/>
+    <path d="M108 372 C86 250 108 116 200 114 C292 116 314 250 292 372 C286 330 292 210 200 210 C108 210 114 330 108 372 Z" fill="url(#pscarf)"/>
+    <ellipse cx="200" cy="226" rx="78" ry="92" fill="#f2c99e"/>
+    <ellipse cx="228" cy="238" rx="52" ry="78" fill="#e7b98c" opacity=".4"/>
+    <path d="M122 214 C122 150 154 118 200 118 C246 118 278 150 278 214 C278 214 250 168 200 168 C150 168 122 214 122 214 Z" fill="url(#pscarf)"/>
+    <path d="M122 214 C122 150 154 118 200 118 C246 118 278 150 278 214" fill="none" stroke="#7d572c" stroke-width="2" opacity=".35"/>
+    <ellipse cx="164" cy="252" rx="15" ry="10" fill="#e8917f" opacity=".28"/>
+    <ellipse cx="236" cy="252" rx="15" ry="10" fill="#e8917f" opacity=".28"/>
+    <path d="M160 230 Q175 220 190 230" fill="none" stroke="#6b4a30" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M210 230 Q225 220 240 230" fill="none" stroke="#6b4a30" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M200 236 L195 262 Q200 268 206 261" fill="none" stroke="#c88f5f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M180 276 Q200 289 220 276" fill="none" stroke="#b5573f" stroke-width="3.2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="avatar" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet">
+    <circle cx="200" cy="176" r="86" fill="currentColor" opacity=".82"/>
+    <path d="M54 470 C54 356 130 300 200 300 C270 300 346 356 346 470 Z" fill="currentColor" opacity=".82"/>
+  </symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path class="lk" d="M22 10L12 5 2 10l10 5 10-5z"/><path class="lk" d="M6 12v5c0 1 3 2.5 6 2.5s6-1.5 6-2.5v-5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path class="lk" d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path class="lk" d="M19 3v18"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path class="lk" d="M4 11l8-7 8 7"/><path class="lk" d="M6 10v10h12V10"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path class="lk" d="M14 3l7 4-9 3-3 6-2-1 1-5-6-2 2-2 6 1z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path class="lk" d="M12 20s-7-4.6-7-9.7A3.7 3.7 0 0 1 12 7a3.7 3.7 0 0 1 7 3.3C19 15.4 12 20 12 20z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle class="lk" cx="9" cy="8" r="3.2"/><path class="lk" d="M3.5 20c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><path class="lk" d="M16 5.2A3.2 3.2 0 0 1 19 11"/><path class="lk" d="M17 15c2 .5 3.5 2.3 4 5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path class="lk" d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><rect class="lk" x="3" y="7" width="18" height="13" rx="2"/><path class="lk" d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path class="lk" d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path class="lk" d="M21 11.5a8.4 8.4 0 0 1-11.9 7.6L3 21l1.9-6.1A8.4 8.4 0 1 1 21 11.5z"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path class="lk" d="M20 11a8 8 0 0 0-14-4l-2 2"/><path class="lk" d="M4 5v4h4"/><path class="lk" d="M4 13a8 8 0 0 0 14 4l2-2"/><path class="lk" d="M20 19v-4h-4"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path class="lk" d="M5 21V4"/><path class="lk" d="M5 5h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect class="lk" x="4.5" y="11" width="15" height="9" rx="2"/><path class="lk" d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path class="lk" d="M5 12h14"/><path class="lk" d="M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path class="lk" d="M19 12H5"/><path class="lk" d="M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path class="lk" d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path class="lk" d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path class="lk" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path class="lk" d="M14 3v5h5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path class="lk" d="M12 4v11"/><path class="lk" d="M8 11l4 4 4-4"/><path class="lk" d="M5 20h14"/></symbol>
+  <symbol id="i-type" viewBox="0 0 24 24"><path class="lk" d="M4 7V5h16v2"/><path class="lk" d="M12 5v14"/><path class="lk" d="M9 19h6"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><path class="lk" d="M3 3l18 18"/><path class="lk" d="M10.6 6.2A9 9 0 0 1 21 12a17 17 0 0 1-3 3.6"/><path class="lk" d="M6.6 6.7A17 17 0 0 0 3 12a9 9 0 0 0 12.5 4.2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path class="lk" d="M12 3l7 3v6c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6z"/><path class="lk" d="M9 12l2 2 4-4"/></symbol>
+</svg>
+
+<!-- ===== LAB BAR ===== -->
+<div class="lab-bar">
+  <div class="lab-in">
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Prototype v1</span></span>
+    <div class="lab-seg push" role="group" aria-label="Screen size" data-pd-state="Viewport">
+      <button type="button" data-vp="mobile" aria-pressed="true">Mobile</button>
+      <button type="button" data-vp="web" aria-pressed="false">Web</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Colour theme" data-pd-state="Theme">
+      <span class="sk">Theme</span>
+      <button type="button" class="swatch" data-ctheme="pomegranate" aria-pressed="true" aria-label="Pomegranate" style="--sw:#A82D46"></button>
+      <button type="button" class="swatch" data-ctheme="olive" aria-pressed="false" aria-label="Olive" style="--sw:#4F6B34"></button>
+      <button type="button" class="swatch" data-ctheme="indigo" aria-pressed="false" aria-label="Indigo" style="--sw:#3E4E8C"></button>
+      <button type="button" class="swatch" data-ctheme="plum" aria-pressed="false" aria-label="Plum" style="--sw:#7C3A6C"></button>
+      <button type="button" class="swatch" data-ctheme="sand" aria-pressed="false" aria-label="Sand" style="--sw:#9A6B1E"></button>
+    </div>
+  </div>
+</div>
+
+<div class="proto">
+  <div class="main">
+    <!-- ===== PART NAVIGATOR ===== -->
+    <nav class="pnav" aria-label="Prototype parts">
+      <button class="pstep" data-part="idea" aria-current="true"><span class="n">1</span> The idea</button>
+      <button class="pstep" data-part="conversation" aria-current="false"><span class="n">2</span> The conversation</button>
+      <button class="pstep" data-part="profile" aria-current="false"><span class="n">3</span> Your profile</button>
+      <button class="pstep" data-part="sharing" aria-current="false"><span class="n">4</span> Sharing &amp; receiving</button>
+    </nav>
+
+    <div class="stagewrap">
+
+      <!-- ============ PART 1 · THE IDEA ============ -->
+      <section class="stage on" id="stage-idea" aria-label="The idea">
+        <div class="device" data-url="">
+          <div class="scr idea">
+            <span class="brandrow"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
+            <span class="kicker">For real life, for real people</span>
+            <h1>A shidduch profile that finally sounds like <em>you</em>.</h1>
+            <p class="lede">Most profiles are a PDF that goes stale the day you send it, sounds like everyone else's, and leaves your hands the moment you hit send. ZivugPath is different: you build it by talking, it reads like a real person, and it lives at one private link that stays yours.</p>
+            <div class="beats">
+              <div class="beat"><span class="bic"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg></span><div><b>Built by talking</b><span>A few good conversations — no forms to fill in.</span></div></div>
+              <div class="beat"><span class="bic"><svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg></span><div><b>One living link</b><span>Update once; everyone's link stays current.</span></div></div>
+              <div class="beat"><span class="bic"><svg class="lk" viewBox="0 0 24 24"><use href="#i-lock"/></svg></span><div><b>You stay in control</b><span>Private by default — you approve every introduction.</span></div></div>
+            </div>
+            <div class="start"><button class="btn primary" data-go="conversation">Walk through the parts <svg class="lk" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button></div>
+            <span class="jump">…or jump to any part using the menu above.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PART 2 · THE CONVERSATION ============ -->
+      <section class="stage" id="stage-conversation" aria-label="The conversation">
+        <div class="device" data-url="/build">
+          <div class="scr">
+            <div class="cv-head">
+              <span class="eyebrow">Part 2 · How the profile gets built</span>
+              <h2>No forms. A few good conversations.</h2>
+              <p class="sub">ZivugPath builds the profile by talking. Different conversations draw out different things — pick one and watch the chat become a profile.</p>
+            </div>
+            <div class="cv-chips" role="group" aria-label="Conversation types">
+              <button class="cv-chip" aria-pressed="true" data-cv="0">Getting acquainted</button>
+              <button class="cv-chip" aria-pressed="false" data-cv="1">The deeper things</button>
+              <button class="cv-chip" aria-pressed="false" data-cv="2">Who she's looking for</button>
+              <button class="cv-chip" aria-pressed="false" data-cv="3">References</button>
+              <button class="cv-chip" aria-pressed="false" data-cv="4">The check-in</button>
+            </div>
+            <div class="cv-grid">
+              <div class="cv-chat" id="cvChat" aria-label="Example conversation">
+                <div class="cv-top"><span class="seal-mark" aria-hidden="true"></span><span class="t">Adina · your profile guide</span><span class="s">example · placeholder person</span></div>
+                <div class="cv-m ai">Let's start easy. Walk me through a regular Tuesday.</div>
+                <div class="cv-m me">Up at seven, davening, then I teach until three. Afternoons are errands or my sister's kids.</div>
+                <div class="cv-m ai">Teaching what — and do you love it?</div>
+                <div class="cv-m me">Third grade. And completely.</div>
+              </div>
+              <div class="cv-card" aria-label="The profile, filling in as she talks">
+                <div class="ph">
+                  <svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg>
+                  <span class="scrim"></span>
+                  <span class="nm">Rivka Mandel</span><span class="lab">Living draft</span>
+                </div>
+                <div class="bd">
+                  <div class="cv-slot"><div class="h">At a glance</div><div class="v" id="cvSlot0">Teaches 3rd grade · loves it</div></div>
+                  <div class="cv-slot"><div class="h">In her words</div><div class="v q empty" id="cvSlot1">— drawn out in conversation —</div></div>
+                  <div class="cv-slot"><div class="h">Looking for</div><div class="v empty" id="cvSlot2">— in her own phrasing, not a checklist —</div></div>
+                  <div class="cv-slot"><div class="h">References</div><div class="v empty" id="cvSlot3">— gathered, kept private —</div></div>
+                  <div class="cv-slot"><div class="h">Status</div><div class="v empty" id="cvSlot4">Live · one link, always current</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PART 3 · YOUR PROFILE (Classic B) ============ -->
+      <section class="stage" id="stage-profile" aria-label="Your profile">
+        <div class="device" data-url="/p/rivka-m">
+          <div class="scr">
+            <div class="themebar" role="group" aria-label="Owner display options">
+              <span class="tl">Your page, your look</span>
+              <div class="swrow" data-pd-state="Theme">
+                <button class="sw" data-ctheme="pomegranate" aria-pressed="true" aria-label="Pomegranate" style="--sw:#A82D46"></button>
+                <button class="sw" data-ctheme="olive" aria-pressed="false" aria-label="Olive" style="--sw:#4F6B34"></button>
+                <button class="sw" data-ctheme="indigo" aria-pressed="false" aria-label="Indigo" style="--sw:#3E4E8C"></button>
+                <button class="sw" data-ctheme="plum" aria-pressed="false" aria-label="Plum" style="--sw:#7C3A6C"></button>
+                <button class="sw" data-ctheme="sand" aria-pressed="false" aria-label="Sand" style="--sw:#9A6B1E"></button>
+              </div>
+              <div class="ptog" role="group" aria-label="Photo" data-pd-state="Photo">
+                <button type="button" data-photo="on" aria-pressed="true">Photo</button>
+                <button type="button" data-photo="off" aria-pressed="false">No photo</button>
+              </div>
+            </div>
+
+            <div class="b-wrap">
+              <div class="b-top">
+                <span class="b-sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath · Profile</span>
+                <span class="b-priv"><svg class="lk" viewBox="0 0 24 24"><use href="#i-lock"/></svg> Private link</span>
+              </div>
+              <div class="b-rail">
+                <div class="b-id">
+                  <div class="pf">
+                    <svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Portrait of Rivka Mandel"><use href="#portrait-f"/></svg>
+                    <svg class="avatar" viewBox="0 0 400 500" aria-hidden="true" style="color:var(--faint);display:none"><use href="#avatar"/></svg>
+                  </div>
+                  <div class="hd"><h1>Rivka Mandel</h1><div class="heb">רבקה מנדל</div><div class="one">"Steady about the big things, light about everything else."</div></div>
+                </div>
+                <div class="badges">
+                  <span class="badge gold"><svg><use href="#i-plane"/></svg>Open to relocating</span>
+                  <span class="badge"><svg><use href="#i-cap"/></svg>3rd-grade morah</span>
+                  <span class="badge"><svg><use href="#i-book"/></svg>Bais Yaakov + seminary</span>
+                  <span class="badge"><svg><use href="#i-users"/></svg>Second of six</span>
+                  <span class="badge soft"><svg><use href="#i-home"/></svg>Hosts every Shabbos</span>
+                  <span class="badge soft"><svg><use href="#i-heart"/></svg>Bakes challah Thursday nights</span>
+                </div>
+                <div class="obs">
+                  <span class="lbl">Observance</span>
+                  <div class="obs-row"><span class="badge gold">Yeshivish · Bais Yaakov</span><span class="obs-comm"><svg class="lk" viewBox="0 0 24 24"><use href="#i-home"/></svg>Lakewood</span></div>
+                  <div class="facets">
+                    <span class="chip"><svg class="lk" viewBox="0 0 24 24"><use href="#i-check"/></svg>Kosher phone</span>
+                    <span class="chip"><svg class="lk" viewBox="0 0 24 24"><use href="#i-check"/></svg>Shomer negiah</span>
+                    <span class="chip"><svg class="lk" viewBox="0 0 24 24"><use href="#i-check"/></svg>No TV at home</span>
+                    <span class="chip"><svg class="lk" viewBox="0 0 24 24"><use href="#i-check"/></svg>Skirts only</span>
+                  </div>
+                  <p class="said obs-words">Bais Yaakov through and through — though I'm always halfway through a secular novel too.</p>
+                </div>
+                <div class="fresh"><svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Updated <b>2 weeks ago</b> · always the current version</div>
+                <div class="arr-top"><span class="ic">MC</span><span class="tx"><b>Mrs. Cohen</b> suggested this for you</span></div>
+              </div>
+              <div class="b-main">
+                <div class="b-sec">
+                  <span class="lbl">Who she is</span>
+                  <p class="q"><span class="mk">"</span>I want a home where guests never feel like guests.<span class="mk">"</span></p>
+                  <span class="q-by">— in her own words</span>
+                  <p>Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.</p>
+                  <p class="said" style="margin-top:14px;">Teaching third grade is honestly the best part of my day — they keep me laughing.</p>
+                </div>
+                <div class="b-div"></div>
+                <div class="b-sec">
+                  <span class="lbl">What she's looking for</span>
+                  <p>Someone warm and steady, serious about growing — and grounded enough not to take himself too seriously.</p>
+                </div>
+                <div class="b-div"></div>
+                <div class="b-sec">
+                  <span class="lbl">Prompts</span>
+                  <div class="pcards">
+                    <div class="pcard"><div class="pq">My ideal Shabbos table</div><div class="pa">Too much food, a niggun that runs long, and no one checking the time.</div></div>
+                    <div class="pcard"><div class="pq">Something I'm working on</div><div class="pa">Letting a plan change without treating it as a small crisis.</div></div>
+                    <div class="pcard"><div class="pq">You'll usually find me</div><div class="pa">Mid-bake, or on a long walk with a friend talking about everything.</div></div>
+                  </div>
+                </div>
+                <div class="b-div"></div>
+                <div class="b-sec">
+                  <span class="lbl">Background</span>
+                  <p class="bg-line"><b>Learning</b>Bnos Bracha High School (Lakewood), then Seminar Meor (Yerushalayim).</p>
+                  <p class="bg-line"><b>Work</b>Teaches third grade at a local girls' school — and loves it.</p>
+                </div>
+                <div class="b-div"></div>
+                <div class="b-sec">
+                  <span class="lbl">Family &amp; community</span>
+                  <p class="bg-line"><b>Parents</b>Father is a rebbi at a yeshiva ketana in Lakewood; mother is a speech therapist.</p>
+                  <p class="bg-line"><b>Siblings</b>Second of six — an older brother learning in BMG, a married sister in Toms River, three younger at home.</p>
+                  <p class="bg-line"><b>Shul</b>Rav Gruen — Khal Zichron Shlomo, Lakewood</p>
+                </div>
+                <div class="b-div"></div>
+                <div class="b-sec photos-block">
+                  <span class="lbl">Photos</span>
+                  <div class="photos-grid">
+                    <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg></div>
+                    <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg></div>
+                    <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg></div>
+                    <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg></div>
+                  </div>
+                </div>
+                <div class="b-sec nophoto-block" hidden>
+                  <span class="lbl">Photos</span>
+                  <div class="photonote"><svg class="lk" viewBox="0 0 24 24"><use href="#i-lock"/></svg><span>Rivka hasn't posted photos publicly. She'll share them privately once she's open to an introduction.</span></div>
+                </div>
+                <div class="b-div"></div>
+                <div class="b-sec">
+                  <span class="lbl">References <span class="opt">· optional</span></span>
+                  <p class="refs-line"><svg><use href="#i-star"/></svg><span><b>Three references</b> available on request — shared privately, not posted here.</span></p>
+                </div>
+              </div>
+
+              <div class="arrival b-arrival" data-arrival="profile">
+                <div class="arr-seg" role="group" aria-label="How this reached you" data-pd-state="How this reached you">
+                  <span class="hint">How this reached you</span>
+                  <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
+                  <button type="button" data-s="ai" aria-pressed="false">AI match</button>
+                  <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
+                  <button type="button" data-s="direct" aria-pressed="false">Direct</button>
+                </div>
+                <div class="sharer"><span class="av"></span><span class="t"><span class="a"></span><span class="s"></span></span></div>
+                <p class="arr-note"></p>
+                <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
+                <p class="priv"></p>
+              </div>
+              <div class="trust b-trust">
+                <span class="v"><svg class="lk" viewBox="0 0 24 24"><use href="#i-star"/></svg> Shared via ZivugPath</span>
+                <span class="v"><svg class="lk" viewBox="0 0 24 24"><use href="#i-lock"/></svg> Private link · never indexed</span>
+                <a href="#report" class="report"><svg class="lk" viewBox="0 0 24 24" style="width:12px;height:12px;vertical-align:-2px"><use href="#i-flag"/></svg> Report this profile</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PART 4 · SHARING & RECEIVING ============ -->
+      <section class="stage" id="stage-sharing" aria-label="Sharing and receiving">
+        <div class="device" data-url="/share">
+          <div class="scr">
+            <div class="sh-head">
+              <span class="eyebrow">Part 4 · How it travels — and how it lands</span>
+              <h2>One link. Every way people actually share.</h2>
+              <p class="sub">The link doesn't replace the WhatsApp habit — it feeds it. And however a suggestion reaches someone, the reply routes through a person, never a cold message to a stranger.</p>
+            </div>
+            <div class="subseg" role="group" aria-label="View">
+              <button type="button" data-sh="travels" aria-pressed="true">How it travels</button>
+              <button type="button" data-sh="arrives" aria-pressed="false">How it arrives</button>
+            </div>
+
+            <!-- ---- how it travels ---- -->
+            <div class="sh-view on" id="sh-travels" data-pd-state="How it travels">
+              <div class="livelink">
+                <svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg>
+                <span><b>One living link.</b> Change a detail and everyone who has the link sees the update — no re-sending, no stale PDFs floating around.</span>
+              </div>
+              <div class="travels">
+                <div class="sh-card">
+                  <div class="hd"><span class="ci"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg></span><b>The link, unfurled in a chat</b></div>
+                  <p>Paste it into WhatsApp and it opens into a designed card — a first name and an initial, never a bare URL.</p>
+                  <div class="wa-bubble">
+                    <div class="wa-card">
+                      <div class="wa-thumb"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg></div>
+                      <div class="wa-meta"><span class="wa-title">Rivka M. — 24 · Lakewood, NJ</span><span class="wa-desc">A private profile, shared with you · ZivugPath</span><span class="wa-dom">zivugpath.com</span></div>
+                    </div>
+                    <div class="wa-link">zivugpath.com/p/rivka-m</div>
+                    <span class="wa-time">12:47 ✓✓</span>
+                  </div>
+                </div>
+                <div class="sh-card">
+                  <div class="hd"><span class="ci"><svg class="lk" viewBox="0 0 24 24"><use href="#i-download"/></svg></span><b>A one-pager to forward</b></div>
+                  <p>Prefer an image or a printed sheet? Generate a tidy one-pager in a tight bullet voice — same profile, glanceable.</p>
+                  <div class="op">
+                    <div class="op-ph"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg></div>
+                    <div class="op-bd"><div class="nm">Rivka Mandel</div><div class="li p"></div><div class="li"></div><div class="li s"></div><div class="li"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="sh-card" style="margin-top:16px">
+                <div class="hd"><span class="ci"><svg class="lk" viewBox="0 0 24 24"><use href="#i-doc"/></svg></span><b>Or export it</b></div>
+                <p>Same profile, whatever a shadchan expects — the link stays the canonical, always-current version.</p>
+                <div class="exports">
+                  <div class="exrow"><span class="ei"><svg class="lk" viewBox="0 0 24 24"><use href="#i-doc"/></svg></span><span class="et"><b>Dated PDF</b><span>A snapshot that points back to the live link</span></span><span class="go">Export</span></div>
+                  <div class="exrow"><span class="ei"><svg class="lk" viewBox="0 0 24 24"><use href="#i-download"/></svg></span><span class="et"><b>Story / image card</b><span>Square image for a status or a quick send</span></span><span class="go">Export</span></div>
+                  <div class="exrow"><span class="ei"><svg class="lk" viewBox="0 0 24 24"><use href="#i-type"/></svg></span><span class="et"><b>Plain text</b><span>Copy-paste bullets, in her own voice</span></span><span class="go">Copy</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ---- how it arrives ---- -->
+            <div class="sh-view" id="sh-arrives" data-pd-state="How it arrives" hidden>
+              <div class="arrives-intro">
+                <svg class="lk" viewBox="0 0 24 24"><use href="#i-users"/></svg>
+                <span>A suggestion can come from a shadchan, from ZivugPath itself, forwarded by a friend, or straight from the person. Whoever it comes from, the top of the page says so — and the reply always goes through an intermediary. No contact details until you both say yes.</span>
+              </div>
+              <div class="recipient">
+                <div class="r-mini">
+                  <div class="pf"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#portrait-f"/></svg></div>
+                  <div class="hd"><h3>Rivka Mandel</h3><div class="f">24 · 5′4″ · Lakewood, NJ</div></div>
+                </div>
+                <div class="arrival" data-arrival="arrives">
+                  <div class="arr-seg" role="group" aria-label="How this reached you">
+                    <span class="hint">Try each way a suggestion can reach you</span>
+                    <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
+                    <button type="button" data-s="ai" aria-pressed="false">AI match</button>
+                    <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
+                    <button type="button" data-s="direct" aria-pressed="false">Direct</button>
+                  </div>
+                  <div class="sharer"><span class="av"></span><span class="t"><span class="a"></span><span class="s"></span></span></div>
+                  <p class="arr-note"></p>
+                  <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
+                  <p class="priv"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="closer">
+              <span class="seal-mark" aria-hidden="true"></span>
+              <h3>That's ZivugPath.</h3>
+              <p>You talk, it writes you up in your own voice, and you share one living link you control. For real life, for real people.</p>
+              <button class="btn" data-go="idea"><svg class="lk" viewBox="0 0 24 24"><use href="#i-back"/></svg> Back to the start</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /stagewrap -->
+
+    <!-- ===== PAGER ===== -->
+    <div class="pager">
+      <button class="pgbtn" id="pgPrev"><svg class="lk" viewBox="0 0 24 24"><use href="#i-back"/></svg> <span>Back</span></button>
+      <button class="pgbtn primary" id="pgNext"><span>Next</span> <svg class="lk" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<div class="foot-note">
+  <div class="stamp">Lab · prototype · v1 · 2026-07-08</div>
+  <p><b>What this is:</b> an <b>interactive walkthrough prototype</b> — not a marketing page — for demoing the idea and its parts. Jump between the four parts with the menu, or step through with <b>Back / Next</b>. Toggle <b>Mobile / Web</b> and a <b>colour theme</b> in the top bar. Part 3's swatches and <b>Photo / No photo</b> show the owner's display choices; Part 4's <b>How this reached you</b> switcher shows the four ways a suggestion travels.</p>
+  <p>Placeholder person; illustrated portrait/avatar stands in for a real photo. The profile is the redesigned <b>Classic</b> layout, owner-themable.</p>
+</div>
+
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    var $ = function (s, r) { return (r || document).querySelector(s); };
+    var $all = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+    /* ---------- parts / router ---------- */
+    var PARTS = ['idea', 'conversation', 'profile', 'sharing'];
+    function partFromHash() { var h = (location.hash || '').replace('#', ''); return PARTS.indexOf(h) > -1 ? h : 'idea'; }
+    function showPart(id) {
+      PARTS.forEach(function (p) {
+        var on = p === id;
+        var st = document.getElementById('stage-' + p);
+        if (st) st.classList.toggle('on', on);
+      });
+      $all('.pstep').forEach(function (b) { b.setAttribute('aria-current', b.dataset.part === id ? 'true' : 'false'); });
+      var i = PARTS.indexOf(id);
+      var prev = document.getElementById('pgPrev'), next = document.getElementById('pgNext');
+      prev.disabled = i <= 0;
+      next.disabled = i >= PARTS.length - 1;
+      $('span', next).textContent = i >= PARTS.length - 1 ? 'Done' : ('Next: ' + label(PARTS[i + 1]));
+      $('span', prev).textContent = i <= 0 ? 'Back' : label(PARTS[i - 1]);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+    function label(id) { return { idea: 'The idea', conversation: 'The conversation', profile: 'Your profile', sharing: 'Sharing' }[id]; }
+    function go(id) { if (location.hash.replace('#', '') === id) showPart(id); else location.hash = id; }
+
+    $all('.pstep').forEach(function (b) { b.addEventListener('click', function () { go(b.dataset.part); }); });
+    $all('[data-go]').forEach(function (b) { b.addEventListener('click', function () { go(b.dataset.go); }); });
+    document.getElementById('pgPrev').addEventListener('click', function () { var i = PARTS.indexOf(partFromHash()); if (i > 0) go(PARTS[i - 1]); });
+    document.getElementById('pgNext').addEventListener('click', function () { var i = PARTS.indexOf(partFromHash()); if (i < PARTS.length - 1) go(PARTS[i + 1]); });
+    window.addEventListener('hashchange', function () { showPart(partFromHash()); });
+    if (!location.hash) { try { history.replaceState(null, '', '#idea'); } catch (e) {} }
+
+    /* ---------- viewport toggle ---------- */
+    $all('.lab-seg button[data-vp]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.body.classList.toggle('vp-web', b.dataset.vp === 'web');
+        $all('.lab-seg button[data-vp]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      });
+    });
+
+    /* ---------- colour theme (lab bar + profile swatches stay in sync) ---------- */
+    function setTheme(t) {
+      document.body.setAttribute('data-ctheme', t);
+      $all('[data-ctheme]').forEach(function (x) {
+        if (x.classList.contains('swatch') || x.classList.contains('sw')) x.setAttribute('aria-pressed', x.dataset.ctheme === t ? 'true' : 'false');
+      });
+    }
+    $all('.swatch[data-ctheme], .sw[data-ctheme]').forEach(function (b) { b.addEventListener('click', function () { setTheme(b.dataset.ctheme); }); });
+
+    /* ---------- profile: photo toggle ---------- */
+    $all('.ptog button[data-photo]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var on = b.dataset.photo === 'on';
+        $all('.ptog button[data-photo]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        var pf = $('#stage-profile .b-id .pf');
+        pf.classList.toggle('nophoto', !on);
+        $('.por', pf).style.display = on ? '' : 'none';
+        $('.avatar', pf).style.display = on ? 'none' : '';
+        $('#stage-profile .photos-block').hidden = !on;
+        $('#stage-profile .nophoto-block').hidden = on;
+        var divBefore = $('#stage-profile .nophoto-block').previousElementSibling;
+        if (divBefore && divBefore.classList.contains('b-div')) divBefore.style.display = on ? 'none' : '';
+      });
+    });
+
+    /* ---------- arrival module (shared across profile + arrives) ---------- */
+    var P = { first: 'Rivka', their: 'her', comm: 'Lakewood' };
+    var SEAL = '<span class="seal-mark" aria-hidden="true"></span>';
+    function arrData() {
+      return {
+        shadchan: { av: 'MC', top: '<b>Mrs. Cohen</b> suggested this for you', sub: 'Shadchan · ' + P.comm,
+          note: '"I thought of you two the moment I met ' + P.first + ' — I really think it could be a fit."',
+          cta: 'Message Mrs. Cohen', priv: "She'll introduce you both. Your contact stays private until you choose to share it." },
+        ai: { av: SEAL, top: '<b>ZivugPath</b> would like to introduce you', sub: 'Based on what you each said matters',
+          note: '"You both described the same kind of home — warm, open, and growing. When what two people are looking for lines up this closely, we suggest the introduction."',
+          cta: 'Request an introduction', priv: 'Your interest goes to ' + P.first + ' quietly — no contact details are shared until you both say yes.' },
+        friend: { av: 'CS', top: '<b>Chaya S.</b> forwarded you this profile', sub: 'Originally suggested by Mrs. Cohen · Shadchan',
+          note: '"You came to mind the second I saw it — just take a look 😊"',
+          cta: 'Message Mrs. Cohen', priv: 'Replies route to Mrs. Cohen, who made the original suggestion. Contact stays private until you both agree.' },
+        direct: { av: P.first[0], top: '<b>' + P.first + '</b> shared ' + P.their + ' profile', sub: 'Reach out through ZivugPath',
+          note: '', cta: 'Request an introduction', priv: 'ZivugPath passes your interest to ' + P.first + '. Contact stays private until you both agree.' }
+      };
+    }
+    function paintArrival(which, sharer) {
+      var d = arrData()[sharer], m = $('[data-arrival="' + which + '"]');
+      if (!m) return;
+      $('.av', m).innerHTML = (d.av === SEAL ? SEAL : d.av);
+      $('.t .a', m).innerHTML = d.top;
+      $('.t .s', m).textContent = d.sub;
+      var note = $('.arr-note', m);
+      if (d.note) { note.textContent = d.note; note.style.display = ''; } else { note.style.display = 'none'; }
+      $('.cta-t', m).textContent = d.cta;
+      $('.priv', m).textContent = d.priv;
+      $all('.arr-seg button', m).forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.s === sharer ? 'true' : 'false'); });
+      // keep the profile's top attribution line honest
+      if (which === 'profile') {
+        var top = $('#stage-profile .arr-top');
+        if (top) { $('.ic', top).innerHTML = (d.av === SEAL ? SEAL : d.av); $('.tx', top).innerHTML = d.top; }
+      }
+    }
+    ['profile', 'arrives'].forEach(function (which) {
+      var m = $('[data-arrival="' + which + '"]');
+      if (!m) return;
+      $all('.arr-seg button', m).forEach(function (b) {
+        b.addEventListener('click', function () { paintArrival(which, b.dataset.s); });
+      });
+      paintArrival(which, 'shadchan');
+    });
+    $all('.trust .report').forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); alert('Demo — in the real app this opens a short "something’s off" report form.'); });
+    });
+
+    /* ---------- sharing sub-view toggle ---------- */
+    $all('.subseg button[data-sh]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        $all('.subseg button[data-sh]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        ['travels', 'arrives'].forEach(function (v) {
+          var el = document.getElementById('sh-' + v);
+          el.classList.toggle('on', v === b.dataset.sh);
+          el.hidden = v !== b.dataset.sh;
+        });
+      });
+    });
+
+    /* ---------- conversation demo ---------- */
+    (function () {
+      var SCRIPTS = [
+        { msgs: [['ai', "Let's start easy. Walk me through a regular Tuesday."], ['me', 'Up at seven, davening, then I teach until three. Afternoons are errands or my sister’s kids.'], ['ai', 'Teaching what — and do you love it?'], ['me', 'Third grade. And completely.']], slot: 0, val: 'Teaches 3rd grade · loves it' },
+        { msgs: [['ai', 'Think of a Shabbos table you loved. What made it that one?'], ['me', 'Everyone stayed after bentching. No one rushed off. There was singing.'], ['ai', 'So a home where people linger.'], ['me', 'Exactly — where guests never feel like guests.']], slot: 1, val: '"A home where guests never feel like guests."' },
+        { msgs: [['ai', 'Describe him at his best — the person, not the checklist.'], ['me', 'Steady. Takes his growth seriously and himself a little less so.'], ['ai', 'That’s going in exactly as you said it.']], slot: 2, val: 'Warm and steady — serious about growth, less serious about himself.' },
+        { msgs: [['ai', 'Who knows you well enough to be honest about you?'], ['me', 'My seminary teacher, my principal, and a neighbor we’re close with.'], ['ai', 'Added — kept private, and shared only when you approve an introduction.']], slot: 3, val: 'Three on request · shared privately' },
+        { msgs: [['ai', 'Quick check-in — anything new since the spring?'], ['me', 'I switched schools in September. And relocating is a yes now.'], ['ai', 'Updated. Everyone who has your link already sees the newest version.']], slot: 4, val: 'Updated today · every link already current' }
+      ];
+      var chat = document.getElementById('cvChat');
+      var chips = $all('.cv-chip');
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var run = 0;
+      function bubble(who, text, anim) { var d = document.createElement('div'); d.className = 'cv-m ' + who + (anim ? ' anim' : ''); d.textContent = text; return d; }
+      function clearChat() { var keep = chat.querySelector('.cv-top'); chat.innerHTML = ''; chat.appendChild(keep); }
+      function fillSlot(s) { var el = document.getElementById('cvSlot' + s.slot); el.classList.remove('empty', 'fill'); el.textContent = s.val; void el.offsetWidth; el.classList.add('fill'); }
+      function play(i) {
+        var token = ++run, s = SCRIPTS[i];
+        chips.forEach(function (c, j) { c.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+        clearChat();
+        if (reduce) { s.msgs.forEach(function (m) { chat.appendChild(bubble(m[0], m[1], false)); }); fillSlot(s); return; }
+        var k = 0;
+        (function next() {
+          if (token !== run) return;
+          if (k >= s.msgs.length) { fillSlot(s); return; }
+          var m = s.msgs[k++];
+          if (m[0] === 'ai') {
+            var ty = document.createElement('div'); ty.className = 'cv-typing'; ty.setAttribute('aria-hidden', 'true'); ty.innerHTML = '<i></i><i></i><i></i>';
+            chat.appendChild(ty);
+            setTimeout(function () { if (token !== run) return; ty.remove(); chat.appendChild(bubble(m[0], m[1], true)); setTimeout(next, 900); }, 650);
+          } else { chat.appendChild(bubble(m[0], m[1], true)); setTimeout(next, 900); }
+        })();
+      }
+      chips.forEach(function (c) { c.addEventListener('click', function () { play(parseInt(c.getAttribute('data-cv'), 10)); }); });
+    })();
+
+    showPart(partFromHash());
+  })();
+</script>
+<script src="/pindrop/pindrop.js?v=2" defer></script>
+</body>
+</html>

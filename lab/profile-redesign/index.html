@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="pd-version" content="6">
+<meta name="pd-version" content="7">
 <title>Lab · Profile redesign · ZivugPath</title>
 </head>
 <body>
@@ -49,7 +49,7 @@
 
   /* ============ LAB CHROME ============ */
   .lab-bar { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-  .lab-in { max-width: 1080px; margin: 0 auto; padding: 11px clamp(16px, 5vw, 34px); display: flex; align-items: center; gap: 12px 14px; flex-wrap: wrap; }
+  .lab-in { max-width: 1080px; margin: 0 auto; padding: 11px clamp(16px, 5vw, 34px); display: flex; align-items: center; gap: 10px 12px; flex-wrap: wrap; }
   .lab-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 1.05rem; }
   .lab-brand .seal-mark { width: 18px; height: 18px; }
   .lab-brand .tag { font-family: var(--sans); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); background: var(--gold-soft); padding: 3px 8px; border-radius: 999px; }
@@ -59,7 +59,7 @@
   .lab-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
   .lab-seg .sk { align-self: center; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 0 4px 0 6px; }
   .lab-tabs { display: flex; gap: 7px; flex-wrap: wrap; }
-  .lab-tab { font-family: var(--sans); font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; }
+  .lab-tab { font-family: var(--sans); font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; }
   .lab-tab:hover { border-color: var(--pom); color: var(--ink); }
   .lab-tab[aria-selected="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
 
@@ -69,10 +69,7 @@
   .por { display: block; width: 100%; height: 100%; }
 
   /* ============ shared badge system ============
-     gold  = distinguishing / status-identity (life-stage, relocating, convert/BT, kohen, sephardi)
-     pom   = core life facts (occupation, learning, family position, community)
-     soft  = interests / lifestyle
-  */
+     gold = distinguishing / status-identity · pom = core facts · soft = interests */
   .badges { display: flex; flex-wrap: wrap; gap: 8px; }
   .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 650; line-height: 1; padding: 8px 13px; border-radius: 999px; background: var(--pom-soft); color: var(--pom-ink); }
   .badge svg { width: 14px; height: 14px; flex: none; opacity: .85; }
@@ -83,27 +80,25 @@
   .lbl { display: block; font-family: var(--sans); font-size: 10.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--pom); margin: 0 0 12px; }
   .lbl .opt { color: var(--faint); font-weight: 600; text-transform: none; letter-spacing: 0; }
 
-  /* pull-quote from the interview (shared) */
   .said { position: relative; font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.42; color: var(--ink); padding-left: 15px; margin: 14px 0 0; border-left: 2px solid var(--pom); }
 
-  /* freshness — the always-current living-link cue */
   .fresh { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: var(--muted); }
   .fresh svg { width: 13px; height: 13px; color: var(--pom); flex: none; }
   .fresh b { color: var(--ink); font-weight: 700; }
 
-  /* observance spectrum — one clean control (hashkafa-meter), never a grid */
-  .obs .obs-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-  .obs .obs-v { font-size: 14px; font-weight: 700; color: var(--ink); }
-  .obs .obs-k { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
-  .obs .track { position: relative; height: 6px; border-radius: 999px; margin: 9px 0 5px; background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 30%, var(--line)), color-mix(in srgb, var(--pom) 42%, var(--line))); }
-  .obs .mk { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--pom); border: 2.5px solid var(--raise); box-shadow: var(--shadow-xs); transform: translate(-50%, -50%); }
-  .obs .ends { display: flex; justify-content: space-between; font-size: 10px; color: var(--faint); font-weight: 600; }
+  /* observance — D hybrid: label + community + facet chips + "in their words" */
+  .obs .obs-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+  .obs .obs-comm { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+  .obs .obs-comm svg { width: 13px; height: 13px; color: var(--faint); flex: none; }
+  .obs .facets { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; }
+  .chip svg { width: 12px; height: 12px; color: var(--pom); flex: none; }
+  .obs .obs-words { font-size: 1.02rem; margin-top: 12px; }
 
-  /* vitals key/value stack (fills the A-web rail; compact elsewhere) */
-  .vitals { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
-  .vitals .vi .k { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
-  .vitals .vi .v { font-size: 14.5px; font-weight: 650; color: var(--ink); margin-top: 2px; }
-  .vitals .vi.wide { grid-column: 1 / -1; }
+  /* Background block */
+  .bg-line { font-size: 14px; line-height: 1.55; margin: 0 0 9px; }
+  .bg-line:last-child { margin-bottom: 0; }
+  .bg-line b { display: block; color: var(--faint); font-weight: 700; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px; }
 
   /* ============ shared arrival / respond module ============ */
   .arrival { border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: var(--paper); box-shadow: var(--shadow-xs); }
@@ -128,24 +123,26 @@
   .btn { font-family: var(--sans); font-weight: 700; font-size: 14.5px; border-radius: 12px; padding: 13px 18px; cursor: pointer; border: 1px solid var(--line); background: var(--raise); color: var(--ink); }
   .btn.primary { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
 
-  /* trust / report strip — for a profile that circulates */
   .trust { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 14px; margin-top: 16px; font-size: 11.5px; color: var(--faint); }
   .trust .v { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
   .trust .v svg { width: 12px; height: 12px; color: var(--pom); }
   .trust a { color: var(--faint); text-decoration: underline; text-underline-offset: 2px; }
   .trust a:hover { color: var(--pom-ink); }
 
-  /* thin "how it reached you" line at top of each profile */
   .arr-top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); }
   .arr-top .ic { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--pom-soft); color: var(--pom-ink); display: grid; place-items: center; font-family: var(--serif); font-weight: 600; font-size: 11px; }
   .arr-top .ic .seal-mark { width: 13px; height: 13px; }
   .arr-top b { color: var(--ink); font-weight: 700; }
 
-  /* photos-shared-privately note (no-photo / after-approval) */
   .photonote { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--muted); line-height: 1.5; background: var(--paper); border: 1px dashed var(--line); border-radius: 12px; padding: 13px 15px; }
   .photonote svg { width: 17px; height: 17px; color: var(--pom); flex: none; margin-top: 1px; }
+  .photos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .photos-grid .th { aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(158deg, #c3b2a2, #574a40); }
+  .refs-line { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
+  .refs-line svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
+  .refs-line b { color: var(--ink); font-weight: 700; }
 
-  /* ============ DIRECTION A — PHOTO-FORWARD, FLOWING ============ */
+  /* ============ DIRECTION A — PHOTO-FORWARD ============ */
   .a-hero { position: relative; aspect-ratio: 4 / 4.4; background: linear-gradient(158deg, #c3b2a2 0%, #8d7a6b 46%, #574a40 100%); }
   .a-hero .por { position: absolute; inset: 0; }
   .a-hero .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.8) 0%, rgba(20,12,9,.24) 44%, transparent 64%); }
@@ -159,24 +156,15 @@
   .a-hero .cap .facts { margin-top: 9px; font-size: 13.5px; color: rgba(255,255,255,.94); display: flex; flex-wrap: wrap; gap: 5px 9px; }
   .a-hero .cap .facts span { display: inline-flex; align-items: center; gap: 8px; }
   .a-hero .cap .facts span + span::before { content: ""; width: 3px; height: 3px; border-radius: 50%; background: var(--pom); }
-  /* no-photo hero: warm panel + centered avatar silhouette */
   .a-hero.nophoto .avatar { position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%); width: 46%; opacity: .9; }
   .a-hero.nophoto .scrim { background: linear-gradient(to top, rgba(20,12,9,.82) 0%, rgba(20,12,9,.3) 50%, rgba(20,12,9,.08) 100%); }
-
   .a-body { padding: 20px clamp(18px, 5vw, 24px) 24px; display: flex; flex-direction: column; gap: 22px; }
   .a-quote { font-family: var(--serif); font-style: italic; font-size: 1.34rem; line-height: 1.34; text-wrap: balance; margin: 0; }
   .a-quote .mk { color: var(--pom); font-style: normal; }
   .a-prose { font-size: 15px; line-height: 1.64; margin: 0; }
-  .a-fam { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin: 0; }
-  .a-fam b { color: var(--faint); font-weight: 700; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 4px; }
-  .a-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .a-photos .th { aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(158deg, #c3b2a2, #574a40); }
-  .a-refs { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
-  .a-refs svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
-  .a-refs b { color: var(--ink); font-weight: 700; }
-  .a-block > .lbl { margin-bottom: 10px; }
+  .a-rail > * + * { margin-top: 22px; }
 
-  /* ============ DIRECTION B — REFINED CLASSIC, FLOWING ============ */
+  /* ============ DIRECTION B — REFINED CLASSIC ============ */
   .b-wrap { padding: clamp(18px, 5vw, 26px) clamp(18px, 5vw, 26px) 24px; }
   .b-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
   .b-sl { display: inline-flex; align-items: center; gap: 7px; font-family: var(--serif); font-size: 1rem; }
@@ -190,22 +178,32 @@
   .b-id .hd h1 { font-size: 2.05rem; line-height: 1; letter-spacing: -.015em; }
   .b-id .hd .heb { font-family: var(--serif); color: var(--muted); font-size: .98rem; margin-top: 3px; }
   .b-id .hd .one { font-size: 13px; color: var(--muted); margin-top: 9px; line-height: 1.5; }
-  .b-badges { margin: 20px 0 0; }
-  .b-obs { margin: 18px 0 0; }
-  .b-fresh { margin: 16px 0 0; }
-  .b-arrtop { margin: 16px 0 0; }
+  .b-rail > * + * { margin-top: 18px; }
   .b-sec { margin-top: 24px; }
   .b-sec .q { font-family: var(--serif); font-style: italic; font-size: 1.28rem; line-height: 1.36; margin: 0; text-wrap: balance; }
-  .b-sec p { font-size: 14.6px; line-height: 1.62; margin: 10px 0 0; }
-  .b-sec p:first-of-type { margin-top: 0; }
+  .b-sec p:not(.said):not(.bg-line) { font-size: 14.6px; line-height: 1.62; margin: 10px 0 0; }
   .b-sec .q + p { margin-top: 12px; }
   .b-div { height: 1px; background: var(--line); margin: 24px 0 0; }
-  .b-refs { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); margin-top: 10px; }
-  .b-refs svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
-  .b-refs b { color: var(--ink); font-weight: 700; }
-  .b-arrival { margin-top: 26px; }
 
-  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 10px 20px 40px; line-height: 1.6; max-width: 760px; margin: 0 auto; }
+  /* ============ DIRECTION C — PROMPTED (Q&A cards) ============ */
+  .c-wrap { padding: clamp(18px, 5vw, 28px) clamp(16px, 5vw, 26px) 26px; display: flex; flex-direction: column; gap: 22px; }
+  .c-head { display: flex; align-items: center; gap: 16px; }
+  .c-head .pf { flex: none; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); background: linear-gradient(158deg, #c3b2a2, #574a40); }
+  .c-head .pf.nophoto { display: grid; place-items: center; background: linear-gradient(158deg, #efe6da, #d9cbbb); }
+  .c-head .pf.nophoto .avatar { width: 74%; opacity: .92; }
+  .c-head .pf .por { transform: scale(1.05); }
+  .c-head h1 { font-size: 1.9rem; line-height: 1; letter-spacing: -.015em; }
+  .c-head .heb { font-family: var(--serif); color: var(--muted); font-size: .95rem; margin-top: 2px; }
+  .c-head .facts { margin-top: 8px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 3px 8px; }
+  .c-head .facts span + span::before { content: "·"; margin-right: 8px; color: var(--faint); }
+  .c-tagline { font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.32; text-wrap: balance; margin: 0; }
+  .c-tagline .mk { color: var(--pom); font-style: normal; }
+  .pcards { display: flex; flex-direction: column; gap: 12px; }
+  .pcard { border: 1px solid var(--line); border-radius: 16px; padding: 15px 17px; background: var(--paper); box-shadow: var(--shadow-xs); }
+  .pcard .pq { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--pom); }
+  .pcard .pa { font-family: var(--serif); font-size: 1.18rem; line-height: 1.32; margin-top: 8px; text-wrap: balance; }
+
+  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 10px 20px 40px; line-height: 1.6; max-width: 780px; margin: 0 auto; }
   .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
   .foot-note b { color: var(--muted); }
 
@@ -216,36 +214,35 @@
   .mact .btn svg { width: 16px; height: 16px; }
   .vp-web .mact { display: none; }
 
-  /* ============ WEB (desktop) VIEW ============ */
+  /* ============ WEB VIEW ============ */
   .vp-web .device { max-width: 1040px; border-radius: 16px; overflow: visible; position: relative; padding-top: 34px; }
   .vp-web .device::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 34px; background: var(--paper); border-bottom: 1px solid var(--line); border-radius: 16px 16px 0 0; }
   .vp-web .device::after { content: "🔒 zivugpath.com/p/" attr(data-slug); position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font: 600 11px/1.7 var(--sans); color: var(--muted); background: var(--raise); border: 1px solid var(--line); border-radius: 999px; padding: 3px 14px; }
 
-  /* A — portrait rail (now filled: portrait + vitals + obs + badges) + prose main */
   .vp-web #s-a .device { display: grid; grid-template-columns: 320px 1fr; align-items: start; column-gap: clamp(26px, 3vw, 44px); padding: 34px clamp(22px, 3vw, 40px) 34px; }
   .vp-web #s-a .a-rail { grid-column: 1; }
   .vp-web #s-a .a-main { grid-column: 2; }
   .vp-web #s-a .a-hero { aspect-ratio: 4 / 4.7; border-radius: 18px; overflow: hidden; }
   .vp-web #s-a .a-hero .cap h1 { font-size: 2.1rem; }
-  .vp-web #s-a .a-rail > * + * { margin-top: 20px; }
   .vp-web #s-a .a-body { padding: 0; gap: 22px; }
-  .vp-web #s-a .a-arrival { grid-column: 1 / -1; max-width: 560px; margin-top: 30px; }
+  .vp-web #s-a .a-arrival { grid-column: 1 / -1; max-width: 620px; margin: 30px auto 0; width: 100%; }
   .vp-web #s-a .a-trust { grid-column: 1 / -1; }
 
-  /* B — résumé rail + sections */
   .vp-web #s-b .b-wrap { display: grid; grid-template-columns: 300px 1fr; column-gap: clamp(28px, 4vw, 48px); align-items: start; padding: clamp(24px, 3vw, 38px); }
   .vp-web #s-b .b-top { grid-column: 1 / -1; }
-  .vp-web #s-b .b-rail { grid-column: 1; align-self: start; }
+  .vp-web #s-b .b-rail { grid-column: 1; }
   .vp-web #s-b .b-main { grid-column: 2; }
-  .vp-web #s-b .b-badges { margin-top: 18px; }
   .vp-web #s-b .b-main > .b-sec:first-child { margin-top: 0; }
-  .vp-web #s-b .b-arrival { grid-column: 1 / -1; max-width: 560px; margin-top: 30px; }
+  .vp-web #s-b .b-arrival { grid-column: 1 / -1; max-width: 620px; margin: 30px auto 0; width: 100%; }
   .vp-web #s-b .b-trust { grid-column: 1 / -1; }
   .vp-web #s-b .b-div { display: none; }
   .vp-web #s-b .b-main > .b-sec { margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--line-soft); }
   .vp-web #s-b .b-main > .b-sec:first-child { padding-top: 0; border-top: 0; }
 
-  /* on mobile the rail/main wrappers are transparent pass-throughs */
+  /* C stays a single reading column, just a touch wider on web */
+  .vp-web #s-c .device { max-width: 680px; }
+
+  /* mobile: rail/main are pass-throughs (source order) */
   .a-rail, .a-main, .b-rail, .b-main { display: contents; }
   .vp-web .a-rail, .vp-web .a-main, .vp-web .b-rail, .vp-web .b-main { display: block; }
 
@@ -255,9 +252,8 @@
   }
 </style>
 
-<!-- ===== shared illustrated portraits + avatar + icons ===== -->
+<!-- ===== illustrated portraits + avatar + icons ===== -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <!-- female portrait -->
   <symbol id="portrait-f" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
     <defs>
       <linearGradient id="pbg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#efe1d0"/><stop offset="1" stop-color="#d9c2a9"/></linearGradient>
@@ -277,14 +273,11 @@
     <path d="M122 214 C122 150 154 118 200 118 C246 118 278 150 278 214" fill="none" stroke="#7d572c" stroke-width="2" opacity=".35"/>
     <ellipse cx="164" cy="252" rx="15" ry="10" fill="#e8917f" opacity=".28"/>
     <ellipse cx="236" cy="252" rx="15" ry="10" fill="#e8917f" opacity=".28"/>
-    <path d="M158 214 Q176 206 192 213" fill="none" stroke="#7a5334" stroke-width="3" stroke-linecap="round" opacity=".55"/>
-    <path d="M208 213 Q224 206 242 214" fill="none" stroke="#7a5334" stroke-width="3" stroke-linecap="round" opacity=".55"/>
     <path d="M160 230 Q175 220 190 230" fill="none" stroke="#6b4a30" stroke-width="3.4" stroke-linecap="round"/>
     <path d="M210 230 Q225 220 240 230" fill="none" stroke="#6b4a30" stroke-width="3.4" stroke-linecap="round"/>
     <path d="M200 236 L195 262 Q200 268 206 261" fill="none" stroke="#c88f5f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M180 276 Q200 289 220 276" fill="none" stroke="#b5573f" stroke-width="3.2" stroke-linecap="round"/>
   </symbol>
-  <!-- male portrait -->
   <symbol id="portrait-m" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
     <defs>
       <linearGradient id="mbg" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#e4e0d5"/><stop offset="1" stop-color="#c7c1b2"/></linearGradient>
@@ -301,7 +294,6 @@
     <ellipse cx="200" cy="228" rx="72" ry="86" fill="#eec092"/>
     <ellipse cx="226" cy="240" rx="46" ry="72" fill="#e0ac79" opacity=".38"/>
     <path d="M132 214 C132 156 160 126 200 126 C240 126 268 156 268 214 C268 196 250 176 200 176 C150 176 132 196 132 214 Z" fill="#4a3627"/>
-    <path d="M150 150 C168 128 232 128 250 150 C250 150 236 142 200 142 C164 142 150 150 150 150 Z" fill="#3c2c1f"/>
     <ellipse cx="200" cy="140" rx="46" ry="22" fill="#211b16"/>
     <ellipse cx="200" cy="136" rx="46" ry="18" fill="#2c241d"/>
     <path d="M162 218 Q176 210 190 217" fill="none" stroke="#5a4230" stroke-width="3.4" stroke-linecap="round"/>
@@ -310,7 +302,6 @@
     <path d="M178 284 Q200 296 222 284" fill="none" stroke="#a85238" stroke-width="3.2" stroke-linecap="round"/>
     <path d="M150 300 C150 340 176 360 200 360 C224 360 250 340 250 300 C250 300 238 322 200 322 C162 322 150 300 150 300 Z" fill="#5a4230" opacity=".28"/>
   </symbol>
-  <!-- no-photo avatar silhouette -->
   <symbol id="avatar" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet">
     <circle cx="200" cy="176" r="86" fill="currentColor" opacity=".82"/>
     <path d="M54 470 C54 356 130 300 200 300 C270 300 346 356 346 470 Z" fill="currentColor" opacity=".82"/>
@@ -325,7 +316,7 @@
   <symbol id="i-child" viewBox="0 0 24 24"><circle class="lk" cx="12" cy="6" r="2.6"/><path class="lk" d="M12 10v6"/><path class="lk" d="M8 13h8"/><path class="lk" d="M9 21l3-5 3 5"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path class="lk" d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
   <symbol id="i-brief" viewBox="0 0 24 24"><rect class="lk" x="3" y="7" width="18" height="13" rx="2"/><path class="lk" d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
-  <symbol id="i-ruler" viewBox="0 0 24 24"><path class="lk" d="M12 3v18"/><path class="lk" d="M9 6h3M9 12h3M9 18h3M12 9h3M12 15h3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path class="lk" d="M20 6L9 17l-5-5"/></symbol>
   <symbol id="i-msg" viewBox="0 0 24 24"><path class="lk" d="M21 11.5a8.4 8.4 0 0 1-11.9 7.6L3 21l1.9-6.1A8.4 8.4 0 1 1 21 11.5z"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path class="lk" d="M20 11a8 8 0 0 0-14-4l-2 2"/><path class="lk" d="M4 5v4h4"/><path class="lk" d="M4 13a8 8 0 0 0 14 4l2-2"/><path class="lk" d="M20 19v-4h-4"/></symbol>
   <symbol id="i-flag" viewBox="0 0 24 24"><path class="lk" d="M5 21V4"/><path class="lk" d="M5 5h11l-2 4 2 4H5"/></symbol>
@@ -334,10 +325,11 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v6</span></span>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v7</span></span>
     <div class="lab-tabs" role="tablist" aria-label="Design direction">
       <button class="lab-tab" role="tab" id="t-a" aria-selected="true" aria-controls="s-a">A · Photo-forward</button>
       <button class="lab-tab" role="tab" id="t-b" aria-selected="false" aria-controls="s-b" tabindex="-1">B · Refined classic</button>
+      <button class="lab-tab" role="tab" id="t-c" aria-selected="false" aria-controls="s-c" tabindex="-1">C · Prompted</button>
     </div>
     <div class="lab-seg push" role="group" aria-label="Example profile" data-pd-state="Example">
       <span class="sk">Example</span>
@@ -357,9 +349,7 @@
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- DIRECTION A -->
-<!-- ============================================================ -->
+<!-- ================= DIRECTION A ================= -->
 <div class="stage on" id="s-a" role="tabpanel" aria-labelledby="t-a">
   <div class="device" data-slug="">
     <div class="a-rail">
@@ -371,63 +361,28 @@
           <span class="sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
           <span class="priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
         </div>
-        <div class="cap">
-          <h1 class="a-name"></h1>
-          <div class="facts a-facts"></div>
-        </div>
+        <div class="cap"><h1 class="r-name"></h1><div class="facts r-facts"></div></div>
       </div>
-
-      <div class="fresh a-fresh"></div>
-
-      <div class="obs a-obs">
-        <div class="obs-h"><span class="obs-k">Observance</span><span class="obs-v"></span></div>
-        <div class="track"><span class="mk"></span></div>
-        <div class="ends"><span>Secular</span><span>Chassidish</span></div>
-      </div>
-
-      <div class="vitals a-vitals"></div>
-
-      <div class="a-block">
-        <span class="lbl">At a glance</span>
-        <div class="badges a-badges"></div>
-      </div>
-
-      <div class="arr-top a-arrtop" data-arrtop="a"><span class="ic"></span><span class="tx"></span></div>
+      <div class="arr-top" data-arrtop="a"><span class="ic"></span><span class="tx"></span></div>
+      <div class="fresh r-fresh"></div>
+      <div class="obs r-obs"></div>
+      <div class="a-block"><span class="lbl">At a glance</span><div class="badges r-badges"></div></div>
     </div>
 
     <div class="a-main">
       <div class="a-body">
-        <p class="a-quote"><span class="mk">“</span><span class="a-quote-t"></span><span class="mk">”</span></p>
-
-        <div class="a-block">
-          <span class="lbl a-who-lbl"></span>
-          <p class="a-prose a-who"></p>
-          <p class="said a-who-said"></p>
-        </div>
-
-        <div class="a-block">
-          <span class="lbl">What <span class="a-look-lbl"></span></span>
-          <p class="a-prose a-look"></p>
-        </div>
-
-        <p class="a-fam"><b>Family</b><span class="a-fam-t"></span></p>
-
-        <div class="a-block a-photos-block">
-          <span class="lbl">Photos</span>
-          <div class="a-photos">
-            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
-            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
-            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
-            <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
-          </div>
-        </div>
-
-        <div class="a-block a-nophoto-block" hidden>
-          <span class="lbl">Photos</span>
-          <div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="a-nophoto-t"></span></div>
-        </div>
-
-        <p class="a-refs"><svg><use href="#i-star"/></svg><span class="a-refs-t"></span></p>
+        <p class="a-quote"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span></p>
+        <div><span class="lbl r-who-lbl"></span><p class="a-prose r-who"></p><p class="said r-said"></p></div>
+        <div><span class="lbl">What <span class="r-look-lbl"></span></span><p class="a-prose r-look"></p></div>
+        <div class="r-bg"></div>
+        <div class="r-photos-block"><span class="lbl">Photos</span><div class="photos-grid">
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+        </div></div>
+        <div class="r-nophoto-block" hidden><span class="lbl">Photos</span><div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="r-nophoto"></span></div></div>
+        <p class="refs-line"><svg><use href="#i-star"/></svg><span class="r-refs"></span></p>
       </div>
     </div>
 
@@ -444,7 +399,6 @@
       <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
       <p class="priv"></p>
     </div>
-
     <div class="trust a-trust">
       <span class="v"><svg class="lk" viewBox="0 0 24 24"><use href="#i-star"/></svg> Shared via ZivugPath</span>
       <span class="v"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · never indexed</span>
@@ -453,9 +407,7 @@
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- DIRECTION B -->
-<!-- ============================================================ -->
+<!-- ================= DIRECTION B ================= -->
 <div class="stage" id="s-b" role="tabpanel" aria-labelledby="t-b">
   <div class="device" data-slug="">
     <div class="b-wrap">
@@ -463,63 +415,34 @@
         <span class="b-sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath · Profile</span>
         <span class="b-priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
       </div>
-
       <div class="b-rail">
         <div class="b-id">
           <div class="pf"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label=""><use class="por-use" href="#portrait-f"/></svg><svg class="avatar" viewBox="0 0 400 500" aria-hidden="true" style="color:var(--faint)"><use href="#avatar"/></svg></div>
-          <div class="hd">
-            <h1 class="b-name"></h1>
-            <div class="heb b-heb"></div>
-            <div class="one b-one"></div>
-          </div>
+          <div class="hd"><h1 class="r-name"></h1><div class="heb r-heb"></div><div class="one r-one"></div></div>
         </div>
-
-        <div class="b-badges badges"></div>
-
-        <div class="obs b-obs">
-          <div class="obs-h"><span class="obs-k">Observance</span><span class="obs-v"></span></div>
-          <div class="track"><span class="mk"></span></div>
-          <div class="ends"><span>Secular</span><span>Chassidish</span></div>
-        </div>
-
-        <div class="fresh b-fresh"></div>
-
-        <div class="arr-top b-arrtop" data-arrtop="b"><span class="ic"></span><span class="tx"></span></div>
+        <div class="badges r-badges"></div>
+        <div class="obs r-obs"></div>
+        <div class="fresh r-fresh"></div>
+        <div class="arr-top" data-arrtop="b"><span class="ic"></span><span class="tx"></span></div>
       </div>
-
       <div class="b-main">
-        <div class="b-sec">
-          <span class="lbl"><span class="b-words-lbl">In her words</span></span>
-          <p class="q b-quote"></p>
-          <p class="b-who"></p>
-          <p class="said b-who-said" style="margin-top:14px;"></p>
-        </div>
-
+        <div class="b-sec"><span class="lbl">In <span class="r-their">her</span> words</span><p class="q r-quote"></p><p class="r-who"></p><p class="said r-said" style="margin-top:14px;"></p></div>
         <div class="b-div"></div>
-        <div class="b-sec">
-          <span class="lbl">What <span class="b-look-lbl"></span></span>
-          <p class="b-look"></p>
-        </div>
-
+        <div class="b-sec"><span class="lbl">What <span class="r-look-lbl"></span></span><p class="r-look"></p></div>
         <div class="b-div"></div>
-        <div class="b-sec">
-          <span class="lbl">Family</span>
-          <p class="b-fam"></p>
-        </div>
-
+        <div class="b-sec"><div class="r-bg"></div></div>
         <div class="b-div"></div>
-        <div class="b-sec b-photos-sec" hidden>
-          <span class="lbl">Photos</span>
-          <div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="b-nophoto-t"></span></div>
-        </div>
-
+        <div class="b-sec r-photos-block"><span class="lbl">Photos</span><div class="photos-grid">
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+          <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+        </div></div>
         <div class="b-div"></div>
-        <div class="b-sec">
-          <span class="lbl">References <span class="opt">· optional</span></span>
-          <p class="b-refs" style="margin-top:0;"><svg><use href="#i-star"/></svg><span class="b-refs-t"></span></p>
-        </div>
+        <div class="b-sec r-nophoto-block" hidden><span class="lbl">Photos</span><div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="r-nophoto"></span></div></div>
+        <div class="b-div"></div>
+        <div class="b-sec"><span class="lbl">References <span class="opt">· optional</span></span><p class="refs-line" style="margin-top:0;"><svg><use href="#i-star"/></svg><span class="r-refs"></span></p></div>
       </div>
-
       <div class="arrival b-arrival" data-arrival="b">
         <div class="arr-seg" role="group" aria-label="How this reached you" data-pd-state="How this reached you">
           <span class="hint">How this reached you</span>
@@ -533,8 +456,55 @@
         <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
         <p class="priv"></p>
       </div>
-
       <div class="trust b-trust">
+        <span class="v"><svg class="lk" viewBox="0 0 24 24"><use href="#i-star"/></svg> Shared via ZivugPath</span>
+        <span class="v"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · never indexed</span>
+        <a href="#report" class="report"><svg class="lk" viewBox="0 0 24 24" style="width:12px;height:12px;vertical-align:-2px"><use href="#i-flag"/></svg> Report this profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= DIRECTION C (prompted) ================= -->
+<div class="stage" id="s-c" role="tabpanel" aria-labelledby="t-c">
+  <div class="device" data-slug="">
+    <div class="c-wrap">
+      <div class="b-top">
+        <span class="b-sl"><span class="seal-mark" aria-hidden="true"></span> ZivugPath</span>
+        <span class="b-priv"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link</span>
+      </div>
+      <div class="c-head">
+        <div class="pf"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label=""><use class="por-use" href="#portrait-f"/></svg><svg class="avatar" viewBox="0 0 400 500" aria-hidden="true" style="color:var(--faint)"><use href="#avatar"/></svg></div>
+        <div><h1 class="r-name"></h1><div class="heb r-heb"></div><div class="facts r-facts-c"></div></div>
+      </div>
+      <div class="arr-top" data-arrtop="c"><span class="ic"></span><span class="tx"></span></div>
+      <p class="c-tagline"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span></p>
+      <div class="badges r-badges"></div>
+      <div class="obs r-obs"></div>
+      <div class="pcards r-prompts"></div>
+      <div class="r-bg"></div>
+      <div class="r-photos-block"><span class="lbl">Photos</span><div class="photos-grid">
+        <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+        <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+        <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+        <div class="th"><svg class="por" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use class="por-use" href="#portrait-f"/></svg></div>
+      </div></div>
+      <div class="r-nophoto-block" hidden><span class="lbl">Photos</span><div class="photonote"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span class="r-nophoto"></span></div></div>
+      <p class="refs-line"><svg><use href="#i-star"/></svg><span class="r-refs"></span></p>
+      <div class="arrival c-arrival" data-arrival="c">
+        <div class="arr-seg" role="group" aria-label="How this reached you" data-pd-state="How this reached you">
+          <span class="hint">How this reached you</span>
+          <button type="button" data-s="shadchan" aria-pressed="true">Shadchan</button>
+          <button type="button" data-s="ai" aria-pressed="false">AI match</button>
+          <button type="button" data-s="friend" aria-pressed="false">Forwarded</button>
+          <button type="button" data-s="direct" aria-pressed="false">Direct</button>
+        </div>
+        <div class="sharer"><span class="av"></span><span class="t"><span class="a"></span><span class="s"></span></span></div>
+        <p class="arr-note"></p>
+        <button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="cta-t"></span></button>
+        <p class="priv"></p>
+      </div>
+      <div class="trust c-trust">
         <span class="v"><svg class="lk" viewBox="0 0 24 24"><use href="#i-star"/></svg> Shared via ZivugPath</span>
         <span class="v"><svg class="lk" viewBox="0 0 24 24"><rect x="4.5" y="11" width="15" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Private link · never indexed</span>
         <a href="#report" class="report"><svg class="lk" viewBox="0 0 24 24" style="width:12px;height:12px;vertical-align:-2px"><use href="#i-flag"/></svg> Report this profile</a>
@@ -547,105 +517,206 @@
 <div class="mact" id="mact"><button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="mact-t">Respond</span></button></div>
 
 <div class="foot-note">
-  <div class="stamp">Lab · profile-redesign · v6 · 2026-07-08</div>
-  <p><b>What this is:</b> two directions for the shared profile — <b>A · Photo-forward</b> and <b>B · Refined classic</b>. Use the top controls: <b>direction</b> (A/B), <b>Example</b> profile (Rivka / Dovid / Miriam — tests a man and a divorced parent), <b>Photo</b> (With / None — the no-photo fallback), and <b>Mobile / Web</b>. The “How this reached you” switcher inside the card is a demo control, not part of the real page.</p>
-  <p><b>New in v6:</b> observance meter · height · life-stage &amp; children · community · “always current” freshness line · no-photo state (illustrated avatar) · male + divorced-with-child examples · A-web rail now filled (portrait + vitals + badges) · badge colours now mean something (gold = distinguishing/status · pink = core facts · outline = interests) · trimmed A to one pull-quote · trust/report strip · sticky mobile respond.</p>
-  <p><b>Parked (not now):</b> exactly what belongs in the badges / visual layer still deserves a dedicated research pass.</p>
-  <p><b>Open question:</b> A vs B as the base direction (still deciding — keeping both).</p>
+  <div class="stamp">Lab · profile-redesign · v7 · 2026-07-08</div>
+  <p><b>What this is:</b> three directions for the shared profile — <b>A · Photo-forward</b>, <b>B · Refined classic</b>, and new <b>C · Prompted</b> (Hinge-style Q&amp;A cards, leaning into the conversation origin). Controls up top: <b>direction</b>, <b>Example</b> profile, <b>Photo</b> (With/None), <b>Mobile/Web</b>. The “How this reached you” switcher is a demo control.</p>
+  <p><b>New in v7:</b> observance is now the <b>hybrid</b> (label + community + facet chips + “in their words”), replacing the linear meter · removed the redundant vitals block and the triple “Divorced” · height moved into the facts line · added a <b>Background</b> section (learning / work / family) · richer content &amp; more prompts · A/B desktop columns rebalanced · <b>Direction C</b> added.</p>
+  <p><b>Open question:</b> A vs B vs C as the base direction. <b>Parked:</b> exact badge/facet content still wants a research pass.</p>
   <p>Placeholder people; illustrated portraits/avatars stand in for real photos.</p>
 </div>
 
 <script>
   (function () {
-    /* ============ data model ============ */
     var PEOPLE = {
       rivka: {
-        slug: 'rivka-m', name: 'Rivka Mandel', heb: 'רבקה מנדל', por: 'portrait-f', they: 'she', their: 'her',
+        slug: 'rivka-m', name: 'Rivka Mandel', heb: 'רבקה מנדל', por: 'portrait-f', their: 'her',
         age: 24, height: "5′4″", city: 'Lakewood, NJ', relocate: { label: 'Open to relocating', gold: true },
-        obs: { label: 'Bais Yaakov · Yeshivish', pos: .74 },
         status: null,
-        community: 'Lakewood',
+        obs: { label: 'Yeshivish · Bais Yaakov', community: 'Lakewood',
+          facets: ['Kosher phone', 'Shomer negiah', 'No TV at home', 'Skirts only'],
+          words: 'Bais Yaakov through and through — though I’m always halfway through a secular novel too.' },
         one: "A morah who's steady on the big things and light about the rest.",
         quote: 'A home where guests never feel like guests.',
         whoLbl: 'Who she is', lookLbl: "she's looking for",
         who: "Rivka is steady about the things that matter and light about the ones that don't. Her classroom runs on warmth and a good sense of humor, and it's the same at home — the door is always open, and no one leaves hungry.",
-        whoSaid: 'Teaching third grade is honestly the best part of my day — they keep me laughing.',
+        said: 'Teaching third grade is honestly the best part of my day — they keep me laughing.',
         look: "Someone warm and steady, serious about growing — and grounded enough not to take himself too seriously.",
-        fam: "Father a rebbi in Lakewood, mother a speech therapist. Second of six in a close, warm home.",
-        famB: "Father is a rebbi in Lakewood; mother is a speech therapist. Second of six, a close and warm family.",
-        refs: "Three references available on request — shared privately, not posted here. (Optional — some profiles won't list any.)",
-        refsB: "<b>Three</b> available on request — shared privately. Not every profile will list references.",
-        updated: '2 weeks ago',
+        education: 'Bais Yaakov of Lakewood, then seminary in Yerushalayim.',
+        work: "Teaches third grade at a local girls' school — and loves it.",
+        family: 'Second of six. Father is a rebbi in Lakewood; mother is a speech therapist. A close, warm home.',
+        prompts: [
+          { q: 'My ideal Shabbos table', a: 'Too much food, a niggun that runs long, and no one checking the time.' },
+          { q: "What I'm looking for", a: 'Someone warm and steady — serious about growing, and grounded enough not to take himself too seriously.' },
+          { q: "Something I'm working on", a: 'Letting a plan change without treating it as a small crisis.' },
+          { q: "You'll usually find me", a: 'Mid-bake, or on a long walk with a friend talking about everything.' }
+        ],
         badges: [
-          { t: '3rd-grade morah', i: 'i-cap', c: '' },
-          { t: 'Bais Yaakov + seminary', i: 'i-book', c: '' },
-          { t: 'Second of six', i: 'i-users', c: '' },
-          { t: 'Loves hosting', i: 'i-home', c: 'soft' },
+          { t: '3rd-grade morah', i: 'i-cap' }, { t: 'Bais Yaakov + seminary', i: 'i-book' },
+          { t: 'Second of six', i: 'i-users' }, { t: 'Loves hosting', i: 'i-home', c: 'soft' },
           { t: 'Baking & long walks', i: 'i-heart', c: 'soft' }
         ],
+        refs: 'Three', updated: '2 weeks ago',
         nophoto: "Rivka hasn't posted photos publicly. She'll share them privately once she's open to an introduction."
       },
       dovid: {
-        slug: 'dovid-w', name: 'Dovid Weiss', heb: 'דוד ווייס', por: 'portrait-m', they: 'he', their: 'his',
+        slug: 'dovid-w', name: 'Dovid Weiss', heb: 'דוד ווייס', por: 'portrait-m', their: 'his',
         age: 27, height: "5′11″", city: 'Teaneck, NJ', relocate: { label: 'Open to relocating', gold: true },
-        obs: { label: 'Modern Orthodox', pos: .5 },
         status: null,
-        community: 'Teaneck',
+        obs: { label: 'Modern Orthodox · machmir', community: 'Teaneck',
+          facets: ['Daf yomi', 'Shomer Shabbos', 'Kipa seruga', 'College + career'],
+          words: 'MO machmir — a daily daf and a kipa seruga, and I’ll still argue with you about a film afterward.' },
         one: "An engineer who learns daf yomi on the train and coaches Little League on Sundays.",
         quote: "I want a home where Shabbos is the best part of the week — every week.",
         whoLbl: 'Who he is', lookLbl: "he's looking for",
         who: "Dovid is easy to be around and hard to rattle. He builds software by day, keeps a daily seder before work, and is the uncle every niece and nephew fights to sit next to. Ambitious about his work, unhurried about people.",
-        whoSaid: "I'd rather be the guy who shows up than the guy who talks about showing up.",
+        said: "I'd rather be the guy who shows up than the guy who talks about showing up.",
         look: "Someone kind and genuine who wants to build a warm, growth-minded home — and will laugh with him when the plan falls apart.",
-        fam: "Oldest of four. Father runs a family business, mother teaches. Close with his siblings, home most Shabbosos.",
-        famB: "Oldest of four. Father runs a family business; mother teaches. He's close with his siblings and home most Shabbosos.",
-        refs: "Two references available on request — shared privately, not posted here.",
-        refsB: "<b>Two</b> available on request — shared privately. Not every profile will list references.",
-        updated: '5 days ago',
-        badges: [
-          { t: 'Software engineer', i: 'i-brief', c: '' },
-          { t: 'Learned in Israel + YU', i: 'i-book', c: '' },
-          { t: 'Oldest of four', i: 'i-users', c: '' },
-          { t: 'Coaches Little League', i: 'i-heart', c: 'soft' },
-          { t: 'Daf yomi', i: 'i-book', c: 'soft' }
+        education: 'Learned in Israel, then Yeshiva University (computer science).',
+        work: 'Software engineer at a fintech; keeps a daily seder before work.',
+        family: 'Oldest of four. Father runs a family business; mother teaches. Close with his siblings, home most Shabbosos.',
+        prompts: [
+          { q: 'My ideal Shabbos', a: "A packed table, a good vort, and a nap I pretend I don't need." },
+          { q: "What I'm looking for", a: 'Someone kind and genuine who wants a warm, growth-minded home — and will laugh when the plan falls apart.' },
+          { q: "I'm at my best when", a: "I'm building something — code, a chavrusa, or a lineup for Sunday's game." },
+          { q: 'A perfect Sunday', a: 'Little League in the morning, daf on the couch, dinner out.' }
         ],
+        badges: [
+          { t: 'Software engineer', i: 'i-brief' }, { t: 'Learned in Israel + YU', i: 'i-book' },
+          { t: 'Oldest of four', i: 'i-users' }, { t: 'Coaches Little League', i: 'i-heart', c: 'soft' }
+        ],
+        refs: 'Two', updated: '5 days ago',
         nophoto: "Dovid hasn't posted photos publicly. He'll share them privately once he's open to an introduction."
       },
       miriam: {
-        slug: 'miriam-a', name: 'Miriam Adler', heb: 'מרים אדלר', por: 'portrait-f', they: 'she', their: 'her',
+        slug: 'miriam-a', name: 'Miriam Adler', heb: 'מרים אדלר', por: 'portrait-f', their: 'her',
         age: 34, height: "5′6″", city: 'Monsey, NY', relocate: { label: 'Prefers to stay local', gold: false },
-        obs: { label: 'Modern Orthodox', pos: .46 },
-        status: { label: 'Divorced', badge: 'Divorced', i: 'i-star', child: 'Mother of one' },
-        community: 'Monsey',
+        status: { badge: 'Divorced · mother of one', i: 'i-child' },
+        obs: { label: 'Modern Orthodox', community: 'Monsey',
+          facets: ['Shomer Shabbos', 'Kosher home', 'Covers hair at shul', 'Works in healthcare'],
+          words: 'Shomer Shabbos with a kosher home; easygoing about the rest and at home in the wider world.' },
         one: "A nurse and a mother who's rebuilt with a lot of grace and a good sense of humor.",
         quote: "I'm not looking to start over — I'm looking to build forward.",
         whoLbl: 'Who she is', lookLbl: "she's looking for",
         who: "Miriam is warm, direct, and unflappable — the friend everyone calls in a crisis. She's a pediatric nurse, a devoted mother to her daughter, and someone who has done the work to know exactly what she wants the second time around.",
-        whoSaid: "I've learned what actually matters, and I don't rattle easily anymore.",
+        said: "I've learned what actually matters, and I don't rattle easily anymore.",
         look: "A kind, settled man who's ready to build a calm, honest home — someone good with children and comfortable with a woman who knows her own mind.",
-        fam: "One of three, parents in Monsey nearby and involved. A daughter in early elementary who is the center of her world.",
-        famB: "One of three; her parents are in Monsey, nearby and involved. She has a daughter in early elementary who is the center of her world.",
-        refs: "Three references available on request — shared privately, not posted here.",
-        refsB: "<b>Three</b> available on request — shared privately. Not every profile will list references.",
-        updated: 'yesterday',
-        badges: [
-          { t: 'Pediatric nurse', i: 'i-brief', c: '' },
-          { t: 'Mother of one', i: 'i-child', c: 'gold' },
-          { t: 'One of three', i: 'i-users', c: '' },
-          { t: 'Loves the outdoors', i: 'i-heart', c: 'soft' },
-          { t: 'Reads everything', i: 'i-book', c: 'soft' }
+        education: 'Grew up Modern Orthodox in Monsey; nursing degree.',
+        work: "Pediatric nurse at a children's hospital.",
+        family: 'One of three; parents nearby in Monsey and involved. A daughter in early elementary who is the center of her world.',
+        prompts: [
+          { q: "What I'm looking for", a: 'A kind, settled man ready to build a calm, honest home — good with children and comfortable with a woman who knows her own mind.' },
+          { q: 'What matters most to me now', a: "Steadiness, honesty, and someone who's genuinely good with my daughter." },
+          { q: "You'll usually find me", a: 'On a trail with my daughter, or with a stack of library books.' },
+          { q: 'Something people say about me', a: "That I'm the one you call in a crisis — and that I don't rattle." }
         ],
+        badges: [
+          { t: 'Pediatric nurse', i: 'i-brief' }, { t: 'One of three', i: 'i-users' },
+          { t: 'Loves the outdoors', i: 'i-heart', c: 'soft' }, { t: 'Reads everything', i: 'i-book', c: 'soft' }
+        ],
+        refs: 'Three', updated: 'yesterday',
         nophoto: "Miriam hasn't posted photos publicly. She'll share them privately once she's open to an introduction."
       }
     };
 
     var SEAL = '<span class="seal-mark" aria-hidden="true"></span>';
+    var dirs = ['a', 'b', 'c'];
+    var state = { person: 'rivka', photo: 'on', sharer: 'shadchan' };
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function $(s, r) { return (r || document).querySelector(s); }
+    function $all(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+    function factsHtml(p) { return ['<span>' + p.age + '</span>', '<span>' + esc(p.height) + '</span>', '<span>' + esc(p.city) + '</span>'].join(''); }
+    function badgesHtml(p) {
+      var L = [];
+      if (p.status) L.push('<span class="badge gold"><svg><use href="#' + (p.status.i || 'i-star') + '"/></svg>' + esc(p.status.badge) + '</span>');
+      L.push('<span class="badge ' + (p.relocate.gold ? 'gold' : 'soft') + '"><svg><use href="#i-plane"/></svg>' + esc(p.relocate.label) + '</span>');
+      p.badges.forEach(function (b) { L.push('<span class="badge ' + (b.c || '') + '"><svg><use href="#' + b.i + '"/></svg>' + esc(b.t) + '</span>'); });
+      return L.join('');
+    }
+    function obsHtml(p) {
+      var chips = p.obs.facets.map(function (f) { return '<span class="chip"><svg class="lk" viewBox="0 0 24 24"><use href="#i-check"/></svg>' + esc(f) + '</span>'; }).join('');
+      return '<span class="lbl">Observance</span>'
+        + '<div class="obs-row"><span class="badge gold">' + esc(p.obs.label) + '</span>'
+        + '<span class="obs-comm"><svg class="lk" viewBox="0 0 24 24"><use href="#i-home"/></svg>' + esc(p.obs.community) + '</span></div>'
+        + '<div class="facets">' + chips + '</div>'
+        + '<p class="said obs-words">' + esc(p.obs.words) + '</p>';
+    }
+    function bgHtml(p) {
+      return '<span class="lbl">Background</span>'
+        + '<p class="bg-line"><b>Learning</b>' + esc(p.education) + '</p>'
+        + '<p class="bg-line"><b>Work</b>' + esc(p.work) + '</p>'
+        + '<p class="bg-line"><b>Family</b>' + esc(p.family) + '</p>';
+    }
+    function promptsHtml(p) {
+      return p.prompts.map(function (pr) { return '<div class="pcard"><div class="pq">' + esc(pr.q) + '</div><div class="pa">' + esc(pr.a) + '</div></div>'; }).join('');
+    }
+    function freshHtml(p) { return '<svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Updated <b>' + esc(p.updated) + '</b> · always the current version'; }
+    function refsHtml(p) { return '<b>' + p.refs + ' references</b> available on request — shared privately, not posted here.'; }
+
+    function setText(root, sel, val) { var e = $(sel, root); if (e) e.textContent = val; }
+    function setHtml(root, sel, val) { var e = $(sel, root); if (e) e.innerHTML = val; }
+
+    function render() {
+      var p = PEOPLE[state.person];
+      $all('.por-use').forEach(function (u) { u.setAttribute('href', '#' + p.por); });
+      $all('.device').forEach(function (d) { d.setAttribute('data-slug', p.slug); });
+
+      dirs.forEach(function (d) {
+        var root = document.getElementById('s-' + d);
+        setText(root, '.r-name', p.name);
+        setText(root, '.r-heb', p.heb);
+        setText(root, '.r-one', p.one);
+        setHtml(root, '.r-facts', factsHtml(p));
+        setHtml(root, '.r-facts-c', factsHtml(p));
+        setHtml(root, '.r-badges', badgesHtml(p));
+        setHtml(root, '.r-obs', obsHtml(p));
+        setHtml(root, '.r-bg', bgHtml(p));
+        setHtml(root, '.r-fresh', freshHtml(p));
+        setText(root, '.r-quote', p.quote);
+        setText(root, '.r-who-lbl', p.whoLbl);
+        setText(root, '.r-who', p.who);
+        setText(root, '.r-said', p.said);
+        setText(root, '.r-look-lbl', p.lookLbl);
+        setText(root, '.r-look', p.look);
+        setText(root, '.r-their', p.their);
+        setHtml(root, '.r-prompts', promptsHtml(p));
+        setHtml(root, '.r-refs', refsHtml(p));
+        setText(root, '.r-nophoto', p.nophoto);
+
+        var mainPor = $('.a-hero .por, .b-id .pf .por, .c-head .pf .por', root);
+        if (mainPor) mainPor.setAttribute('aria-label', 'Portrait of ' + p.name);
+      });
+
+      applyPhoto();
+      dirs.forEach(function (d) { paintArrival(d, state.sharer); });
+    }
+
+    function applyPhoto() {
+      var on = state.photo === 'on';
+      var heroA = $('#s-a .a-hero');
+      heroA.classList.toggle('nophoto', !on);
+      $('#s-a .a-hero .por').style.display = on ? '' : 'none';
+      $('#s-a .a-hero .avatar').style.display = on ? 'none' : '';
+      ['#s-b .b-id .pf', '#s-c .c-head .pf'].forEach(function (sel) {
+        var pf = $(sel); pf.classList.toggle('nophoto', !on);
+        $('.por', pf).style.display = on ? '' : 'none';
+        $('.avatar', pf).style.display = on ? 'none' : '';
+      });
+      dirs.forEach(function (d) {
+        var root = document.getElementById('s-' + d);
+        var pb = $('.r-photos-block', root), np = $('.r-nophoto-block', root);
+        if (pb) pb.hidden = !on;
+        if (np) np.hidden = on;
+        if (d === 'b' && np && np.previousElementSibling && np.previousElementSibling.classList.contains('b-div'))
+          np.previousElementSibling.style.display = on ? 'none' : '';
+      });
+    }
+
     function arrData(p) {
-      var Name = p.name.split(' ')[0], they = p.they, their = p.their;
+      var Name = p.name.split(' ')[0], their = p.their;
       return {
-        shadchan: { av: 'MC', top: '<b>Mrs. Cohen</b> suggested this for you', who: '<b>Mrs. Cohen</b> suggested this for you', sub: 'Shadchan · ' + p.community,
+        shadchan: { av: 'MC', top: '<b>Mrs. Cohen</b> suggested this for you', who: '<b>Mrs. Cohen</b> suggested this for you', sub: 'Shadchan · ' + p.obs.community,
           note: '“I thought of you two the moment I met ' + Name + ' — I really think it could be a fit.”',
-          cta: 'Message Mrs. Cohen', priv: they === 'she' ? "She'll introduce you both. Your contact stays private until you choose to share it." : "She'll introduce you both. Your contact stays private until you choose to share it." },
+          cta: 'Message Mrs. Cohen', priv: "She'll introduce you both. Your contact stays private until you choose to share it." },
         ai: { av: SEAL, top: 'Suggested by <b>ZivugPath</b>', who: '<b>ZivugPath</b> suggested this match', sub: "From what you're both looking for",
           note: "“There's real overlap in the kind of home you each described wanting — worth a look.”",
           cta: 'Request an introduction', priv: 'ZivugPath passes your interest to ' + Name + ' — no contact details are shared until you both say yes.' },
@@ -656,126 +727,8 @@
           note: '', cta: 'Request an introduction', priv: 'ZivugPath passes your interest to ' + Name + '. Contact stays private until you both agree.' }
       };
     }
-
-    /* ============ state ============ */
-    var state = { person: 'rivka', photo: 'on', sharer: 'shadchan' };
-    var dirs = ['a', 'b'];
-
-    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-    function $(sel, root) { return (root || document).querySelector(sel); }
-    function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-
-    function factsHtml(p) {
-      var out = ['<span>' + p.age + '</span>', '<span>' + esc(p.height) + '</span>', '<span>' + esc(p.city) + '</span>'];
-      if (p.status) out.push('<span>' + esc(p.status.label) + '</span>');
-      return out.join('');
-    }
-
-    function badgesHtml(p) {
-      var list = [];
-      // status-identity first (gold)
-      if (p.status) list.push({ t: p.status.label, i: p.status.i || 'i-star', c: 'gold' });
-      // core location + relocating
-      list.push({ t: p.city.split(',')[0], i: 'i-pin', c: '' });
-      list.push({ t: p.relocate.label, i: 'i-plane', c: p.relocate.gold ? 'gold' : 'soft' });
-      list = list.concat(p.badges);
-      return list.map(function (b) {
-        return '<span class="badge ' + (b.c || '') + '"><svg><use href="#' + b.i + '"/></svg>' + esc(b.t) + '</span>';
-      }).join('');
-    }
-
-    function badgesHtmlB(p) {
-      // B leads with age as a bare pill, then the same set
-      var head = '<span class="badge soft">' + p.age + '</span>';
-      return head + badgesHtml(p);
-    }
-
-    function setObs(root, p) {
-      $('.obs-v', root).textContent = p.obs.label;
-      $('.mk', root).style.left = (p.obs.pos * 100) + '%';
-      root.setAttribute('aria-label', 'Observance: ' + p.obs.label);
-    }
-
-    function setPortrait(p) {
-      $all('.por-use').forEach(function (u) { u.setAttribute('href', '#' + p.por); });
-      $all('.a-hero .por').forEach(function (s) { s.setAttribute('aria-label', 'Portrait of ' + p.name); });
-      $('#s-a .a-hero .por').setAttribute('aria-label', 'Portrait of ' + p.name);
-    }
-
-    function applyPhoto() {
-      var on = state.photo === 'on';
-      // A hero
-      var heroSvg = $('#s-a .a-hero .por'), heroA = $('#s-a .a-hero');
-      heroA.classList.toggle('nophoto', !on);
-      heroSvg.style.display = on ? '' : 'none';
-      $('#s-a .a-hero .avatar').style.display = on ? 'none' : '';
-      // A photos block vs note
-      $('#s-a .a-photos-block').hidden = !on;
-      $('#s-a .a-nophoto-block').hidden = on;
-      // B portrait
-      var pf = $('#s-b .b-id .pf');
-      pf.classList.toggle('nophoto', !on);
-      $('#s-b .b-id .pf .por').style.display = on ? '' : 'none';
-      $('#s-b .b-id .pf .avatar').style.display = on ? 'none' : '';
-      $('#s-b .b-photos-sec').hidden = on; // only show the "photos private" note when there are no public photos
-      // hide the divider that precedes the (hidden) photos section on B
-      var sec = $('#s-b .b-photos-sec');
-      if (sec && sec.previousElementSibling && sec.previousElementSibling.classList.contains('b-div')) {
-        sec.previousElementSibling.style.display = on ? 'none' : '';
-      }
-    }
-
-    function render() {
-      var p = PEOPLE[state.person];
-      setPortrait(p);
-      $all('.device').forEach(function (d) { d.setAttribute('data-slug', p.slug); });
-
-      /* ---- A ---- */
-      $('#s-a .a-name').textContent = p.name;
-      $('#s-a .a-facts').innerHTML = factsHtml(p);
-      $('#s-a .a-fresh').innerHTML = '<svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Updated <b>' + esc(p.updated) + '</b> · always the current version';
-      setObs($('#s-a .a-obs'), p);
-      $('#s-a .a-vitals').innerHTML =
-        '<div class="vi"><div class="k">Age</div><div class="v">' + p.age + '</div></div>' +
-        '<div class="vi"><div class="k">Height</div><div class="v">' + esc(p.height) + '</div></div>' +
-        '<div class="vi"><div class="k">Community</div><div class="v">' + esc(p.community) + '</div></div>' +
-        '<div class="vi"><div class="k">Status</div><div class="v">' + esc(p.status ? p.status.label + (p.status.child ? ' · ' + p.status.child : '') : 'Single') + '</div></div>';
-      $('#s-a .a-badges').innerHTML = badgesHtml(p);
-      $('#s-a .a-quote-t').textContent = p.quote;
-      $('#s-a .a-who-lbl').textContent = p.whoLbl;
-      $('#s-a .a-who').textContent = p.who;
-      $('#s-a .a-who-said').textContent = p.whoSaid;
-      $('#s-a .a-look-lbl').textContent = p.lookLbl;
-      $('#s-a .a-look').textContent = p.look;
-      $('#s-a .a-fam-t').textContent = p.fam;
-      $('#s-a .a-refs-t').innerHTML = esc(p.refs).replace(/^(Two|Three) references/, '<b>$1 references</b>');
-      $('#s-a .a-nophoto-t').textContent = p.nophoto;
-
-      /* ---- B ---- */
-      $('#s-b .b-name').textContent = p.name;
-      $('#s-b .b-heb').textContent = p.heb;
-      $('#s-b .b-one').textContent = p.one;
-      $('#s-b .b-words-lbl').textContent = 'In ' + p.their + ' words';
-      $('#s-b .b-badges').innerHTML = badgesHtmlB(p);
-      setObs($('#s-b .b-obs'), p);
-      $('#s-b .b-fresh').innerHTML = '<svg class="lk" viewBox="0 0 24 24"><use href="#i-refresh"/></svg> Updated <b>' + esc(p.updated) + '</b> · always current';
-      $('#s-b .b-quote').textContent = '“' + p.quote + '”';
-      $('#s-b .b-who').textContent = p.who;
-      $('#s-b .b-who-said').textContent = p.whoSaid;
-      $('#s-b .b-look-lbl').textContent = p.lookLbl;
-      $('#s-b .b-look').textContent = p.look;
-      $('#s-b .b-fam').textContent = p.famB;
-      $('#s-b .b-refs-t').innerHTML = p.refsB;
-      $('#s-b .b-nophoto-t').textContent = p.nophoto;
-
-      applyPhoto();
-      dirs.forEach(function (d) { paintArrival(d, state.sharer); });
-    }
-
-    /* ---- arrival module ---- */
     function paintArrival(dir, sharer) {
-      var p = PEOPLE[state.person];
-      var d = arrData(p)[sharer];
+      var p = PEOPLE[state.person], d = arrData(p)[sharer];
       var top = $('[data-arrtop="' + dir + '"]');
       if (top) { $('.ic', top).innerHTML = (d.av === SEAL ? SEAL : d.av); $('.tx', top).innerHTML = d.top; }
       var m = $('[data-arrival="' + dir + '"]');
@@ -787,18 +740,14 @@
       $('.cta-t', m).textContent = d.cta;
       $('.priv', m).textContent = d.priv;
       $all('.arr-seg button', m).forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.s === sharer ? 'true' : 'false'); });
-      // sticky respond mirrors the active direction's CTA
       $('.mact-t').textContent = d.cta;
     }
 
-    /* ---- direction tabs (hash-routed) ---- */
     function normHash() { var h = (location.hash || '').replace('#', ''); return dirs.indexOf(h) > -1 ? h : 'a'; }
     function applyDir(id) {
       dirs.forEach(function (k) {
-        var on = (k === id);
-        var t = document.getElementById('t-' + k);
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-        t.tabIndex = on ? 0 : -1;
+        var on = (k === id), t = document.getElementById('t-' + k);
+        t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
         document.getElementById('s-' + k).classList.toggle('on', on);
       });
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -817,7 +766,6 @@
     });
     window.addEventListener('hashchange', function () { applyDir(normHash()); });
 
-    /* ---- segmented controls ---- */
     function bindSeg(attr, key, after) {
       $all('.lab-seg button[data-' + attr + ']').forEach(function (b) {
         b.addEventListener('click', function () {
@@ -829,8 +777,6 @@
     }
     bindSeg('person', 'person', render);
     bindSeg('photo', 'photo', applyPhoto);
-
-    // viewport toggle
     $all('.lab-seg button[data-vp]').forEach(function (b) {
       b.addEventListener('click', function () {
         document.body.classList.toggle('vp-web', b.dataset.vp === 'web');
@@ -838,21 +784,16 @@
         updateMact();
       });
     });
-
-    // arrival sharer switchers (per direction)
     dirs.forEach(function (dir) {
       var m = $('[data-arrival="' + dir + '"]');
       $all('.arr-seg button', m).forEach(function (b) {
         b.addEventListener('click', function () { state.sharer = b.dataset.s; paintArrival(dir, state.sharer); });
       });
     });
-
-    // report link (demo)
     $all('.trust .report').forEach(function (a) {
       a.addEventListener('click', function (e) { e.preventDefault(); alert('Demo — in the real app this opens a short “something’s off” report form.'); });
     });
 
-    /* ---- sticky mobile respond bar ---- */
     var mact = document.getElementById('mact');
     function updateMact() {
       if (document.body.classList.contains('vp-web')) { mact.classList.remove('show'); return; }
@@ -860,9 +801,8 @@
       var arr = stage ? stage.querySelector('.arrival') : null;
       if (!arr) { mact.classList.remove('show'); return; }
       var r = arr.getBoundingClientRect();
-      var past = window.scrollY > 320;
       var arrVisible = r.top < window.innerHeight && r.bottom > 0;
-      mact.classList.toggle('show', past && !arrVisible);
+      mact.classList.toggle('show', window.scrollY > 320 && !arrVisible);
     }
     window.addEventListener('scroll', updateMact, { passive: true });
     window.addEventListener('resize', updateMact, { passive: true });
@@ -872,12 +812,11 @@
       if (arr) arr.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    /* ---- go ---- */
     render();
     applyDir(normHash());
     updateMact();
   })();
 </script>
-  <script src="/pindrop/pindrop.js?v=2" defer></script>
+<script src="/pindrop/pindrop.js?v=1" defer></script>
 </body>
 </html>

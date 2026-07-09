@@ -4,61 +4,67 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="pd-version" content="7">
+<meta name="pd-version" content="8">
 <title>Lab · Profile redesign · ZivugPath</title>
 </head>
-<body>
+<body data-ctheme="pomegranate">
 <style>
   :root {
+    /* neutral base (light) */
     --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
-    --line: #E7E0D6; --line-soft: #F1EBE2;
-    --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
-    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
+    --line: #E7E0D6; --line-soft: #F1EBE2; --on-accent: #ffffff;
     --shadow: 30px 50px 90px -54px rgba(58,34,22,.5);
     --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
     --shadow-xs: 8px 14px 26px -20px rgba(58,34,22,.3);
     --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', 'Hoefler Text', Constantia, Georgia, serif;
     --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* default accent = Pomegranate (mirrored on body[data-ctheme="pomegranate"]) */
+    --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6; --gold: #876214; --gold-soft: #F3EAD4;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
-      --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
-      --gold: #DBB161; --gold-soft: #2A2114; --on-accent: #17130F;
+    :root {
+      --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
+      --line: #322A23; --line-soft: #291F19; --on-accent: #17130F;
       --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
-      --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5); }
+      --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5);
+      --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028; --gold: #DBB161; --gold-soft: #2A2114;
+    }
   }
-  :root[data-theme="light"] { --paper: #FCFAF7; --raise: #FFFFFF; --ink: #221F1B; --muted: #6E655C; --faint: #7B7266;
-    --line: #E7E0D6; --line-soft: #F1EBE2; --pom: #A82D46; --pom-ink: #8E2439; --pom-soft: #F6E5E6;
-    --gold: #876214; --gold-soft: #F3EAD4; --on-accent: #ffffff;
-    --shadow: 30px 50px 90px -54px rgba(58,34,22,.5); --shadow-sm: 14px 22px 42px -28px rgba(58,34,22,.36);
-    --shadow-xs: 8px 14px 26px -20px rgba(58,34,22,.3); }
-  :root[data-theme="dark"] { --paper: #17130F; --raise: #201B16; --ink: #F1EAE0; --muted: #B2A99E; --faint: #948A7E;
-    --line: #322A23; --line-soft: #291F19; --pom: #E5798C; --pom-ink: #EE8DA0; --pom-soft: #3B2028;
-    --gold: #DBB161; --gold-soft: #2A2114; --on-accent: #17130F;
-    --shadow: 30px 50px 90px -52px rgba(0,0,0,.7); --shadow-sm: 14px 22px 42px -26px rgba(0,0,0,.62);
-    --shadow-xs: 8px 14px 26px -20px rgba(0,0,0,.5); }
+  /* ===== curated colour themes (accent tokens only; neutrals stay shared) ===== */
+  body[data-ctheme="olive"]  { --pom: #4F6B34; --pom-ink: #3E5427; --pom-soft: #E7EEDB; --gold: #8A6A1C; --gold-soft: #F0E9D2; }
+  body[data-ctheme="indigo"] { --pom: #3E4E8C; --pom-ink: #313F72; --pom-soft: #E5E8F5; --gold: #7A6A3A; --gold-soft: #EDE9DA; }
+  body[data-ctheme="plum"]   { --pom: #7C3A6C; --pom-ink: #632E56; --pom-soft: #F2E4EF; --gold: #876214; --gold-soft: #F3EAD4; }
+  body[data-ctheme="sand"]   { --pom: #9A6B1E; --pom-ink: #7E561A; --pom-soft: #F3E9D6; --gold: #5B7548; --gold-soft: #E7EEDB; }
+  @media (prefers-color-scheme: dark) {
+    body[data-ctheme="olive"]  { --pom: #9CC178; --pom-ink: #AECF8C; --pom-soft: #212B18; --gold: #D8B86A; --gold-soft: #262012; }
+    body[data-ctheme="indigo"] { --pom: #8FA0E0; --pom-ink: #A6B4EC; --pom-soft: #1E2440; --gold: #CFC08A; --gold-soft: #22200F; }
+    body[data-ctheme="plum"]   { --pom: #D585C0; --pom-ink: #E29BD0; --pom-soft: #331F2E; --gold: #DBB161; --gold-soft: #2A2114; }
+    body[data-ctheme="sand"]   { --pom: #D6A24E; --pom-ink: #E4B667; --pom-soft: #2E2413; --gold: #9CC178; --gold-soft: #212B18; }
+  }
 
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
   h1, h2, h3 { font-family: var(--serif); font-weight: 500; margin: 0; }
   :focus-visible { outline: 2.5px solid var(--pom); outline-offset: 3px; border-radius: 6px; }
-  .seal-mark { border-radius: 50%; background: radial-gradient(circle at 35% 30%, #d76277, #7e2447 72%); position: relative; display: inline-block; }
+  .seal-mark { border-radius: 50%; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--pom) 78%, #fff), var(--pom-ink) 74%); position: relative; display: inline-block; }
   .seal-mark::after { content: ""; position: absolute; inset: 22%; border-radius: 50%; border: 1.3px solid rgba(255,255,255,.6); }
   .lk { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   /* ============ LAB CHROME ============ */
   .lab-bar { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-  .lab-in { max-width: 1080px; margin: 0 auto; padding: 11px clamp(16px, 5vw, 34px); display: flex; align-items: center; gap: 10px 12px; flex-wrap: wrap; }
+  .lab-in { max-width: 1120px; margin: 0 auto; padding: 10px clamp(16px, 5vw, 34px); display: flex; align-items: center; gap: 9px 12px; flex-wrap: wrap; }
   .lab-brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--serif); font-size: 1.05rem; }
   .lab-brand .seal-mark { width: 18px; height: 18px; }
   .lab-brand .tag { font-family: var(--sans); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); background: var(--gold-soft); padding: 3px 8px; border-radius: 999px; }
-  .lab-seg { display: flex; gap: 3px; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--raise); }
+  .sk { align-self: center; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 0 3px 0 5px; }
+  .lab-seg { display: flex; gap: 3px; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--raise); align-items: center; }
   .lab-seg.push { margin-left: auto; }
   .lab-seg button { font-family: var(--sans); font-size: 12px; font-weight: 700; border: 0; background: transparent; color: var(--muted); border-radius: 999px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
   .lab-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-  .lab-seg .sk { align-self: center; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 0 4px 0 6px; }
-  .lab-tabs { display: flex; gap: 7px; flex-wrap: wrap; }
+  .lab-seg .swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--raise); outline: 1px solid var(--line); outline-offset: 0; padding: 0; background: var(--sw); cursor: pointer; }
+  .lab-seg .swatch[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .lab-tabs { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
   .lab-tab { font-family: var(--sans); font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: var(--raise); color: var(--muted); border-radius: 999px; padding: 7px 14px; cursor: pointer; transition: border-color .16s, color .16s, background .16s; }
   .lab-tab:hover { border-color: var(--pom); color: var(--ink); }
   .lab-tab[aria-selected="true"] { background: var(--pom); border-color: var(--pom); color: var(--on-accent); }
@@ -68,8 +74,7 @@
   .device { width: 100%; max-width: 470px; margin: 0 auto; background: var(--raise); border: 1px solid var(--line); border-radius: 30px; box-shadow: var(--shadow); overflow: hidden; }
   .por { display: block; width: 100%; height: 100%; }
 
-  /* ============ shared badge system ============
-     gold = distinguishing / status-identity · pom = core facts · soft = interests */
+  /* ============ shared badge system ============ */
   .badges { display: flex; flex-wrap: wrap; gap: 8px; }
   .badge { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 650; line-height: 1; padding: 8px 13px; border-radius: 999px; background: var(--pom-soft); color: var(--pom-ink); }
   .badge svg { width: 14px; height: 14px; flex: none; opacity: .85; }
@@ -86,7 +91,7 @@
   .fresh svg { width: 13px; height: 13px; color: var(--pom); flex: none; }
   .fresh b { color: var(--ink); font-weight: 700; }
 
-  /* observance — D hybrid: label + community + facet chips + "in their words" */
+  /* observance — hybrid */
   .obs .obs-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
   .obs .obs-comm { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
   .obs .obs-comm svg { width: 13px; height: 13px; color: var(--faint); flex: none; }
@@ -94,6 +99,11 @@
   .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; }
   .chip svg { width: 12px; height: 12px; color: var(--pom); flex: none; }
   .obs .obs-words { font-size: 1.02rem; margin-top: 12px; }
+  /* observance — meter (owner option) */
+  .obs-meter .obs-v { font-size: 14px; font-weight: 700; color: var(--ink); }
+  .obs-meter .track { position: relative; height: 6px; border-radius: 999px; margin: 10px 0 5px; background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 30%, var(--line)), color-mix(in srgb, var(--pom) 42%, var(--line))); }
+  .obs-meter .mk { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--pom); border: 2.5px solid var(--raise); box-shadow: var(--shadow-xs); transform: translate(-50%, -50%); }
+  .obs-meter .ends { display: flex; justify-content: space-between; font-size: 10px; color: var(--faint); font-weight: 600; }
 
   /* Background block */
   .bg-line { font-size: 14px; line-height: 1.55; margin: 0 0 9px; }
@@ -142,7 +152,7 @@
   .refs-line svg { width: 16px; height: 16px; color: var(--pom); flex: none; }
   .refs-line b { color: var(--ink); font-weight: 700; }
 
-  /* ============ DIRECTION A — PHOTO-FORWARD ============ */
+  /* ============ LAYOUT: PHOTO-FORWARD (A) ============ */
   .a-hero { position: relative; aspect-ratio: 4 / 4.4; background: linear-gradient(158deg, #c3b2a2 0%, #8d7a6b 46%, #574a40 100%); }
   .a-hero .por { position: absolute; inset: 0; }
   .a-hero .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,12,9,.8) 0%, rgba(20,12,9,.24) 44%, transparent 64%); }
@@ -164,7 +174,7 @@
   .a-prose { font-size: 15px; line-height: 1.64; margin: 0; }
   .a-rail > * + * { margin-top: 22px; }
 
-  /* ============ DIRECTION B — REFINED CLASSIC ============ */
+  /* ============ LAYOUT: CLASSIC (B) ============ */
   .b-wrap { padding: clamp(18px, 5vw, 26px) clamp(18px, 5vw, 26px) 24px; }
   .b-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
   .b-sl { display: inline-flex; align-items: center; gap: 7px; font-family: var(--serif); font-size: 1rem; }
@@ -185,7 +195,7 @@
   .b-sec .q + p { margin-top: 12px; }
   .b-div { height: 1px; background: var(--line); margin: 24px 0 0; }
 
-  /* ============ DIRECTION C — PROMPTED (Q&A cards) ============ */
+  /* ============ LAYOUT: PROMPTED (C) ============ */
   .c-wrap { padding: clamp(18px, 5vw, 28px) clamp(16px, 5vw, 26px) 26px; display: flex; flex-direction: column; gap: 22px; }
   .c-head { display: flex; align-items: center; gap: 16px; }
   .c-head .pf { flex: none; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); background: linear-gradient(158deg, #c3b2a2, #574a40); }
@@ -203,7 +213,7 @@
   .pcard .pq { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--pom); }
   .pcard .pa { font-family: var(--serif); font-size: 1.18rem; line-height: 1.32; margin-top: 8px; text-wrap: balance; }
 
-  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 10px 20px 40px; line-height: 1.6; max-width: 780px; margin: 0 auto; }
+  .foot-note { text-align: center; color: var(--faint); font-size: 12px; padding: 10px 20px 40px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
   .foot-note .stamp { font-weight: 700; letter-spacing: .04em; color: var(--muted); }
   .foot-note b { color: var(--muted); }
 
@@ -239,10 +249,8 @@
   .vp-web #s-b .b-main > .b-sec { margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--line-soft); }
   .vp-web #s-b .b-main > .b-sec:first-child { padding-top: 0; border-top: 0; }
 
-  /* C stays a single reading column, just a touch wider on web */
   .vp-web #s-c .device { max-width: 680px; }
 
-  /* mobile: rail/main are pass-throughs (source order) */
   .a-rail, .a-main, .b-rail, .b-main { display: contents; }
   .vp-web .a-rail, .vp-web .a-main, .vp-web .b-rail, .vp-web .b-main { display: block; }
 
@@ -325,17 +333,32 @@
 <!-- ===== LAB BAR ===== -->
 <div class="lab-bar">
   <div class="lab-in">
-    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v7</span></span>
-    <div class="lab-tabs" role="tablist" aria-label="Design direction">
-      <button class="lab-tab" role="tab" id="t-a" aria-selected="true" aria-controls="s-a">A · Photo-forward</button>
-      <button class="lab-tab" role="tab" id="t-b" aria-selected="false" aria-controls="s-b" tabindex="-1">B · Refined classic</button>
-      <button class="lab-tab" role="tab" id="t-c" aria-selected="false" aria-controls="s-c" tabindex="-1">C · Prompted</button>
+    <span class="lab-brand"><span class="seal-mark" aria-hidden="true"></span> ZivugPath <span class="tag">Lab · profile v8</span></span>
+    <div class="lab-tabs" role="tablist" aria-label="Layout">
+      <span class="sk">Layout</span>
+      <button class="lab-tab" role="tab" id="t-b" aria-selected="true" aria-controls="s-b">Classic</button>
+      <button class="lab-tab" role="tab" id="t-a" aria-selected="false" aria-controls="s-a" tabindex="-1">Photo-forward</button>
+      <button class="lab-tab" role="tab" id="t-c" aria-selected="false" aria-controls="s-c" tabindex="-1">Prompted</button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Colour theme" data-pd-state="Theme">
+      <span class="sk">Theme</span>
+      <button type="button" class="swatch" data-ctheme="pomegranate" aria-pressed="true" aria-label="Pomegranate" style="--sw:#A82D46"></button>
+      <button type="button" class="swatch" data-ctheme="olive" aria-pressed="false" aria-label="Olive" style="--sw:#4F6B34"></button>
+      <button type="button" class="swatch" data-ctheme="indigo" aria-pressed="false" aria-label="Indigo" style="--sw:#3E4E8C"></button>
+      <button type="button" class="swatch" data-ctheme="plum" aria-pressed="false" aria-label="Plum" style="--sw:#7C3A6C"></button>
+      <button type="button" class="swatch" data-ctheme="sand" aria-pressed="false" aria-label="Sand" style="--sw:#9A6B1E"></button>
+    </div>
+    <div class="lab-seg" role="group" aria-label="Observance display" data-pd-state="Observance">
+      <span class="sk">Observ.</span>
+      <button type="button" data-obs="hybrid" aria-pressed="true">Hybrid</button>
+      <button type="button" data-obs="meter" aria-pressed="false">Meter</button>
+      <button type="button" data-obs="off" aria-pressed="false">Off</button>
     </div>
     <div class="lab-seg push" role="group" aria-label="Example profile" data-pd-state="Example">
       <span class="sk">Example</span>
-      <button type="button" data-person="rivka" aria-pressed="true">Rivka · 24</button>
-      <button type="button" data-person="dovid" aria-pressed="false">Dovid · 27</button>
-      <button type="button" data-person="miriam" aria-pressed="false">Miriam · 34</button>
+      <button type="button" data-person="rivka" aria-pressed="true">Rivka</button>
+      <button type="button" data-person="dovid" aria-pressed="false">Dovid</button>
+      <button type="button" data-person="miriam" aria-pressed="false">Miriam</button>
     </div>
     <div class="lab-seg" role="group" aria-label="Photo" data-pd-state="Photo">
       <span class="sk">Photo</span>
@@ -349,8 +372,8 @@
   </div>
 </div>
 
-<!-- ================= DIRECTION A ================= -->
-<div class="stage on" id="s-a" role="tabpanel" aria-labelledby="t-a">
+<!-- ================= LAYOUT: PHOTO-FORWARD (A) ================= -->
+<div class="stage" id="s-a" role="tabpanel" aria-labelledby="t-a">
   <div class="device" data-slug="">
     <div class="a-rail">
       <div class="a-hero">
@@ -368,7 +391,6 @@
       <div class="obs r-obs"></div>
       <div class="a-block"><span class="lbl">At a glance</span><div class="badges r-badges"></div></div>
     </div>
-
     <div class="a-main">
       <div class="a-body">
         <p class="a-quote"><span class="mk">“</span><span class="r-quote"></span><span class="mk">”</span></p>
@@ -385,7 +407,6 @@
         <p class="refs-line"><svg><use href="#i-star"/></svg><span class="r-refs"></span></p>
       </div>
     </div>
-
     <div class="arrival a-arrival" data-arrival="a">
       <div class="arr-seg" role="group" aria-label="How this reached you" data-pd-state="How this reached you">
         <span class="hint">How this reached you</span>
@@ -407,8 +428,8 @@
   </div>
 </div>
 
-<!-- ================= DIRECTION B ================= -->
-<div class="stage" id="s-b" role="tabpanel" aria-labelledby="t-b">
+<!-- ================= LAYOUT: CLASSIC (B) — default ================= -->
+<div class="stage on" id="s-b" role="tabpanel" aria-labelledby="t-b">
   <div class="device" data-slug="">
     <div class="b-wrap">
       <div class="b-top">
@@ -465,7 +486,7 @@
   </div>
 </div>
 
-<!-- ================= DIRECTION C (prompted) ================= -->
+<!-- ================= LAYOUT: PROMPTED (C) ================= -->
 <div class="stage" id="s-c" role="tabpanel" aria-labelledby="t-c">
   <div class="device" data-slug="">
     <div class="c-wrap">
@@ -513,14 +534,12 @@
   </div>
 </div>
 
-<!-- sticky mobile respond bar -->
 <div class="mact" id="mact"><button class="btn primary"><svg class="lk" viewBox="0 0 24 24"><use href="#i-msg"/></svg> <span class="mact-t">Respond</span></button></div>
 
 <div class="foot-note">
-  <div class="stamp">Lab · profile-redesign · v7 · 2026-07-08</div>
-  <p><b>What this is:</b> three directions for the shared profile — <b>A · Photo-forward</b>, <b>B · Refined classic</b>, and new <b>C · Prompted</b> (Hinge-style Q&amp;A cards, leaning into the conversation origin). Controls up top: <b>direction</b>, <b>Example</b> profile, <b>Photo</b> (With/None), <b>Mobile/Web</b>. The “How this reached you” switcher is a demo control.</p>
-  <p><b>New in v7:</b> observance is now the <b>hybrid</b> (label + community + facet chips + “in their words”), replacing the linear meter · removed the redundant vitals block and the triple “Divorced” · height moved into the facts line · added a <b>Background</b> section (learning / work / family) · richer content &amp; more prompts · A/B desktop columns rebalanced · <b>Direction C</b> added.</p>
-  <p><b>Open question:</b> A vs B vs C as the base direction. <b>Parked:</b> exact badge/facet content still wants a research pass.</p>
+  <div class="stamp">Lab · profile-redesign · v8 · 2026-07-08</div>
+  <p><b>What this is:</b> the shared profile settled on <b>Classic (B)</b> as the base, now <b>owner-themable</b>. Controls: <b>Layout</b> (Classic · Photo-forward · Prompted — all one dataset), <b>Theme</b> (5 curated colours), <b>Observance</b> (Hybrid · Meter · Off), plus <b>Example</b> / <b>Photo</b> / <b>Mobile-Web</b>. The “How this reached you” switcher is a demo control.</p>
+  <p><b>New in v8:</b> five curated <b>colour themes</b> (accent + soft, light &amp; dark) — a small set, not a free picker, so it stays warm-editorial · a <b>layout</b> option that lets an owner switch Classic ⇄ Photo-forward ⇄ Prompted off the same profile · an <b>observance display</b> option (hybrid default, or a simple meter, or hidden entirely). Recorded in SPEC §8.3 / §12 / §22.</p>
   <p>Placeholder people; illustrated portraits/avatars stand in for real photos.</p>
 </div>
 
@@ -531,7 +550,7 @@
         slug: 'rivka-m', name: 'Rivka Mandel', heb: 'רבקה מנדל', por: 'portrait-f', their: 'her',
         age: 24, height: "5′4″", city: 'Lakewood, NJ', relocate: { label: 'Open to relocating', gold: true },
         status: null,
-        obs: { label: 'Yeshivish · Bais Yaakov', community: 'Lakewood',
+        obs: { label: 'Yeshivish · Bais Yaakov', community: 'Lakewood', pos: .74,
           facets: ['Kosher phone', 'Shomer negiah', 'No TV at home', 'Skirts only'],
           words: 'Bais Yaakov through and through — though I’m always halfway through a secular novel too.' },
         one: "A morah who's steady on the big things and light about the rest.",
@@ -561,7 +580,7 @@
         slug: 'dovid-w', name: 'Dovid Weiss', heb: 'דוד ווייס', por: 'portrait-m', their: 'his',
         age: 27, height: "5′11″", city: 'Teaneck, NJ', relocate: { label: 'Open to relocating', gold: true },
         status: null,
-        obs: { label: 'Modern Orthodox · machmir', community: 'Teaneck',
+        obs: { label: 'Modern Orthodox · machmir', community: 'Teaneck', pos: .5,
           facets: ['Daf yomi', 'Shomer Shabbos', 'Kipa seruga', 'College + career'],
           words: 'MO machmir — a daily daf and a kipa seruga, and I’ll still argue with you about a film afterward.' },
         one: "An engineer who learns daf yomi on the train and coaches Little League on Sundays.",
@@ -590,7 +609,7 @@
         slug: 'miriam-a', name: 'Miriam Adler', heb: 'מרים אדלר', por: 'portrait-f', their: 'her',
         age: 34, height: "5′6″", city: 'Monsey, NY', relocate: { label: 'Prefers to stay local', gold: false },
         status: { badge: 'Divorced · mother of one', i: 'i-child' },
-        obs: { label: 'Modern Orthodox', community: 'Monsey',
+        obs: { label: 'Modern Orthodox', community: 'Monsey', pos: .46,
           facets: ['Shomer Shabbos', 'Kosher home', 'Covers hair at shul', 'Works in healthcare'],
           words: 'Shomer Shabbos with a kosher home; easygoing about the rest and at home in the wider world.' },
         one: "A nurse and a mother who's rebuilt with a lot of grace and a good sense of humor.",
@@ -618,8 +637,8 @@
     };
 
     var SEAL = '<span class="seal-mark" aria-hidden="true"></span>';
-    var dirs = ['a', 'b', 'c'];
-    var state = { person: 'rivka', photo: 'on', sharer: 'shadchan' };
+    var dirs = ['b', 'a', 'c']; // tab/display order — Classic (B) first / default
+    var state = { person: 'rivka', photo: 'on', sharer: 'shadchan', ctheme: 'pomegranate', obsMode: 'hybrid' };
     function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
     function $(s, r) { return (r || document).querySelector(s); }
     function $all(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -632,7 +651,14 @@
       p.badges.forEach(function (b) { L.push('<span class="badge ' + (b.c || '') + '"><svg><use href="#' + b.i + '"/></svg>' + esc(b.t) + '</span>'); });
       return L.join('');
     }
-    function obsHtml(p) {
+    function obsHtml(p, mode) {
+      if (mode === 'off') return '';
+      if (mode === 'meter') {
+        return '<span class="lbl">Observance</span>'
+          + '<div class="obs-meter"><span class="obs-v">' + esc(p.obs.label) + '</span>'
+          + '<div class="track"><span class="mk" style="left:' + (p.obs.pos * 100) + '%"></span></div>'
+          + '<div class="ends"><span>Secular</span><span>Chassidish</span></div></div>';
+      }
       var chips = p.obs.facets.map(function (f) { return '<span class="chip"><svg class="lk" viewBox="0 0 24 24"><use href="#i-check"/></svg>' + esc(f) + '</span>'; }).join('');
       return '<span class="lbl">Observance</span>'
         + '<div class="obs-row"><span class="badge gold">' + esc(p.obs.label) + '</span>'
@@ -668,7 +694,8 @@
         setHtml(root, '.r-facts', factsHtml(p));
         setHtml(root, '.r-facts-c', factsHtml(p));
         setHtml(root, '.r-badges', badgesHtml(p));
-        setHtml(root, '.r-obs', obsHtml(p));
+        var obsEl = $('.r-obs', root);
+        if (obsEl) { if (state.obsMode === 'off') { obsEl.style.display = 'none'; obsEl.innerHTML = ''; } else { obsEl.style.display = ''; obsEl.innerHTML = obsHtml(p, state.obsMode); } }
         setHtml(root, '.r-bg', bgHtml(p));
         setHtml(root, '.r-fresh', freshHtml(p));
         setText(root, '.r-quote', p.quote);
@@ -743,7 +770,7 @@
       $('.mact-t').textContent = d.cta;
     }
 
-    function normHash() { var h = (location.hash || '').replace('#', ''); return dirs.indexOf(h) > -1 ? h : 'a'; }
+    function normHash() { var h = (location.hash || '').replace('#', ''); return dirs.indexOf(h) > -1 ? h : 'b'; }
     function applyDir(id) {
       dirs.forEach(function (k) {
         var on = (k === id), t = document.getElementById('t-' + k);
@@ -753,7 +780,7 @@
       window.scrollTo({ top: 0, behavior: 'auto' });
       updateMact();
     }
-    if (!location.hash) { try { history.replaceState(null, '', '#a'); } catch (e) {} }
+    if (!location.hash) { try { history.replaceState(null, '', '#b'); } catch (e) {} }
     dirs.forEach(function (k, i) {
       var tab = document.getElementById('t-' + k);
       tab.addEventListener('click', function () { location.hash = k; });
@@ -777,6 +804,14 @@
     }
     bindSeg('person', 'person', render);
     bindSeg('photo', 'photo', applyPhoto);
+    bindSeg('obs', 'obsMode', render);
+    $all('.swatch[data-ctheme]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        state.ctheme = b.dataset.ctheme;
+        document.body.setAttribute('data-ctheme', state.ctheme);
+        $all('.swatch[data-ctheme]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      });
+    });
     $all('.lab-seg button[data-vp]').forEach(function (b) {
       b.addEventListener('click', function () {
         document.body.classList.toggle('vp-web', b.dataset.vp === 'web');
